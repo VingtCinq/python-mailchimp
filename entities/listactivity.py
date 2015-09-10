@@ -1,10 +1,10 @@
 from baseapi import BaseApi
 
 
-class Activity(BaseApi):
+class ListActivity(BaseApi):
 
     def __init__(self, *args, **kwargs):
-        super(Activity, self).__init__(*args, **kwargs)
+        super(ListActivity, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
 
     def all(self, list_id):

@@ -10,5 +10,5 @@ class AuthorizedApp(BaseApi):
     def all(self):
         return self._mc_client._get(url=self.endpoint)
 
-    def get(self, authorized_app_id):
-        return self._mc_client._get(url=self._build_path(authorized_app_id))
+    def get(self, app_id):
+        return self._mc_client._get(url=self._build_path(app_id))

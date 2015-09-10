@@ -21,12 +21,12 @@ class List(BaseApi):
         self.list_id = list_id
         return self._mc_client._get(url=self._build_path(list_id))
 
-    def update(self, list_id):
+    def update(self, list_id, data):
         """
         updates an existing list's settings.
         """
         self.list_id = list_id
-        return self._mc_client._patch(url=self._build_path(list_id))
+        return self._mc_client._patch(url=self._build_path(list_id), data=data)
 
     def delete(self, list_id):
         """

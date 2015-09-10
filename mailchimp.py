@@ -14,6 +14,9 @@ from entities.activity import Activity
 from entities.client import Client
 from entities.list import List
 from entities.growth import Growth
+from entities.template import Template
+from entities.interest import Interest
+from entities.category import Category
 
 
 class MailChimp(MailChimpClient):
@@ -36,3 +39,6 @@ class MailChimp(MailChimpClient):
         self.client = Client(self)
         self.list = List(self)
         self.growth = Growth(self)
+        self.template = Template(self)
+        self.category = Category(self)
+        self.interest = Interest(self)

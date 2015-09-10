@@ -12,3 +12,9 @@ class Growth(BaseApi):
         returns 10 months worth of growth history.
         """
         return self._mc_client._get(url=self._build_path(list_id, 'growth-history'))
+
+    def get(self, list_id, month):
+        """
+        returns a specific list's growth report for the specified month.
+        """
+        return self._mc_client._get(url=self._build_path(list_id, 'growth-history', month))

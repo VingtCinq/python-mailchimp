@@ -38,8 +38,8 @@ class MailChimpClient(object):
         r = requests.delete(url, auth=self.auth)
         return r.json()
 
-    def _patch(self, url, json=None):
+    def _patch(self, url, data=None):
         url = urljoin(self.base_url, url)
         print url
-        r = requests.patch(url, auth=self.auth, json=json)
+        r = requests.patch(url, auth=self.auth, json=data)
         return r.json()

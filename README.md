@@ -18,9 +18,9 @@ requests >= 2.7.0
 
 ## Examples
 
-    from mailchimp3 import MailChimpClient
+    from mailchimp3 import MailChimp
     
-    client = MailChimpClient('YOUR USERNAME', 'YOUR SECRET KEY')
+    client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY')
     
     client.lists.all()  # returns all the lists
     client.lists.get('123456')  # returns the list matching id '123456'

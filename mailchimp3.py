@@ -18,6 +18,7 @@ from entities.growth import Growth
 from entities.template import Template
 from entities.interest import Interest
 from entities.category import Category
+from entities.goal import Goal
 
 
 class MailChimp(MailChimpClient):
@@ -44,3 +45,4 @@ class MailChimp(MailChimpClient):
         self.category = Category(self)
         self.interest = Interest(self)
         self.memberactivity = MemberActivity(self)
+        self.goal = Goal(self)

@@ -1,5 +1,5 @@
 from baseapi import BaseApi
-from entities.feedback import Feedback
+from feedback import Feedback
 
 
 class Campaign(BaseApi):

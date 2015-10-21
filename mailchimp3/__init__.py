@@ -23,6 +23,10 @@ from entities.category import Category
 from entities.goal import Goal
 from entities.member import Member
 from entities.reportabuse import ReportAbuse
+from entities.files import File
+from entities.automationemail import AutomationEmail
+from entities.automationemailqueue import AutomationEmailQueue
+from entities.automationeremovedsubscriber import AutomationRemovedSubscriber
 
 
 class MailChimp(MailChimpClient):
@@ -34,8 +38,14 @@ class MailChimp(MailChimpClient):
         Initialize the class with your user_id and secret_key
         """
         super(MailChimp, self).__init__(*args, **kwargs)
+        # Authorized Apps
         self.authorized_app = AuthorizedApp(self)
+        # Automation
         self.automation = Automation(self)
+        self.automationemail = AutomationEmail(self)
+        self.automationemailqueue = AutomationEmailQueue(self)
+        self.automationeremovedsubscriber = AutomationRemovedSubscriber(self)
+        # Campaigns
         self.campaign = Campaign(self)
         self.report = Report(self)
         self.campaignfeedback = Feedback(self)
@@ -47,6 +57,7 @@ class MailChimp(MailChimpClient):
         self.list = List(self)
         self.growth = Growth(self)
         self.template = Template(self)
+        self.file = File(self)
         self.category = Category(self)
         self.interest = Interest(self)
         self.memberactivity = MemberActivity(self)

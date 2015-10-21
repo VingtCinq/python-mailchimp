@@ -35,22 +35,41 @@ requests >= 2.7.0
 
 ### Automation
 
+#### Automation
+
     client.automation.all()
     client.automation.get(workflow_id='')
     client.automation.pause(workflow_id='')
     client.automation.start(workflow_id='')
-    
-    client.email.all(workflow_id='')
-    client.email.get(workflow_id='', email_id='')
-    client.email.pause(workflow_id='', email_id='')
-    client.email.start(workflow_id='', email_id='')
 
-### Campaigns
+#### Automation Email
+
+    client.automationemail.all(workflow_id='')
+    client.automationemail.get(workflow_id='', email_id='')
+    client.automationemail.pause(workflow_id='', email_id='')
+    client.automationemail.start(workflow_id='', email_id='')
+
+#### Automation Email Queue
+
+    client.automationemailqueue.all(workflow_id='', email_id='')
+    client.automationemailqueue.get(workflow_id='', email_id='', member_id='')
+    client.automationemailqueue.create(workflow_id='', email_id='', data='')
+
+#### Automation Removed Subscribers
+
+    client.automationeremovedsubscriber.all(workflow_id='')
+    client.automationeremovedsubscriber.create(workflow_id='', data='')
+
+### Campaign
+
+#### Campaign
 
     client.campaign.all()
     client.campaign.get(campaign_id='')
     client.campaign.delete(campaign_id='')
-    
+
+#### Campaigns feedback
+
     client.feedback.all(campaign_id='')
     client.feedback.create(campaign_id='', data={})
     client.feedback.get(campaign_id='', feedback_id='')
@@ -59,24 +78,33 @@ requests >= 2.7.0
   
 ### Conversations
   
-  TODO
+    client.conversation.all()
+    client.conversation.get(conversation_id='')
   
 ### Files
   
-  TODO
+    client.file.all()
+    client.file.create(data='')
   
 ### Lists
   
-  TODO
+    client.list.all()
+    client.list.get(list_id='')
+    client.list.create(data='')
+    client.list.update(list_id='', data='')
+    client.list.delete(list_id='')
   
 ### Reports
   
-  TODO
+    client.report.all()
+    client.report.get(report_id='')
   
 ### Templates
   
-  TODO
-
+    client.template.all()
+    client.template.get(template_id='')
+    client.template.update(template_id='', data='')
+    client.template.delete(template_id='')
 
 ## Support
 

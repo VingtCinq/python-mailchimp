@@ -1,10 +1,10 @@
 from baseapi import BaseApi
 
 
-class Email(BaseApi):
+class AutomationEmail(BaseApi):
 
     def __init__(self, *args, **kwargs):
-        super(Email, self).__init__(*args, **kwargs)
+        super(AutomationEmail, self).__init__(*args, **kwargs)
         self.endpoint = 'automations'
 
     def all(self, workflow_id):

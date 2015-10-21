@@ -7,11 +7,13 @@ from entities.authorizedapp import AuthorizedApp
 from entities.automation import Automation
 from entities.message import Message
 from entities.campaign import Campaign
+from entities.report import Report
 from entities.feedback import Feedback
 from entities.conversation import Conversation
 from entities.abuse import Abuse
 from entities.listactivity import ListActivity
 from entities.memberactivity import MemberActivity
+from entities.reportactivity import ReportActivity
 from entities.client import Client
 from entities.list import List
 from entities.growth import Growth
@@ -19,6 +21,7 @@ from entities.template import Template
 from entities.interest import Interest
 from entities.category import Category
 from entities.goal import Goal
+from entities.member import Member
 
 
 class MailChimp(MailChimpClient):
@@ -33,6 +36,7 @@ class MailChimp(MailChimpClient):
         self.authorized_app = AuthorizedApp(self)
         self.automation = Automation(self)
         self.campaign = Campaign(self)
+        self.report = Report(self)
         self.campaignfeedback = Feedback(self)
         self.conversation = Conversation(self)
         self.message = Message(self)
@@ -45,4 +49,6 @@ class MailChimp(MailChimpClient):
         self.category = Category(self)
         self.interest = Interest(self)
         self.memberactivity = MemberActivity(self)
+        self.reportactivity = ReportActivity(self)
         self.goal = Goal(self)
+        self.member = Member(self)

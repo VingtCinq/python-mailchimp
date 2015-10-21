@@ -21,25 +21,33 @@ class MailChimpClient(object):
         self.base_url = 'https://%s.api.mailchimp.com/3.0/' % datacenter
 
     def _post(self, url, json=None):
+        """
+        Handle authenticated POST requests
+        """
         url = urljoin(self.base_url, url)
-        print url
         r = requests.post(url, auth=self.auth, json=json)
         return r.json()
 
     def _get(self, url):
+        """
+        Handle authenticated POST requests
+        """
         url = urljoin(self.base_url, url)
-        print url
         r = requests.get(url, auth=self.auth)
         return r.json()
 
     def _delete(self, url):
+        """
+        Handle authenticated DELETE requests
+        """
         url = urljoin(self.base_url, url)
-        print url
         r = requests.delete(url, auth=self.auth)
         return r.json()
 
     def _patch(self, url, data=None):
+        """
+        Handle authenticated PATH requests
+        """
         url = urljoin(self.base_url, url)
-        print url
         r = requests.patch(url, auth=self.auth, json=data)
         return r.json()

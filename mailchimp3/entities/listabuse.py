@@ -1,10 +1,10 @@
 from baseapi import BaseApi
 
 
-class Abuse(BaseApi):
+class ListAbuse(BaseApi):
 
     def __init__(self, *args, **kwargs):
-        super(Abuse, self).__init__(*args, **kwargs)
+        super(ListAbuse, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
 
     def all(self, list_id):

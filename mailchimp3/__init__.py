@@ -10,7 +10,7 @@ from entities.campaign import Campaign
 from entities.report import Report
 from entities.feedback import Feedback
 from entities.conversation import Conversation
-from entities.abuse import Abuse
+from entities.listabuse import ListAbuse
 from entities.listactivity import ListActivity
 from entities.memberactivity import MemberActivity
 from entities.reportactivity import ReportActivity
@@ -22,6 +22,7 @@ from entities.interest import Interest
 from entities.category import Category
 from entities.goal import Goal
 from entities.member import Member
+from entities.reportabuse import ReportAbuse
 
 
 class MailChimp(MailChimpClient):
@@ -41,7 +42,7 @@ class MailChimp(MailChimpClient):
         self.conversation = Conversation(self)
         self.message = Message(self)
         self.listactivity = ListActivity(self)
-        self.abuse = Abuse(self)
+        self.listabuse = ListAbuse(self)
         self.client = Client(self)
         self.list = List(self)
         self.growth = Growth(self)
@@ -52,3 +53,4 @@ class MailChimp(MailChimpClient):
         self.reportactivity = ReportActivity(self)
         self.goal = Goal(self)
         self.member = Member(self)
+        self.reportabuse = ReportAbuse(self)

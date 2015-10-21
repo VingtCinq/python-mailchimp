@@ -22,8 +22,8 @@ requests >= 2.7.0
     
     client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY')
     
-    client.lists.all()  # returns all the lists
-    client.lists.get('123456')  # returns the list matching id '123456'
+    client.list.all()  # returns all the lists
+    client.list.get('123456')  # returns the list matching id '123456'
     client.campaign.all() # returns all the campaigns
 
 ## Usage

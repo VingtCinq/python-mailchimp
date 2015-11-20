@@ -5,6 +5,7 @@ Mailchimp v3 Api SDK
 import requests
 from requests.auth import HTTPBasicAuth
 from urlparse import urljoin
+from urllib import urlencode
 
 
 class MailChimpClient(object):
@@ -28,11 +29,15 @@ class MailChimpClient(object):
         r = requests.post(url, auth=self.auth, json=json)
         return r.json()
 
-    def _get(self, url):
+    def _get(self, url, **kwargs):
         """
-        Handle authenticated POST requests
+        Handle authenticated GET requests
         """
         url = urljoin(self.base_url, url)
+
+        if len(kwargs):
+            url += '?' + urlencode(kwargs)
+
         r = requests.get(url, auth=self.auth)
         return r.json()
 

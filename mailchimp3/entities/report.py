@@ -7,11 +7,11 @@ class Report(BaseApi):
         super(Report, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
 
-    def all(self):
+    def all(self, **kwargs):
         """
-        Returns first 10 reports based on campaign send time.
+        Returns a list of reports.
         """
-        return self._mc_client._get(url=self.endpoint)
+        return self._mc_client._get(url=self.endpoint, **kwargs)
 
     def get(self, report_id):
         """

@@ -12,6 +12,7 @@ class MailChimpClient(object):
     """
     MailChimp class to communicate with the v3 API
     """
+
     def __init__(self, mc_user, mc_secret):
         """
         Initialize the class with you user_id and secret_key

@@ -33,6 +33,7 @@ class MailChimp(MailChimpClient):
     """
     MailChimp class to communicate with the v3 API
     """
+
     def __init__(self, *args, **kwargs):
         """
         Initialize the class with your user_id and secret_key

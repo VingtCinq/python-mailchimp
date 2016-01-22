@@ -21,7 +21,7 @@ class MailChimpClient(object):
         datacenter = mc_secret.split('-').pop()
         self.base_url = 'https://%s.api.mailchimp.com/3.0/' % datacenter
 
-    def _post(self, url, json=None):
+    def _post(self, url, data=None):
         """
         Handle authenticated POST requests
         """

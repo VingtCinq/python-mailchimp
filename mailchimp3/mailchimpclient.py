@@ -4,6 +4,7 @@ Mailchimp v3 Api SDK
 """
 import requests
 from requests.auth import HTTPBasicAuth
+from requests.exceptions import InvalidURL, HTTPError
 # Handle library reorganisation Python 2 > Python 3.
 try:
     from urllib.parse import urljoin
@@ -32,7 +33,9 @@ class MailChimpClient(object):
         Handle authenticated POST requests
         """
         url = urljoin(self.base_url, url)
-        r = requests.post(url, auth=self.auth, json=json)
+        r = requests.post(url, auth=self.auth, json=data)
+        if r.status_code != requests.codes.ok:
+            raise HTTPError(r.json())
         return r.json()
 
     def _get(self, url, **kwargs):
@@ -44,7 +47,11 @@ class MailChimpClient(object):
         if len(kwargs):
             url += '?' + urlencode(kwargs)
 
-        r = requests.get(url, auth=self.auth)
+        try:
+            r = requests.get(url, auth=self.auth)
+        except InvalidURL as e:
+            print('Problem with url: {}'.format(url))
+            raise e
         return r.json()
 
     def _delete(self, url):
@@ -53,7 +60,11 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         r = requests.delete(url, auth=self.auth)
-        return r.json()
+        r.raise_for_status()
+        if r.text:
+            return r.json()
+        else:
+            return
 
     def _patch(self, url, data=None):
         """

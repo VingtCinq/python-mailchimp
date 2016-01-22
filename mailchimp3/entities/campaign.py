@@ -1,5 +1,5 @@
-from baseapi import BaseApi
-from feedback import Feedback
+from ..baseapi import BaseApi
+from .feedback import Feedback
 
 
 class Campaign(BaseApi):

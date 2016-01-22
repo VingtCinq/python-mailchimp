@@ -4,8 +4,13 @@ Mailchimp v3 Api SDK
 """
 import requests
 from requests.auth import HTTPBasicAuth
-from urlparse import urljoin
-from urllib import urlencode
+# Handle library reorganisation Python 2 > Python 3.
+try:
+    from urllib.parse import urljoin
+    from urllib.parse import urlencode
+except ImportError:
+    from urlparse import urljoin
+    from urllib import urlencode
 
 
 class MailChimpClient(object):

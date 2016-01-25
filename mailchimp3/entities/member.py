@@ -7,11 +7,11 @@ class Member(BaseApi):
         super(Member, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
 
-    def all(self, list_id):
+    def all(self, list_id, **kwargs):
         """
         returns the first 10 members for a specific list.
         """
-        return self._mc_client._get(url=self._build_path(list_id, 'members'))
+        return self._mc_client._get(url=self._build_path(list_id, 'members'), **kwargs)
 
     def get(self, list_id, member_id):
         """

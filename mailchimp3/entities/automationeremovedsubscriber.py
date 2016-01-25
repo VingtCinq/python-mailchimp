@@ -13,7 +13,7 @@ class AutomationRemovedSubscriber(BaseApi):
         """
         return self._mc_client._get(url=self._build_path(workflow_id, 'removed-subscribers'))
 
-    def create(self, workflow_id='', data):
+    def create(self, workflow_id='', data=None):
         """
         Removes a subscriber from a specific Automation workflow.
         """

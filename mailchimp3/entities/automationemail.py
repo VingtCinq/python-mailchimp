@@ -1,4 +1,4 @@
-from baseapi import BaseApi
+from ..baseapi import BaseApi
 
 
 class AutomationEmail(BaseApi):

@@ -18,4 +18,4 @@ class BaseApi(object):
         """
         Build path width endpoint and args
         """
-        return path.join(self.endpoint, *args)
+        return "/".join([self.endpoint,] + list(args))

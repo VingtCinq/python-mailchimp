@@ -73,3 +73,8 @@ class MailChimpClient(object):
         url = urljoin(self.base_url, url)
         r = requests.patch(url, auth=self.auth, json=data)
         return r.json()
+
+    def _put(self, url, data=None):
+        url = urljoin(self.base_url, url)
+        r = requests.put(url, auth=self.auth, json=data)
+        return r.json()

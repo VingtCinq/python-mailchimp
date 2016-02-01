@@ -27,6 +27,7 @@ from .entities.files import File
 from .entities.automationemail import AutomationEmail
 from .entities.automationemailqueue import AutomationEmailQueue
 from .entities.automationeremovedsubscriber import AutomationRemovedSubscriber
+from .entities.batches import Batches
 
 
 class MailChimp(MailChimpClient):
@@ -66,3 +67,5 @@ class MailChimp(MailChimpClient):
         self.goal = Goal(self)
         self.member = Member(self)
         self.reportabuse = ReportAbuse(self)
+        # Batches operations
+        self.batches = Batches(self)

@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import json
 from ..baseapi import BaseApi
 from ..helpers import HTTP_METHOD_ACTION_MATCHING
@@ -47,7 +49,7 @@ class Batches(BaseApi):
             operations.append({
                 'method': HTTP_METHOD_ACTION_MATCHING.get(operation.get('action', 'PUT')),
                 'path': "/".join(operation['entity_params']),
-                'body': u'{}'.format(json.dumps(operation['data']))
+                'body': '{}'.format(json.dumps(operation.get('data')))
             })
 
         return {
@@ -60,3 +62,5 @@ class Batches(BaseApi):
         """
         data = self._prepare_params(operations_list)
         self.operation_status = self.post(data=data)
+
+        return self.operation_status

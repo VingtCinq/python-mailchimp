@@ -1,4 +1,4 @@
-[![mailchimp3 v1.0.14 on PyPi]https://img.shields.io/badge/pypi-1.0.14-green.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v1.0.14 on PyPi](https://img.shields.io/badge/pypi-1.0.14-green.svg)](https://pypi.python.org/pypi/mailchimp3)
 
 # python-mailchimp-api
 

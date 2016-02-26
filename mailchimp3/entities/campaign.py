@@ -19,5 +19,11 @@ class Campaign(BaseApi):
     def delete(self, campaign_id):
         return self._mc_client._delete(url=self._build_path(campaign_id))
 
+    def create(self, data):
+        return self._mc_client._post(url=self.endpoint, data=data)
+
+    def send(self, campaign_id):
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'send'))
+
     def feedbacks(self):
         return Feedback.all(self.campaign_id)

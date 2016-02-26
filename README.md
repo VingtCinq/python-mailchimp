@@ -85,7 +85,15 @@ requests >= 2.7.0
   
     client.file.all()
     client.file.create(data='')
-  
+
+### Interest
+
+    client.interest.all(list_id, category_id, count=100)
+    client.interest.create(list_id, category_id, post_data)
+    client.interest.get(list_id, category_id, interest_id)
+    client.interest.update(list_id, category_id, interest_id, post_data)
+    client.interest.delete(list_id, category_id, interest_id)
+
 ### Lists
   
     client.list.all()

@@ -67,8 +67,11 @@ Campaigns
 ::
 
     client.campaign.all()
+    client.campaign.create(data={})
     client.campaign.get(campaign_id='')
     client.campaign.delete(campaign_id='')
+    client.campaign.get_content(campaign_id='', **kwargs)
+    client.campaign.set_content(campaign_id='', data={})
 
     client.feedback.all(campaign_id='')
     client.feedback.create(campaign_id='', data={})

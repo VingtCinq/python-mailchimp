@@ -69,8 +69,11 @@ requests >= 2.7.0
 #### Campaign
 
     client.campaign.all()
+    client.campaign.create(data={})
     client.campaign.get(campaign_id='')
     client.campaign.delete(campaign_id='')
+    client.campaign.get_content(campaign_id='', **kwargs)
+    client.campaign.set_content(campaign_id='', data={})
 
 #### Campaigns feedback
 

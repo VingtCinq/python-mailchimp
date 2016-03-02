@@ -23,7 +23,13 @@ class Campaign(BaseApi):
         return self._mc_client._post(url=self.endpoint, data=data)
 
     def send(self, campaign_id):
-        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'send'))
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'send'), data={})
+
+    def set_content(self, campaign_id, data):
+        return self._mc_client._put(url=self._build_path(campaign_id, 'content'), data=data)
+
+    def get_content(self, campaign_id, **kwargs):
+        return self._mc_client._get(url=self._build_path(campaign_id, 'content'), **kwargs)
 
     def feedbacks(self):
         return Feedback.all(self.campaign_id)

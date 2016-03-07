@@ -22,6 +22,13 @@ class Campaign(BaseApi):
     def create(self, data):
         return self._mc_client._post(url=self.endpoint, data=data)
 
+    def patch(self, campaign_id, data):
+        return self._mc_client._patch(url=self._build_path(campaign_id), data=data)
+
+    # Pro feature
+    def cancel(self, campaign_id):
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'cancel-send'))
+
     def send(self, campaign_id):
         return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'send'), data={})
 

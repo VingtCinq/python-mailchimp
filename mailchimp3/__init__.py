@@ -3,6 +3,7 @@ Mailchimp v3 Api SDK
 
 """
 from .mailchimpclient import MailChimpClient
+from .entities.root import Root
 from .entities.authorizedapp import AuthorizedApp
 from .entities.automation import Automation
 from .entities.message import Message

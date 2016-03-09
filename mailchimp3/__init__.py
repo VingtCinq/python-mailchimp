@@ -69,3 +69,5 @@ class MailChimp(MailChimpClient):
         self.reportabuse = ReportAbuse(self)
         # Batches operations
         self.batches = Batches(self)
+        # Root
+        self.root = Root(self)

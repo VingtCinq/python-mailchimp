@@ -123,6 +123,10 @@ requests >= 2.7.0
     client.template.update(template_id='', data='')
     client.template.delete(template_id='')
 
+
+### Root
+    client.root.get()
+    
 ## Support
 
 If you are having issues, please let us know.

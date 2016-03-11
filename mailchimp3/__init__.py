@@ -3,6 +3,7 @@ Mailchimp v3 Api SDK
 
 """
 from .mailchimpclient import MailChimpClient
+from .entities.root import Root
 from .entities.authorizedapp import AuthorizedApp
 from .entities.automation import Automation
 from .entities.message import Message
@@ -69,3 +70,5 @@ class MailChimp(MailChimpClient):
         self.reportabuse = ReportAbuse(self)
         # Batches operations
         self.batches = Batches(self)
+        # Root
+        self.root = Root(self)

@@ -34,9 +34,13 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         r = requests.post(url, auth=self.auth, json=data)
-        if r.status_code != requests.codes.ok:
+        if r.status_code == requests.codes.ok:
+            return r.json()
+        if r.status_code == requests.codes.no_content:
+            return "{'status': 204}"
+        else:
             raise HTTPError(r.json())
-        return r.json()
+        
 
     def _get(self, url, **kwargs):
         """

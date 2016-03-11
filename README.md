@@ -72,6 +72,8 @@ requests >= 2.7.0
     client.campaign.create(data={})
     client.campaign.get(campaign_id='')
     client.campaign.delete(campaign_id='')
+    client.campaign.patch(campaign_id='', data={})
+    client.campaign.cancel(campaign_id='')
     client.campaign.get_content(campaign_id='', **kwargs)
     client.campaign.set_content(campaign_id='', data={})
 
@@ -121,6 +123,10 @@ requests >= 2.7.0
     client.template.update(template_id='', data='')
     client.template.delete(template_id='')
 
+
+### Root
+    client.root.get()
+    
 ## Support
 
 If you are having issues, please let us know.

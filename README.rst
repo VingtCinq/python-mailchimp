@@ -1,3 +1,5 @@
+|mailchimp3 v1.0.17 on PyPi| |MIT license| |Stable|
+
 python-mailchimp-api
 ====================
 
@@ -31,8 +33,8 @@ Examples
 
     client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY')
 
-    client.lists.all()  # returns all the lists
-    client.lists.get('123456')  # returns the list matching id '123456'
+    client.list.all()  # returns all the lists
+    client.list.get('123456')  # returns the list matching id '123456'
     client.campaign.all() # returns all the campaigns
 
 Usage
@@ -49,6 +51,9 @@ Authorized Apps
 Automation
 ~~~~~~~~~~
 
+Automation
+^^^^^^^^^^
+
 ::
 
     client.automation.all()
@@ -56,13 +61,38 @@ Automation
     client.automation.pause(workflow_id='')
     client.automation.start(workflow_id='')
 
-    client.email.all(workflow_id='')
-    client.email.get(workflow_id='', email_id='')
-    client.email.pause(workflow_id='', email_id='')
-    client.email.start(workflow_id='', email_id='')
+Automation Email
+^^^^^^^^^^^^^^^^
 
-Campaigns
-~~~~~~~~~
+::
+
+    client.automationemail.all(workflow_id='')
+    client.automationemail.get(workflow_id='', email_id='')
+    client.automationemail.pause(workflow_id='', email_id='')
+    client.automationemail.start(workflow_id='', email_id='')
+
+Automation Email Queue
+^^^^^^^^^^^^^^^^^^^^^^
+
+::
+
+    client.automationemailqueue.all(workflow_id='', email_id='')
+    client.automationemailqueue.get(workflow_id='', email_id='', member_id='')
+    client.automationemailqueue.create(workflow_id='', email_id='', data='')
+
+Automation Removed Subscribers
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+::
+
+    client.automationeremovedsubscriber.all(workflow_id='')
+    client.automationeremovedsubscriber.create(workflow_id='', data='')
+
+Campaign
+~~~~~~~~
+
+Campaign
+^^^^^^^^
 
 ::
 
@@ -70,8 +100,15 @@ Campaigns
     client.campaign.create(data={})
     client.campaign.get(campaign_id='')
     client.campaign.delete(campaign_id='')
+    client.campaign.patch(campaign_id='', data={})
+    client.campaign.cancel(campaign_id='')
     client.campaign.get_content(campaign_id='', **kwargs)
     client.campaign.set_content(campaign_id='', data={})
+
+Campaigns feedback
+^^^^^^^^^^^^^^^^^^
+
+::
 
     client.feedback.all(campaign_id='')
     client.feedback.create(campaign_id='', data={})
@@ -82,12 +119,18 @@ Campaigns
 Conversations
 ~~~~~~~~~~~~~
 
-TODO
+::
+
+    client.conversation.all()
+    client.conversation.get(conversation_id='')
 
 Files
 ~~~~~
 
-TODO
+::
+
+    client.file.all()
+    client.file.create(data='')
 
 Interest
 ~~~~~~~~
@@ -98,29 +141,9 @@ Interest
     client.interest.create(list_id, category_id, post_data)
     client.interest.get(list_id, category_id, interest_id)
     client.interest.update(list_id, category_id, interest_id, post_data)
-    client.interest.delete(list_id, category_id, interest_id)
+    client.interest.delet
 
-Lists
-~~~~~
-
-TODO
-
-Reports
-~~~~~~~
-
-TODO
-
-Templates
-~~~~~~~~~
-
-TODO
-
-Support
--------
-
-If you are having issues, please let us know.
-
-License
--------
-
-The project is licensed under the MIT License.
+.. |mailchimp3 v1.0.17 on PyPi| image:: https://img.shields.io/badge/pypi-1.0.17-green.svg
+   :target: https://pypi.python.org/pypi/mailchimp3
+.. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
+.. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

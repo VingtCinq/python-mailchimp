@@ -39,4 +39,5 @@ class Campaign(BaseApi):
         return self._mc_client._get(url=self._build_path(campaign_id, 'content'), **kwargs)
 
     def feedbacks(self):
-        return Feedback.all(self.campaign_id)
+        feedback_api = Feedback()
+        return feedback_api.all(self.campaign_id)

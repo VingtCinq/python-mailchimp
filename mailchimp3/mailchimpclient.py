@@ -2,6 +2,9 @@
 Mailchimp v3 Api SDK
 
 """
+
+from __future__ import unicode_literals
+
 import requests
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import InvalidURL, HTTPError

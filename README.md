@@ -26,9 +26,24 @@ requests >= 2.7.0
     
     client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY')
     
-    client.list.all()  # returns all the lists
-    client.list.get('123456')  # returns the list matching id '123456'
-    client.campaign.all() # returns all the campaigns
+    # returns all the lists
+    client.list.all() 
+    
+    # returns the list matching id '123456'
+    client.list.get('123456')  
+    
+    # add John Doe with email john.doe@example.com to list matching id '123456'
+    client.member.create('123456', {
+        'email_address': 'john.doe@example.com',
+        'status': 'subscribed',
+        'merge_fields': {
+            'FNAME': 'John',
+            'LNAME': 'Doe',
+        },
+    })
+    
+    # returns all the campaigns
+    client.campaign.all() 
 
 ## Usage
 

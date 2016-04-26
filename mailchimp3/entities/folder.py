@@ -28,3 +28,11 @@ class Folder(BaseApi):
         removes a folder from the File Manager.
         """
         return self._mc_client._delete(url=self._build_path(folder_id))
+
+
+    def create(self, data):
+        """
+        creates a folder in the File Manager. Data should be a dictionary
+        containing the name of the folder to create
+        """
+        return self._mc_client._post(url=self.endpoint, data=data)

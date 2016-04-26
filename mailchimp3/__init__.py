@@ -25,6 +25,7 @@ from .entities.goal import Goal
 from .entities.member import Member
 from .entities.reportabuse import ReportAbuse
 from .entities.files import File
+from .entities.folder import Folder
 from .entities.automationemail import AutomationEmail
 from .entities.automationemailqueue import AutomationEmailQueue
 from .entities.automationeremovedsubscriber import AutomationRemovedSubscriber
@@ -61,6 +62,7 @@ class MailChimp(MailChimpClient):
         self.growth = Growth(self)
         self.template = Template(self)
         self.file = File(self)
+        self.folder = Folder(self)
         self.category = Category(self)
         self.interest = Interest(self)
         self.memberactivity = MemberActivity(self)

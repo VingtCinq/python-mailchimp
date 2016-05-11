@@ -37,3 +37,9 @@ class Member(BaseApi):
         adds a new member to the list.
         """
         return self._mc_client._post(url=self._build_path(list_id, 'members'), data=data)
+
+    def create_or_update(self, list_id, member_id, data):
+        """
+        adds or updates an existing list member.
+        """
+        return self._mc_client._put(url=self._build_path(list_id, 'members', member_id), data=data)

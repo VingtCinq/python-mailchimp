@@ -43,7 +43,6 @@ class MailChimpClient(object):
             return "{'status': 204}"
         else:
             raise HTTPError(r.json())
-        
 
     def _get(self, url, **kwargs):
         """
@@ -82,6 +81,9 @@ class MailChimpClient(object):
         return r.json()
 
     def _put(self, url, data=None):
+        """
+        Handle authenticated PUT requests
+        """
         url = urljoin(self.base_url, url)
         r = requests.put(url, auth=self.auth, json=data)
         return r.json()

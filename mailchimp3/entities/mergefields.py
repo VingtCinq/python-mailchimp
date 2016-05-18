@@ -37,9 +37,3 @@ class MergeFields(BaseApi):
         adds a new merge_field to the list.
         """
         return self._mc_client._post(url=self._build_path(list_id, 'merge-fields'), data=data)
-
-    def create_or_update(self, list_id, merge_field_id, data):
-        """
-        adds or updates an existing list merge_field.
-        """
-        return self._mc_client._put(url=self._build_path(list_id, 'merge-fields', merge_field_id), data=data)

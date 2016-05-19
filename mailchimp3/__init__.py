@@ -23,6 +23,7 @@ from .entities.interest import Interest
 from .entities.category import Category
 from .entities.goal import Goal
 from .entities.member import Member
+from .entities.mergefields import MergeFields
 from .entities.reportabuse import ReportAbuse
 from .entities.files import File
 from .entities.folder import Folder
@@ -69,6 +70,7 @@ class MailChimp(MailChimpClient):
         self.reportactivity = ReportActivity(self)
         self.goal = Goal(self)
         self.member = Member(self)
+        self.mergefields = MergeFields(self)
         self.reportabuse = ReportAbuse(self)
         # Batches operations
         self.batches = Batches(self)

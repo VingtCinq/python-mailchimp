@@ -9,11 +9,11 @@ class List(BaseApi):
         self.endpoint = 'lists'
         self.list_id = None
 
-    def all(self):
+    def all(self, **kwargs):
         """
-        returns list of subscriber lists in the account.
+        returns the first 10 subscriber lists in the account.
         """
-        return self._mc_client._get(url=self.endpoint)
+        return self._mc_client._get(url=self.endpoint, **kwargs)
 
     def get(self, list_id):
         """

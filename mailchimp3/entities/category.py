@@ -25,3 +25,15 @@ class Category(BaseApi):
         returns information about a specific interest category, or Group Title.
         """
         return self._mc_client._get(url=self._build_path(list_id, 'interest-categories', category_id))
+
+    def update(self, list_id, category_id, data):
+        """
+        updates an existing interest category, or Group Title.
+        """
+        return self._mc_client._patch(url=self._build_path(list_id, 'interest-categories', category_id), data=data)
+
+    def delete(self, list_id, category_id):
+        """
+        removes an existing interest category, or Group Title. from the list. This cannot be undone.
+        """
+        return self._mc_client._delete(url=self._build_path(list_id, 'interest-categories', category_id))

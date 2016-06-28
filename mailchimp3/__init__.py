@@ -15,6 +15,7 @@ from .entities.listabuse import ListAbuse
 from .entities.listactivity import ListActivity
 from .entities.memberactivity import MemberActivity
 from .entities.reportactivity import ReportActivity
+from .entities.reportunsubscribed import ReportUnsubscribed
 from .entities.client import Client
 from .entities.list import List
 from .entities.growth import Growth
@@ -68,6 +69,7 @@ class MailChimp(MailChimpClient):
         self.interest = Interest(self)
         self.memberactivity = MemberActivity(self)
         self.reportactivity = ReportActivity(self)
+        self.reportunsubscribed = ReportUnsubscribed(self)
         self.goal = Goal(self)
         self.member = Member(self)
         self.mergefields = MergeFields(self)

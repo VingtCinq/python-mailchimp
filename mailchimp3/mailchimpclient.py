@@ -42,7 +42,7 @@ class MailChimpClient(object):
         if r.status_code == requests.codes.no_content:
             return "{'status': 204}"
         else:
-            raise HTTPError(r.json())
+            raise HTTPError(r.content)
 
     def _get(self, url, **kwargs):
         """

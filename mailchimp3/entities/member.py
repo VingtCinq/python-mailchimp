@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from ..baseapi import BaseApi
+from ..helpers import merge_two_dicts 
 
 
 class Member(BaseApi):
@@ -8,11 +9,22 @@ class Member(BaseApi):
         super(Member, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
 
-    def all(self, list_id, **kwargs):
+    def all(self, list_id, get_all=False, **kwargs):
         """
-        returns the first 10 members for a specific list.
+        returns the first 10 members for a specific list
+        or if get_all=True return all
         """
-        return self._mc_client._get(url=self._build_path(list_id, 'members'), **kwargs)
+        # Get total amount of members in the list
+        total = self._mc_client._get(url=self._build_path(list_id, 'members'), **kwargs)['total_items']
+        # Itterate by 100 if more
+        if get_all and total > 100:
+            ret = {}
+            for offset in range(0, int(total /100) +1):
+                ret = merge_two_dicts(ret, self._mc_client._get(url=self._build_path(list_id, 'members'), 
+                        offset=int(offset*100), count=100, **kwargs))
+            return ret
+        else:
+            return self._mc_client._get(url=self._build_path(list_id, 'members'), **kwargs)
 
     def get(self, list_id, member_id):
         """

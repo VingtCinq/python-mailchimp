@@ -3,29 +3,25 @@
 python-mailchimp-api
 ====================
 
-A python client for v3 of MailChimp API
+A straighforward python client for v3 of MailChimp API using requests >=
+2.7.0.
 
-About
------
-
-This package aims to provide a straighforward python client to interact
-with Mailchimp API v3.
+Get Stated
+----------
 
 Installation
-------------
+~~~~~~~~~~~~
 
 This client is hosted at PyPi under the name ``mailchimp3``, to install
 it, simply run
 
 ``pip install mailchimp3``
 
-Dependencies
-------------
+Initialization
+~~~~~~~~~~~~~~
 
-requests >= 2.7.0
-
-Examples
---------
+Grab ``YOUR SECRET KEY`` from your mailchimp account (Account > Extra >
+Api Keys). ``YOUR USERNAME`` is the one you use to login.
 
 ::
 
@@ -33,12 +29,57 @@ Examples
 
     client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY')
 
-    client.list.all()  # returns all the lists
-    client.list.get('123456')  # returns the list matching id '123456'
-    client.campaign.all() # returns all the campaigns
+Examples
+~~~~~~~~
 
-Usage
------
+::
+
+    # returns all the lists
+    client.list.all()
+
+    # returns all members inside list '123456'
+    client.member.all('123456')
+
+    # same query, but with query params
+    client.member.all('123456', count=100, offset=0, fields="members.email_address")
+
+    # returns the list matching id '123456'
+    client.list.get('123456')  
+
+    # add John Doe with email john.doe@example.com to list matching id '123456'
+    client.member.create('123456', {
+        'email_address': 'john.doe@example.com',
+        'status': 'subscribed',
+        'merge_fields': {
+            'FNAME': 'John',
+            'LNAME': 'Doe',
+        },
+    })
+
+    # returns all the campaigns
+    client.campaign.all()
+
+Pagination
+~~~~~~~~~~
+
+Simply add ``count`` and ``offset`` arguments in your function like so:
+
+::
+
+    client.member.all('123456', count=100, offset=0)
+
+Fields
+~~~~~~
+
+Simply add ``fields`` arguments in your function. The following only
+display email\_address and id for each member:
+
+::
+
+    client.member.all('123456', fields="members.email_address,members.id")
+
+API
+---
 
 Authorized Apps
 ~~~~~~~~~~~~~~~
@@ -102,7 +143,7 @@ Campaign
     client.campaign.delete(campaign_id='')
     client.campaign.patch(campaign_id='', data={})
     client.campaign.cancel(campaign_id='')
-    client.campaign.get_content(campaign_id='', **kwargs)
+    client.campaign.get_content(campaign_id='', \*\*queryparams)
     client.campaign.set_content(campaign_id='', data={})
 
 Campaigns feedback
@@ -141,9 +182,63 @@ Interest
     client.interest.create(list_id, category_id, post_data)
     client.interest.get(list_id, category_id, interest_id)
     client.interest.update(list_id, category_id, interest_id, post_data)
-    client.interest.delet
+    client.interest.delete(list_id, category_id, interest_id)
+
+Lists
+~~~~~
+
+::
+
+    client.list.all()
+    client.list.get(list_id='')
+    client.list.create(data='')
+    client.list.update(list_id='', data='')
+    client.list.delete(list_id='')
+
+Members
+~~~~~~~
+
+::
+
+    client.member.all(list_id='', \*\*queryparams)
+
+Reports
+~~~~~~~
+
+::
+
+    client.report.all()
+    client.report.get(report_id='')
+
+Templates
+~~~~~~~~~
+
+::
+
+    client.template.all()
+    client.template.get(template_id='')
+    client.template.update(template_id='', data='')
+    client.template.delete(template_id='')
+
+Root
+~~~~
+
+::
+
+    client.root.get()
+
+Support
+-------
+
+If you are having issues, please let us know.
+
+License
+-------
+
+The project is licensed under the MIT License.
 
 .. |mailchimp3 v1.0.17 on PyPi| image:: https://img.shields.io/badge/pypi-1.0.17-green.svg
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
+

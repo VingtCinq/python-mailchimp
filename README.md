@@ -1,4 +1,4 @@
-[![mailchimp3 v1.0.17 on PyPi](https://img.shields.io/badge/pypi-1.0.17-green.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v1.0.23 on PyPi](https://img.shields.io/badge/pypi-1.0.23-green.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -170,7 +170,7 @@ Simply add `fields` arguments in your function. The following only display email
 
 ## Support
 
-If you are having issues, please let us know.
+If you are having issues, please let us know or submit a pull request.
 
 ## License
 

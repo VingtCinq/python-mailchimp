@@ -110,7 +110,7 @@ Simply add `fields` arguments in your function. The following only display email
     client.campaign.delete(campaign_id='')
     client.campaign.patch(campaign_id='', data={})
     client.campaign.cancel(campaign_id='')
-    client.campaign.get_content(campaign_id='', \*\*queryparams)
+    client.campaign.get_content(campaign_id='', **queryparams)
     client.campaign.set_content(campaign_id='', data={})
 
 #### Campaigns feedback
@@ -133,7 +133,7 @@ Simply add `fields` arguments in your function. The following only display email
 
 ### Interest
 
-    client.interest.all(list_id, category_id, count=100)
+    client.interest.all(list_id, category_id, **querparams)
     client.interest.create(list_id, category_id, post_data)
     client.interest.get(list_id, category_id, interest_id)
     client.interest.update(list_id, category_id, interest_id, post_data)
@@ -149,7 +149,7 @@ Simply add `fields` arguments in your function. The following only display email
 
 ### Members
 
-    client.member.all(list_id='', \*\*queryparams)
+    client.member.all(list_id='', **queryparams)
 
 
 ### Reports

@@ -7,7 +7,7 @@
 A straighforward python client for v3 of MailChimp API using requests >= 2.7.0.
 
 
-## Get Stated
+## Getting Started
 
 ### Installation
 

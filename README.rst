@@ -6,8 +6,8 @@ python-mailchimp-api
 A straighforward python client for v3 of MailChimp API using requests >=
 2.7.0.
 
-Get Stated
-----------
+Getting Started
+---------------
 
 Installation
 ~~~~~~~~~~~~
@@ -44,7 +44,7 @@ Examples
     client.member.all('123456', count=100, offset=0, fields="members.email_address")
 
     # returns the list matching id '123456'
-    client.list.get('123456')  
+    client.list.get('123456')
 
     # add John Doe with email john.doe@example.com to list matching id '123456'
     client.member.create('123456', {
@@ -241,4 +241,3 @@ The project is licensed under the MIT License.
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
-

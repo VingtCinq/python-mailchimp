@@ -8,8 +8,8 @@ class Message(BaseApi):
         super(Message, self).__init__(*args, **kwargs)
         self.endpoint = 'conversations'
 
-    def all(self, conversation_id):
-        return self._mc_client._get(url=self._build_path(conversation_id, 'messages'))
+    def all(self, conversation_id, **queryparams):
+        return self._mc_client._get(url=self._build_path(conversation_id, 'messages'), **queryparams)
 
     def get(self, conversation_id, message_id):
         return self._mc_client._get(url=self._build_path(conversation_id, 'messages', message_id))

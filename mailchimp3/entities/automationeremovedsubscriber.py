@@ -8,11 +8,11 @@ class AutomationRemovedSubscriber(BaseApi):
         super(AutomationRemovedSubscriber, self).__init__(*args, **kwargs)
         self.endpoint = 'automations'
 
-    def all(self, workflow_id=''):
+    def all(self, workflow_id='', **queryparams):
         """
         Return information about subscribers who have been removed from an Automation workflow.
         """
-        return self._mc_client._get(url=self._build_path(workflow_id, 'removed-subscribers'))
+        return self._mc_client._get(url=self._build_path(workflow_id, 'removed-subscribers'), **queryparams)
 
     def create(self, workflow_id='', data=None):
         """

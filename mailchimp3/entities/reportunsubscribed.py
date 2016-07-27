@@ -14,11 +14,11 @@ class ReportUnsubscribed(BaseApi):
         super(ReportUnsubscribed, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
 
-    def all(self, campaign_id):
+    def all(self, campaign_id, **queryparams):
         """
         Returns report of all usubscribes a reason for a given campaign
         """
-        return self._mc_client._get(url=self._build_path(campaign_id, 'unsubscribed'))
+        return self._mc_client._get(url=self._build_path(campaign_id, 'unsubscribed'), **queryparams)
 
     def get(self, campaign_id, subscriber_hash):
         """

@@ -8,11 +8,11 @@ class AutomationEmailQueue(BaseApi):
         super(AutomationEmailQueue, self).__init__(*args, **kwargs)
         self.endpoint = 'automations'
 
-    def all(self, workflow_id, email_id):
+    def all(self, workflow_id, email_id, **queryparams):
         """
         Returns a list of queued subscribers for an automated email.
         """
-        return self._mc_client._get(url=self._build_path(workflow_id, 'emails', email_id, 'queue'))
+        return self._mc_client._get(url=self._build_path(workflow_id, 'emails', email_id, 'queue'), **queryparams)
 
     def get(self, workflow_id, email_id):
         """

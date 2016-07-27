@@ -10,8 +10,8 @@ class Campaign(BaseApi):
         self.endpoint = 'campaigns'
         self.campaign_id = None
 
-    def all(self, **kwargs):
-        return self._mc_client._get(url=self.endpoint, **kwargs)
+    def all(self, **queryparams):
+        return self._mc_client._get(url=self.endpoint, **queryparams)
 
     def get(self, campaign_id):
         self.campaign_id = campaign_id

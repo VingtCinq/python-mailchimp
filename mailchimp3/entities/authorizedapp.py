@@ -8,8 +8,8 @@ class AuthorizedApp(BaseApi):
         super(AuthorizedApp, self).__init__(*args, **kwargs)
         self.endpoint = 'authorized-apps'
 
-    def all(self):
-        return self._mc_client._get(url=self.endpoint)
+    def all(self, **queryparams):
+        return self._mc_client._get(url=self.endpoint, **queryparams)
 
     def get(self, app_id):
         return self._mc_client._get(url=self._build_path(app_id))

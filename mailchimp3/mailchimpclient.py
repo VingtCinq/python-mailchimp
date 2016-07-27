@@ -42,21 +42,20 @@ class MailChimpClient(object):
         if r.status_code == requests.codes.no_content:
             return "{'status': 204}"
         else:
-            raise HTTPError(r.content)
+            raise HTTPError(request=r)
 
-    def _get(self, url, **kwargs):
+    def _get(self, url, **queryparams):
         """
         Handle authenticated GET requests
         """
         url = urljoin(self.base_url, url)
 
-        if len(kwargs):
-            url += '?' + urlencode(kwargs)
+        if len(queryparams):
+            url += '?' + urlencode(queryparams)
 
         try:
             r = requests.get(url, auth=self.auth)
         except InvalidURL as e:
-            print('Problem with url: {}'.format(url))
             raise e
         return r.json()
 

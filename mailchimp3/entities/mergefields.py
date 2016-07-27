@@ -8,11 +8,11 @@ class MergeFields(BaseApi):
         super(MergeFields, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
 
-    def all(self, list_id, **kwargs):
+    def all(self, list_id, **queryparams):
         """
         returns the first 10 merge-fields for a specific list.
         """
-        return self._mc_client._get(url=self._build_path(list_id, 'merge-fields'), **kwargs)
+        return self._mc_client._get(url=self._build_path(list_id, 'merge-fields'), **queryparams)
 
     def get(self, list_id, merge_field_id):
         """

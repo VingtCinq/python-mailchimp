@@ -8,8 +8,8 @@ class File(BaseApi):
         super(File, self).__init__(*args, **kwargs)
         self.endpoint = 'file-manager/files'
 
-    def all(self):
-        return self._mc_client._get(url=self.endpoint)
+    def all(self, **queryparams):
+        return self._mc_client._get(url=self.endpoint, **queryparams)
 
     def create(self, data):
         return self._mc_client._post(url=self.endpoint, data=data)

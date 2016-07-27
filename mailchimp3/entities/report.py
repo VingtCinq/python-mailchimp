@@ -8,11 +8,11 @@ class Report(BaseApi):
         super(Report, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
 
-    def all(self, **kwargs):
+    def all(self, **queryparams):
         """
         Returns a list of reports.
         """
-        return self._mc_client._get(url=self.endpoint, **kwargs)
+        return self._mc_client._get(url=self.endpoint, **queryparams)
 
     def get(self, report_id):
         """

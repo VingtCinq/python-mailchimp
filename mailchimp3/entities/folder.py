@@ -8,8 +8,8 @@ class Folder(BaseApi):
         super(Folder, self).__init__(*args, **kwargs)
         self.endpoint = 'file-manager/folders'
 
-    def all(self):
-        return self._mc_client._get(url=self.endpoint)
+    def all(self, **queryparams):
+        return self._mc_client._get(url=self.endpoint, **queryparams)
 
     def get(self, folder_id):
         """

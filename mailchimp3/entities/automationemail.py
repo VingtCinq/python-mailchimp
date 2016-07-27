@@ -8,8 +8,8 @@ class AutomationEmail(BaseApi):
         super(AutomationEmail, self).__init__(*args, **kwargs)
         self.endpoint = 'automations'
 
-    def all(self, workflow_id):
-        return self._mc_client._get(url=self._build_path(workflow_id, 'emails'))
+    def all(self, workflow_id, **queryparams):
+        return self._mc_client._get(url=self._build_path(workflow_id, 'emails'), **queryparams)
 
     def get(self, workflow_id, email_id):
         """

@@ -8,8 +8,8 @@ class Feedback(BaseApi):
         super(Feedback, self).__init__(*args, **kwargs)
         self.endpoint = 'campaigns'
 
-    def all(self, campaign_id):
-        return self._mc_client._get(url=self._build_path(campaign_id, 'feedback'))
+    def all(self, campaign_id, **queryparams):
+        return self._mc_client._get(url=self._build_path(campaign_id, 'feedback'), **queryparams)
 
     def get(self, campaign_id, feedback_id):
         return self._mc_client._get(url=self._build_path(campaign_id, 'feedback', feedback_id))

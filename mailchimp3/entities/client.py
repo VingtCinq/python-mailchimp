@@ -8,8 +8,8 @@ class Client(BaseApi):
         super(Client, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
 
-    def all(self, list_id):
+    def all(self, list_id, **queryparams):
         """
         returns top 10 email clients based on subscriber count.
         """
-        return self._mc_client._get(url=self._build_path(list_id, 'clients'))
+        return self._mc_client._get(url=self._build_path(list_id, 'clients'), **queryparams)

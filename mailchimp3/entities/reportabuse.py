@@ -17,11 +17,11 @@ class ReportAbuse(BaseApi):
         super(ReportAbuse, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
 
-    def all(self, campaign_id):
+    def all(self, campaign_id, **queryparams):
         """
         Returns the last 10 abuse reports by date.
         """
-        return self._mc_client._get(url=self._build_path(campaign_id, 'abuse-report'))
+        return self._mc_client._get(url=self._build_path(campaign_id, 'abuse-report'), **queryparams)
 
     def get(self, campaign_id, abuse_id):
         """

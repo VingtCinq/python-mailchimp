@@ -8,13 +8,13 @@ class Interest(BaseApi):
         super(Interest, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
 
-    def all(self, list_id, category_id, **kwargs):
+    def all(self, list_id, category_id, **queryparams):
         """
         returns the interests for the category.
         """
         return self._mc_client._get(
             url=self._build_path(list_id, 'interest-categories', category_id, 'interests'),
-            **kwargs
+            **queryparams
         )
 
     def create(self, list_id, category_id, data):

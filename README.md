@@ -51,6 +51,9 @@ Grab `YOUR SECRET KEY` from your mailchimp account (Account > Extra > Api Keys).
     # returns all the campaigns
     client.campaign.all()
 
+    # You can also disable at runtime with the optional `enabled` parameter.
+    # Every API call will return None
+    client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', enabled=False)
 
 ### Pagination
 

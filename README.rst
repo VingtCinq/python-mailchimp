@@ -1,4 +1,4 @@
-|mailchimp3 v1.0.17 on PyPi| |MIT license| |Stable|
+|mailchimp3 v1.0.24 on PyPi| |MIT license| |Stable|
 
 python-mailchimp-api
 ====================
@@ -34,8 +34,8 @@ Examples
 
 ::
 
-    # returns all the lists
-    client.list.all()
+    # returns all the lists (only name and id)
+    client.list.all(fields="lists.name,lists.id")
 
     # returns all members inside list '123456'
     client.member.all('123456')

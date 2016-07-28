@@ -1,4 +1,4 @@
-[![mailchimp3 v1.0.23 on PyPi](https://img.shields.io/badge/pypi-1.0.23-green.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v1.0.24 on PyPi](https://img.shields.io/badge/pypi-1.0.24-green.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -26,8 +26,8 @@ Grab `YOUR SECRET KEY` from your mailchimp account (Account > Extra > Api Keys).
 
 ### Examples
 
-    # returns all the lists
-    client.list.all()
+    # returns all the lists (only name and id)
+    client.list.all(fields="lists.name,lists.id")
 
     # returns all members inside list '123456'
     client.member.all('123456')

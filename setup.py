@@ -15,7 +15,7 @@ except Exception:
 
 setup(
     name='mailchimp3',
-    version='1.0.26',
+    version='1.1.0',
     description='A python client for v3 of MailChimp API',
     long_description=long_description,
     url='https://github.com/charlesthk/python-mailchimp',

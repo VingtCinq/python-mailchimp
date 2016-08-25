@@ -16,6 +16,6 @@ class BaseApi(object):
 
     def _build_path(self, *args):
         """
-        Build path width endpoint and args
+        Build path with endpoint and args
         """
-        return "/".join([self.endpoint,] + list(args))
+        return "/".join(str(component) for component in ([self.endpoint,] + list(args)))

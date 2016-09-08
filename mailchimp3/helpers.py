@@ -14,9 +14,9 @@ def get_subscriber_hash(member_email):
     """
     The MD5 hash of the lowercase version
     of the list member's email.
-    Uses as memeber_id
+    Uses as member_id
     """
-    member_email = member_email.lower()
+    member_email = member_email.lower().encode()
     m = hashlib.md5(member_email)
     return m.hexdigest()
 

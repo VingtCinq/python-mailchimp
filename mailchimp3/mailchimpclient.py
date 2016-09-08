@@ -50,13 +50,13 @@ class MailChimpClient(object):
         Handle authenticated POST requests
         """
         url = urljoin(self.base_url, url)
-        r = requests.post(url, auth=self.auth, json=data)
-        if r.status_code == requests.codes.ok:
-            return r.json()
-        if r.status_code == requests.codes.no_content:
-            return "{'status': 204}"
+        try:
+            r = requests.post(url, auth=self.auth, json=data)
+        except requests.exceptions.RequestException as e:
+            raise e
         else:
-            raise HTTPError(request=r)
+            r.raise_for_status()
+            return r.json()
 
     @_enabled_or_noop
     def _get(self, url, **queryparams):
@@ -70,9 +70,11 @@ class MailChimpClient(object):
 
         try:
             r = requests.get(url, auth=self.auth)
-        except InvalidURL as e:
+        except requests.exceptions.RequestException as e:
             raise e
-        return r.json()
+        else:
+            r.raise_for_status()
+            return r.json()
 
     @_enabled_or_noop
     def _delete(self, url):
@@ -80,12 +82,13 @@ class MailChimpClient(object):
         Handle authenticated DELETE requests
         """
         url = urljoin(self.base_url, url)
-        r = requests.delete(url, auth=self.auth)
-        r.raise_for_status()
-        if r.text:
-            return r.json()
+        try:
+            r = requests.delete(url, auth=self.auth)
+        except requests.exceptions.RequestException as e:
+            raise e
         else:
-            return
+            r.raise_for_status()
+            return r.json()
 
     @_enabled_or_noop
     def _patch(self, url, data=None):
@@ -93,8 +96,13 @@ class MailChimpClient(object):
         Handle authenticated PATH requests
         """
         url = urljoin(self.base_url, url)
-        r = requests.patch(url, auth=self.auth, json=data)
-        return r.json()
+        try:
+            r = requests.patch(url, auth=self.auth, json=data)
+        except requests.exceptions.RequestException as e:
+            raise e
+        else:
+            r.raise_for_status()
+            return r.json()
 
     @_enabled_or_noop
     def _put(self, url, data=None):
@@ -102,5 +110,10 @@ class MailChimpClient(object):
         Handle authenticated PUT requests
         """
         url = urljoin(self.base_url, url)
-        r = requests.put(url, auth=self.auth, json=data)
-        return r.json()
+        try:
+            r = requests.put(url, auth=self.auth, json=data)
+        except requests.exceptions.RequestException as e:
+            raise e
+        else:
+            r.raise_for_status()
+            return r.json()

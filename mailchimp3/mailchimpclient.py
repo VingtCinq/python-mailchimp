@@ -9,7 +9,6 @@ import functools
 
 import requests
 from requests.auth import HTTPBasicAuth
-from requests.exceptions import InvalidURL, HTTPError
 # Handle library reorganisation Python 2 > Python 3.
 try:
     from urllib.parse import urljoin
@@ -117,7 +116,7 @@ class MailChimpClient(object):
     @_enabled_or_noop
     def _patch(self, url, data=None):
         """
-        Handle authenticated PATH requests
+        Handle authenticated PATCH requests
 
         :param url: The url for the endpoint including path parameters
         :type url: :py:class:`str`

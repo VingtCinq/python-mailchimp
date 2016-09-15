@@ -25,7 +25,7 @@ def get_subscriber_hash(member_email):
     :rtype: :py:class:`str`
     """
     if not re.search('@', member_email):
-        raise SyntaxError('String passed is not a valid email address')
+        raise ValueError('String passed is not a valid email address')
     member_email = member_email.lower().encode()
     m = hashlib.md5(member_email)
     return m.hexdigest()

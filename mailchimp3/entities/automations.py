@@ -10,25 +10,27 @@ Schema: https://api.mailchimp.com/schema/3.0/Automations/Instance.json
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.entities.automationaction import AutomationAction
-from mailchimp3.entities.automationemail import AutomationEmail
-from mailchimp3.entities.automationeremovedsubscriber import AutomationRemovedSubscriber
+from mailchimp3.entities.automationactions import AutomationActions
+from mailchimp3.entities.automationemails import AutomationEmails
+from mailchimp3.entities.automationremovedsubscribers import AutomationRemovedSubscribers
 
 
-class Automation(BaseApi):
+class Automations(BaseApi):
     """
-    Manage Automation workflows.
+    Automation is a paid feature that lets you build a series of triggered
+    emails that are sent to subscribers over a set period of time. Use the
+    Automation API calls to manage Automation workflows, emails, and queues.
     """
     def __init__(self, *args, **kwargs):
         """
         Initialize the endpoint
         """
-        super(Automation, self).__init__(*args, **kwargs)
+        super(Automations, self).__init__(*args, **kwargs)
         self.endpoint = 'automations'
         self.workflow_id = None
-        self.action = AutomationAction(self)
-        self.email = AutomationEmail(self)
-        self.removedsubscriber = AutomationRemovedSubscriber(self)
+        self.actions = AutomationActions(self)
+        self.emails = AutomationEmails(self)
+        self.removedsubscribers = AutomationRemovedSubscribers(self)
 
 
     # Paid feature
@@ -53,7 +55,8 @@ class Automation(BaseApi):
     def get(self, workflow_id):
         """
         Get a summary of an individual Automation workflow’s settings and
-        content.
+        content. The trigger_settings object returns information for the first
+        email in the workflow.
 
         :param workflow_id: The unique id for the Automation workflow
         :type workflow_id: :py:class:`str`

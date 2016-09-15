@@ -11,12 +11,12 @@ from mailchimp3.entities.root import Root
 # Authorized Apps
 from mailchimp3.entities.authorizedapps import AuthorizedApps
 # Automations
-from mailchimp3.entities.automation import Automation
-from mailchimp3.entities.automationaction import AutomationAction
-from mailchimp3.entities.automationemail import AutomationEmail
-from mailchimp3.entities.automationemailaction import AutomationEmailAction
+from mailchimp3.entities.automations import Automations
+from mailchimp3.entities.automationactions import AutomationActions
+from mailchimp3.entities.automationemails import AutomationEmails
+from mailchimp3.entities.automationemailactions import AutomationEmailActions
 from mailchimp3.entities.automationemailqueue import AutomationEmailQueue
-from mailchimp3.entities.automationeremovedsubscriber import AutomationRemovedSubscriber
+from mailchimp3.entities.automationremovedsubscribers import AutomationRemovedSubscribers
 # Batche Operations
 from mailchimp3.entities.batch import Batch
 # Campaign Folders
@@ -94,13 +94,13 @@ class MailChimp(MailChimpClient):
         self.root = Root(self)
         # Authorized Apps
         self.authorized_app = AuthorizedApps(self)
-        # Automation - Paid feature
-        self.automation = Automation(self)
-        self.automationaction = self.automation.action
-        self.automationemail = self.automation.email
-        self.automationemailaction = self.automation.email.action
-        self.automationemailqueue = self.automation.email.queue
-        self.automationeremovedsubscriber = self.automation.removedsubscriber
+        # Automations - Paid feature
+        self.automations = Automations(self)
+        self.automationactions = self.automations.actions
+        self.automationemails = self.automations.emails
+        self.automationemailactions = self.automations.emails.actions
+        self.automationemailqueue = self.automations.emails.queue
+        self.automationeremovedsubscribers = self.automations.removedsubscribers
         # Batch operations
         self.batch = Batch(self)
         # Campaign Folders

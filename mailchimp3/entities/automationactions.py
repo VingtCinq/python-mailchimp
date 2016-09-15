@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class AutomationAction(BaseApi):
+class AutomationActions(BaseApi):
     """
     Actions for the Automations endpoint.
     """
@@ -19,7 +19,7 @@ class AutomationAction(BaseApi):
         """
         Initialize the endpoint
         """
-        super(AutomationAction, self).__init__(*args, **kwargs)
+        super(AutomationActions, self).__init__(*args, **kwargs)
         self.endpoint = 'automations'
         self.workflow_id = None
 
@@ -28,6 +28,7 @@ class AutomationAction(BaseApi):
     def pause(self, workflow_id):
         """
         Pause all emails in a specific Automation workflow.
+
         :param workflow_id: The unique id for the Automation workflow.
         :type workflow_id: :py:class:`str`
         """
@@ -39,6 +40,7 @@ class AutomationAction(BaseApi):
     def start(self, workflow_id):
         """
         Start all emails in an Automation workflow.
+
         :param workflow_id: The unique id for the Automation workflow.
         :type workflow_id: :py:class:`str`
         """

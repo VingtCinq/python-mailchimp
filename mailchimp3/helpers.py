@@ -24,8 +24,7 @@ def get_subscriber_hash(member_email):
     :returns: The md5 hash in hex
     :rtype: :py:class:`str`
     """
-    if not re.search('@', member_email):
-        raise ValueError('String passed is not a valid email address')
+    check_subscriber_email(member_email)
     member_email = member_email.lower().encode()
     m = hashlib.md5(member_email)
     return m.hexdigest()
@@ -36,6 +35,12 @@ def check_subscriber_hash(potential_hash):
         return potential_hash
     else:
         return get_subscriber_hash(potential_hash)
+
+
+def check_subscriber_email(email):
+    if not re.search('@', email):
+        raise ValueError('String passed is not a valid email address')
+    return
 
 
 def merge_two_dicts(x, y):

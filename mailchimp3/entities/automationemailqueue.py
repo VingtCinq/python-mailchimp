@@ -10,6 +10,7 @@ Schema: https://api.mailchimp.com/schema/3.0/Automations/Emails/Queue/Instance.j
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_subscriber_email, check_subscriber_hash
 
 
 class AutomationEmailQueue(BaseApi):
@@ -43,11 +44,13 @@ class AutomationEmailQueue(BaseApi):
         """
         self.workflow_id = workflow_id
         self.email_id = email_id
-        self.subscriber_hash = None
-        return self._mc_client._post(
+        check_subscriber_email(data['email_address'])
+        response = self._mc_client._post(
             url=self._build_path(workflow_id, 'emails', email_id, 'actions/pause-all-emails'),
             data=data
         )
+        self.subscriber_hash = response['id']
+        return response
 
 
     # Paid feature
@@ -82,6 +85,7 @@ class AutomationEmailQueue(BaseApi):
         """
         self.workflow_id = workflow_id
         self.email_id = email_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         return self._mc_client._get(url=self._build_path(workflow_id, 'emails', email_id, 'queue', subscriber_hash))
 

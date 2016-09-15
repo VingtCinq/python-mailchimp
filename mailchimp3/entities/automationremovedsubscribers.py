@@ -10,9 +10,9 @@ Schema: https://api.mailchimp.com/schema/3.0/Automations/RemovedSubscribers/Inst
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_subscriber_email
 
-
-class AutomationRemovedSubscriber(BaseApi):
+class AutomationRemovedSubscribers(BaseApi):
     """
     Remove subscribers from an Automation workflow.
     """
@@ -20,7 +20,7 @@ class AutomationRemovedSubscriber(BaseApi):
         """
         Initialize the endpoint
         """
-        super(AutomationRemovedSubscriber, self).__init__(*args, **kwargs)
+        super(AutomationRemovedSubscribers, self).__init__(*args, **kwargs)
         self.endpoint = 'automations'
         self.workflow_id = None
 
@@ -39,6 +39,7 @@ class AutomationRemovedSubscriber(BaseApi):
         :type data: :py:class:`dict`
         """
         self.workflow_id = workflow_id
+        check_subscriber_email(data['email_address'])
         return self._mc_client._post(url=self._build_path(workflow_id, 'removed-subscribers'), data=data)
 
 

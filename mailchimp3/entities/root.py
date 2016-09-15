@@ -12,7 +12,9 @@ from mailchimp3.baseapi import BaseApi
 
 class Root(BaseApi):
     """
-    Returns details about the MailChimp user account.
+    The API root resource links to all other resources available in the API.
+    Calling the root directory also returns details about the MailChimp user
+    account.
     """
     def __init__(self, *args, **kwargs):
         """

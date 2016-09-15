@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class AuthorizedApp(BaseApi):
+class AuthorizedApps(BaseApi):
     """
     Manage registered, connected apps for your MailChimp account with the
     Authorized Apps endpoints.
@@ -19,7 +19,7 @@ class AuthorizedApp(BaseApi):
         """
         Initialize the endpoint
         """
-        super(AuthorizedApp, self).__init__(*args, **kwargs)
+        super(AuthorizedApps, self).__init__(*args, **kwargs)
         self.endpoint = 'authorized-apps'
         self.app_id = None
 

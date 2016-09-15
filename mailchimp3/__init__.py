@@ -9,7 +9,7 @@ from mailchimp3.mailchimpclient import MailChimpClient
 # API Root
 from mailchimp3.entities.root import Root
 # Authorized Apps
-from mailchimp3.entities.authorizedapp import AuthorizedApp
+from mailchimp3.entities.authorizedapps import AuthorizedApps
 # Automations
 from mailchimp3.entities.automation import Automation
 from mailchimp3.entities.automationaction import AutomationAction
@@ -93,7 +93,7 @@ class MailChimp(MailChimpClient):
         # API Root
         self.root = Root(self)
         # Authorized Apps
-        self.authorized_app = AuthorizedApp(self)
+        self.authorized_app = AuthorizedApps(self)
         # Automation - Paid feature
         self.automation = Automation(self)
         self.automationaction = self.automation.action

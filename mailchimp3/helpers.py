@@ -38,7 +38,7 @@ def check_subscriber_hash(potential_hash):
 
 
 def check_subscriber_email(email):
-    if not re.search('@', email):
+    if not re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
         raise ValueError('String passed is not a valid email address')
     return
 

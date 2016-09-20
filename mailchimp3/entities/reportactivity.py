@@ -14,14 +14,14 @@ class ReportActivity(BaseApi):
         super(ReportActivity, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
 
-    def all(self, list_id, **queryparams):
+    def all(self, campaign_id, **queryparams):
         """
         Returns a list of subscriber activity in a specific campaign.
         """
-        return self._mc_client._get(url=self._build_path(list_id, 'email-activity'), **queryparams)
+        return self._mc_client._get(url=self._build_path(campaign_id, 'email-activity'), **queryparams)
 
-    def get(self, list_id, email_id):
+    def get(self, campaign_id, email_id):
         """
         returns a list of a member's subscriber activity in a specific campaign.
         """
-        return self._mc_client._get(url=self._build_path(list_id, 'email-activity', email_id))
+        return self._mc_client._get(url=self._build_path(campaign_id, 'email-activity', email_id))

@@ -21,7 +21,7 @@ def get_subscriber_hash(member_email):
 
     :param member_email: The member's email address
     :type member_email: :py:class:`str`
-    :returns: The md5 hash in hex
+    :returns: The MD5 hash in hex
     :rtype: :py:class:`str`
     """
     check_subscriber_email(member_email)
@@ -31,6 +31,17 @@ def get_subscriber_hash(member_email):
 
 
 def check_subscriber_hash(potential_hash):
+    """
+    Check the passed value to see if it matches a 32 character hex number that
+    MD5 generates as output, or compute that value assuming that the input is
+    an email address.
+
+    :param potential_hash: A value to be passed to any of the endpoints that
+    expect an MD5 of an email address
+    :type potential_hash: :py:class:`str`
+    :returns: A valid MD5 hash in hex
+    :rtype: :py:class:`str`
+    """
     if re.match('^[0-9a-f]{32}$', potential_hash):
         return potential_hash
     else:
@@ -38,7 +49,19 @@ def check_subscriber_hash(potential_hash):
 
 
 def check_subscriber_email(email):
-    if not re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+    """
+    Function that verifies that the string passed is a valid email address.
+
+    Regex for email validation from http://emailregex.com/
+
+    :param email: The potential email address
+    :type email: :py:class:`str`
+    :return: Nothing
+    """
+    if not re.match(
+        r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
+        email
+    ):
         raise ValueError('String passed is not a valid email address')
     return
 

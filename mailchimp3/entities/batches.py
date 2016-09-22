@@ -7,9 +7,7 @@ Schema: https://api.mailchimp.com/schema/3.0/Batches/Instance.json
 """
 from __future__ import unicode_literals
 
-import json
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.helpers import HTTP_METHOD_ACTION_MATCHING
 
 
 class Batches(BaseApi):
@@ -37,9 +35,6 @@ class Batches(BaseApi):
                 {
                     "method": string* (Must be one of "GET", "POST", "PUT", or "PATCH")
                     "path": string*,
-                    "params": object,
-                    "body": string,
-                    "operation_id": string
                 }*
             ]*
         }

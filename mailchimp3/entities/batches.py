@@ -32,6 +32,17 @@ class Batches(BaseApi):
 
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "operations": [
+                {
+                    "method": string* (Must be one of "GET", "POST", "PUT", or "PATCH")
+                    "path": string*,
+                    "params": object,
+                    "body": string,
+                    "operation_id": string
+                }*
+            ]*
+        }
         """
         for op in data['operations']:
             if op['method'] not in ['GET', 'POST', 'PUT', 'PATCH']:

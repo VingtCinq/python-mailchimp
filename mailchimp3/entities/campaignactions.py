@@ -7,10 +7,13 @@ Schema: https://api.mailchimp.com/schema/3.0/CampaignFolders/Instance.json
 """
 from __future__ import unicode_literals
 
+from datetime import timedelta
+
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_email
 
 
-class CampaignAction(BaseApi):
+class CampaignActions(BaseApi):
     """
     Campaigns are how you send emails to your MailChimp list. Use the
     Campaigns API calls to manage campaigns in your MailChimp account.
@@ -19,7 +22,7 @@ class CampaignAction(BaseApi):
         """
         Initialize the endpoint
         """
-        super(CampaignAction, self).__init__(*args, **kwargs)
+        super(CampaignActions, self).__init__(*args, **kwargs)
         self.endpoint = 'campaigns'
         self.campaign_id = None
 
@@ -28,13 +31,14 @@ class CampaignAction(BaseApi):
     def cancel(self, campaign_id):
         """
         Cancel a Regular or Plain-Text Campaign after you send, before all of
-        your recipients receive it.
+        your recipients receive it. This feature is included with MailChimp
+        Pro.
 
         :param campaign_id: The unique id for the campaign.
         :type campaign_id: :py:class:`str`
         """
         self.campaign_id = campaign_id
-        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'cancel-send'))
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions/cancel-send'))
 
 
     def pause(self, campaign_id):
@@ -45,7 +49,7 @@ class CampaignAction(BaseApi):
         :type campaign_id: :py:class:`str`
         """
         self.campaign_id = campaign_id
-        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'pause'))
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions/pause'))
 
 
     def replicate(self, campaign_id):
@@ -56,7 +60,7 @@ class CampaignAction(BaseApi):
         :type campaign_id: :py:class:`str`
         """
         self.campaign_id = campaign_id
-        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'replicate'))
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions/replicate'))
 
 
     def resume(self, campaign_id):
@@ -67,7 +71,7 @@ class CampaignAction(BaseApi):
         :type campaign_id: :py:class:`str`
         """
         self.campaign_id = campaign_id
-        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'resume'))
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions/resume'))
 
 
     def schedule(self, campaign_id, data):
@@ -80,9 +84,22 @@ class CampaignAction(BaseApi):
         :type campaign_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "schedule_time": datetime* (A UTC timezone datetime that ends on the quarter hour [:00, :15, :30, or :45])
+        }
         """
+        if not data['schedule_time']:
+            raise ValueError('You must supply a schedule_time')
+        else:
+            if data['schedule_time'].tzinfo is None:
+                raise ValueError('The schedule_time must be in UTC')
+            else:
+                if data['schedule_time'].tzinfo.utcoffset() != timedelta(0):
+                    raise ValueError('The schedule_time must be in UTC')
+        if data['schedule_time'].minute not in [0, 15, 30, 45]:
+            raise ValueError('The schedule_time must end on the quarter hour (00, 15, 30, 45)')
         self.campaign_id = campaign_id
-        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'schedule'), data=data)
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions/schedule'), data=data)
 
 
     def send(self, campaign_id):
@@ -94,7 +111,7 @@ class CampaignAction(BaseApi):
         :type campaign_id: :py:class:`str`
         """
         self.campaign_id = campaign_id
-        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'send'))
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions/send'))
 
 
     def test(self, campaign_id, data):
@@ -105,9 +122,17 @@ class CampaignAction(BaseApi):
         :type campaign_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "test_emails": array*,
+            "send_type": string* (Must be one of "html" or "plain_text")
+        }
         """
+        for email in data['test_emails']:
+            check_email(email)
+        if data['send_type'] not in ['html', 'plain_text']:
+            raise ValueError('The send_type must be either "html" or "plain_text"')
         self.campaign_id = campaign_id
-        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'test'), data=data)
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions/test'), data=data)
 
 
     def unschedule(self, campaign_id):
@@ -118,4 +143,4 @@ class CampaignAction(BaseApi):
         :type campaign_id: :py:class:`str`
         """
         self.campaign_id = campaign_id
-        return self._mc_client._post(url=self._build_path(campaign_id, 'actions', 'unschedule'))
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions/unschedule'))

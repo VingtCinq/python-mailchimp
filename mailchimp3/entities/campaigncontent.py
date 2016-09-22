@@ -38,7 +38,7 @@ class CampaignContent(BaseApi):
         return self._mc_client._get(url=self._build_path(campaign_id, 'content'), **queryparams)
 
 
-    def set(self, campaign_id, data):
+    def update(self, campaign_id, data):
         """
         Set the content for a campaign.
 

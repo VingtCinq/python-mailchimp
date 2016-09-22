@@ -22,8 +22,8 @@ from mailchimp3.entities.batches import Batches
 # Campaign Folders
 from mailchimp3.entities.campaignfolders import CampaignFolders
 # Campaigns
-from mailchimp3.entities.campaign import Campaign
-from mailchimp3.entities.campaignaction import CampaignAction
+from mailchimp3.entities.campaigns import Campaigns
+from mailchimp3.entities.campaignactions import CampaignActions
 from mailchimp3.entities.campaigncontent import CampaignContent
 from mailchimp3.entities.campaignfeedback import CampaignFeedback
 from mailchimp3.entities.campaignsendchecklist import CampaignSendChecklist
@@ -106,11 +106,11 @@ class MailChimp(MailChimpClient):
         # Campaign Folders
         self.campaignfolders = CampaignFolders(self)
         # Campaigns
-        self.campaign = Campaign(self)
-        self.campaignaction = self.campaign.action
-        self.campaigncontent = self.campaign.content
-        self.campaignfeedback = self.campaign.feedback
-        self.campaignsendchecklist = self.campaign.sendchecklist
+        self.campaigns = Campaigns(self)
+        self.campaignactions = self.campaigns.actions
+        self.campaigncontent = self.campaigns.content
+        self.campaignfeedback = self.campaigns.feedback
+        self.campaignsendchecklist = self.campaigns.sendchecklist
         # Conversations - Paid feature
         self.conversation = Conversation(self)
         self.message = self.conversationmessage = self.conversation.message

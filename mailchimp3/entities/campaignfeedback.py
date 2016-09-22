@@ -33,6 +33,9 @@ class CampaignFeedback(BaseApi):
         :type campaign_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "message": string*
+        }
         :param queryparams: The query string parameters
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
@@ -91,6 +94,9 @@ class CampaignFeedback(BaseApi):
         :type feedback_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "message": string*
+        }
         """
         self.campaign_id = campaign_id
         self.feedback_id = feedback_id

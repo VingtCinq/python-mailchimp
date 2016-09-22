@@ -91,7 +91,7 @@ class MailChimp(MailChimpClient):
         """
         super(MailChimp, self).__init__(*args, **kwargs)
         # API Root
-        self.root = self.api_root = Root(self)
+        self.root = self.apiroot = Root(self)
         # Authorized Apps
         self.authorizedapps = AuthorizedApps(self)
         # Automations - Paid feature

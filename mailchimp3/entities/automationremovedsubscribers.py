@@ -10,7 +10,7 @@ Schema: https://api.mailchimp.com/schema/3.0/Automations/RemovedSubscribers/Inst
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.helpers import check_subscriber_email
+from mailchimp3.helpers import check_email
 
 class AutomationRemovedSubscribers(BaseApi):
     """
@@ -39,7 +39,7 @@ class AutomationRemovedSubscribers(BaseApi):
         :type data: :py:class:`dict`
         """
         self.workflow_id = workflow_id
-        check_subscriber_email(data['email_address'])
+        check_email(data['email_address'])
         return self._mc_client._post(url=self._build_path(workflow_id, 'removed-subscribers'), data=data)
 
 

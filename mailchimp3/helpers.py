@@ -24,7 +24,7 @@ def get_subscriber_hash(member_email):
     :returns: The MD5 hash in hex
     :rtype: :py:class:`str`
     """
-    check_subscriber_email(member_email)
+    check_email(member_email)
     member_email = member_email.lower().encode()
     m = hashlib.md5(member_email)
     return m.hexdigest()
@@ -48,7 +48,7 @@ def check_subscriber_hash(potential_hash):
         return get_subscriber_hash(potential_hash)
 
 
-def check_subscriber_email(email):
+def check_email(email):
     """
     Function that verifies that the string passed is a valid email address.
 

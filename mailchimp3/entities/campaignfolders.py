@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class CampaignFolder(BaseApi):
+class CampaignFolders(BaseApi):
     """
     Organize your campaigns using folders.
     """
@@ -18,7 +18,7 @@ class CampaignFolder(BaseApi):
         """
         Initialize the endpoint
         """
-        super(CampaignFolder, self).__init__(*args, **kwargs)
+        super(CampaignFolders, self).__init__(*args, **kwargs)
         self.endpoint = 'campaign-folders'
         self.folder_id = None
 
@@ -33,6 +33,8 @@ class CampaignFolder(BaseApi):
             "name": string*
         }
         """
+        if not data['name']:
+            raise ValueError("You must provide a name for the folder")
         response = self._mc_client._post(url=self._build_path(), data=data)
         self.folder_id = response['id']
         return response
@@ -84,6 +86,8 @@ class CampaignFolder(BaseApi):
         }
         """
         self.folder_id = folder_id
+        if not data['name']:
+            raise ValueError("You must provide a new name for the folder")
         return self._mc_client._patch(url=self._build_path(folder_id), data=data)
 
 

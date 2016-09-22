@@ -12,15 +12,15 @@ from mailchimp3.baseapi import BaseApi
 from mailchimp3.helpers import HTTP_METHOD_ACTION_MATCHING
 
 
-class Batch(BaseApi):
+class Batches(BaseApi):
     """
-    Implements mailchimp batch operations: Use batch operations to complete multiple operations with a single call.
+    Use batch operations to complete multiple operations with a single call.
     """
     def __init__(self, *args, **kwargs):
         """
         Initialize the endpoint
         """
-        super(Batch, self).__init__(*args, **kwargs)
+        super(Batches, self).__init__(*args, **kwargs)
         self.endpoint = 'batches'
         self.batch_id = None
         self.operation_status = None
@@ -33,6 +33,11 @@ class Batch(BaseApi):
         :param data: The request body parameters
         :type data: :py:class:`dict`
         """
+        for op in data['operations']:
+            if op['method'] not in ['GET', 'POST', 'PUT', 'PATCH']:
+                raise ValueError('The method for each operation must be "GET", "POST", "PUT", or "PATCH", not {0}'.format(op['method']))
+            if not op['path']:
+                raise ValueError('You must specify a path for the batch operation')
         return self._mc_client._post(url=self._build_path(), data=data)
 
 
@@ -84,65 +89,3 @@ class Batch(BaseApi):
         self.batch_id = batch_id
         self.operation_status = None
         return self._mc_client._delete(url=self._build_path(batch_id))
-
-    @staticmethod
-    def _prepare_params(operations_list):
-        """
-        Prepares data to be sent to the API
-
-        :param operations_list: list of dictionaries
-        :type operations_list: :py:class:`list`
-        operations_list = [{
-            'action': 'create_or_update',
-            'mailchimp_entity': instance of mailchimp entity, e.g. self.mailchimp.batches,
-            'entity_params': list or tuple of params for building path e.g. ('lists', list_id, 'members', member_id),
-            'data': {
-                'email_address': subscriber_email,
-                'status_if_new': 'subscribed',
-                'merge_fields': {
-                    'ID': subscriber_id,
-                    'FNAME': subscriber_fname
-                }
-            }
-        }]
-        :returns: The prepared dict for use with the create command
-        :rtype: :py:class:`dict`
-        """
-        operations = []
-        for operation in operations_list:
-            operations.append({
-                'method': HTTP_METHOD_ACTION_MATCHING.get(operation.get('action', 'PUT')),
-                'path': "/".join(operation['entity_params']),
-                'body': '{}'.format(json.dumps(operation.get('data')))
-            })
-
-        return {
-            'operations': operations
-        }
-
-    def execute(self, operations_list):
-        """
-        Executes batch operation and set its status
-
-        :param operations_list: The list of operations to batch
-        :type operations_list: :py:class:`list`
-        operations_list = [{
-            'action': 'create_or_update',
-            'mailchimp_entity': instance of mailchimp entity, e.g. self.mailchimp.batches,
-            'entity_params': list or tuple of params for building path e.g. ('lists', list_id, 'members', member_id),
-            'data': {
-                'email_address': subscriber_email,
-                'status_if_new': 'subscribed',
-                'merge_fields': {
-                    'ID': subscriber_id,
-                    'FNAME': subscriber_fname
-                }
-            }
-        }]
-        :returns: The operation status
-        :rtype: :py:class:`int`
-        """
-        self.batch_id = None
-        data = self._prepare_params(operations_list)
-        self.operation_status = self.post(data=data)
-        return self.operation_status

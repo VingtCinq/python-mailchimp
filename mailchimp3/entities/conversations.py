@@ -10,10 +10,10 @@ Schema: https://api.mailchimp.com/schema/3.0/Conversations/Instance.json
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.entities.conversationmessage import ConversationMessage
+from mailchimp3.entities.conversationmessages import ConversationMessages
 
 
-class Conversation(BaseApi):
+class Conversations(BaseApi):
     """
     Conversation tracking is a paid feature that lets you view subscribers’
     replies to your campaigns in your MailChimp account.
@@ -22,10 +22,10 @@ class Conversation(BaseApi):
         """
         Initialize the endpoint
         """
-        super(Conversation, self).__init__(*args, **kwargs)
+        super(Conversations, self).__init__(*args, **kwargs)
         self.endpoint = 'conversations'
         self.conversation_id = None
-        self.message = ConversationMessage(self)
+        self.messages = ConversationMessages(self)
 
 
     # Paid feature

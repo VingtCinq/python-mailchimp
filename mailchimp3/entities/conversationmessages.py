@@ -10,9 +10,10 @@ Schema: https://api.mailchimp.com/schema/3.0/Conversations/Messages/Instance.jso
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_email
 
 
-class ConversationMessage(BaseApi):
+class ConversationMessages(BaseApi):
     """
     Manage messages in a specific campaign conversation.
     """
@@ -20,7 +21,7 @@ class ConversationMessage(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ConversationMessage, self).__init__(*args, **kwargs)
+        super(ConversationMessages, self).__init__(*args, **kwargs)
         self.endpoint = 'conversations'
         self.conversation_id = None
         self.message_id = None
@@ -35,8 +36,18 @@ class ConversationMessage(BaseApi):
         :type conversation_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "from_email": string*,
+            "read": boolean*
+        }
         """
         self.conversation_id = conversation_id
+        if not data['from_email']:
+            raise ValueError('You must supply a from_email')
+        else:
+            check_email(data['from_email'])
+        if data['read'] is not True and data['read'] is not False:
+            raise ValueError('You must indicate if this message has been read or not')
         response =  self._mc_client._post(url=self._build_path(conversation_id, 'messages'), data=data)
         self.message_id = response['id']
         return response
@@ -46,6 +57,9 @@ class ConversationMessage(BaseApi):
     def all(self, conversation_id, **queryparams):
         """
         Get messages from a specific conversation.
+
+        This endpoint does not currently support count and offset, preventing
+        it from having the get_all parameter that most all() methods have
 
         :param conversation_id: The unique id for the conversation.
         :type conversation_id: :py:class:`str`

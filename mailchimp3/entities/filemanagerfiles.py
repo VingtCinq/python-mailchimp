@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class File(BaseApi):
+class FileManagerFiles(BaseApi):
     """
     Manage specific files in the File Manager for your MailChimp account. The
     File Manager is a place to store images, documents, and other files you
@@ -20,7 +20,7 @@ class File(BaseApi):
         """
         Initialize the endpoint
         """
-        super(File, self).__init__(*args, **kwargs)
+        super(FileManagerFiles, self).__init__(*args, **kwargs)
         self.endpoint = 'file-manager/files'
         self.file_id = None
 
@@ -31,7 +31,21 @@ class File(BaseApi):
 
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*,
+            "file_data": string*
+        }
         """
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The file must have a name'
+            raise
+        try:
+            test = data['file_data']
+        except KeyError as error:
+            error.message += ' The file must have file_data'
+            raise
         response = self._mc_client._post(url=self._build_path(), data=data)
         self.file_id = response['id']
         return response
@@ -84,8 +98,22 @@ class File(BaseApi):
         :type file_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*,
+            "file_data": string*
+        }
         """
         self.file_id = file_id
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The file must have a name'
+            raise
+        try:
+            test = data['file_data']
+        except KeyError as error:
+            error.message += ' The file must have file_data'
+            raise
         return self._mc_client._patch(url=self._build_path(file_id), data=data)
 
 

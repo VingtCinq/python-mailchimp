@@ -40,7 +40,7 @@ from mailchimp3.entities.storeorderlines import StoreOrderLines
 from mailchimp3.entities.storeproducts import StoreProducts
 from mailchimp3.entities.storeproductvariants import StoreProductVariants
 # File Manager Files
-from mailchimp3.entities.file import File
+from mailchimp3.entities.filemanagerfiles import FileManagerFiles
 # File Manager Folders
 from mailchimp3.entities.folder import Folder
 # Lists
@@ -124,7 +124,7 @@ class MailChimp(MailChimpClient):
         self.storeproducts = self.products = self.store.products
         self.storeproductvariants = self.productvariants = self.store.products.variants
         # File Manager Files
-        self.file = File(self)
+        self.files = FileManagerFiles(self)
         # File Manager Folders
         self.folder = Folder(self)
         # Lists

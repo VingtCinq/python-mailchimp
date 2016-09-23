@@ -44,22 +44,22 @@ from mailchimp3.entities.filemanagerfiles import FileManagerFiles
 # File Manager Folders
 from mailchimp3.entities.filemanagerfolders import FileManagerFolders
 # Lists
-from mailchimp3.entities.list import List
-from mailchimp3.entities.listabusereport import ListAbuseReport
+from mailchimp3.entities.lists import Lists
+from mailchimp3.entities.listabusereports import ListAbuseReports
 from mailchimp3.entities.listactivity import ListActivity
-from mailchimp3.entities.listclient import ListClient
+from mailchimp3.entities.listclients import ListClients
 from mailchimp3.entities.listgrowthhistory import ListGrowthHistory
-from mailchimp3.entities.listinterestcategory import ListInterestCategory
+from mailchimp3.entities.listinterestcategories import ListInterestCategories
 from mailchimp3.entities.listinterestcategoryinterest import ListInterestCategoryInterest
-from mailchimp3.entities.listmember import ListMember
+from mailchimp3.entities.listmembers import ListMembers
 from mailchimp3.entities.listmemberactivity import ListMemberActivity
-from mailchimp3.entities.listmembergoal import ListMemberGoal
-from mailchimp3.entities.listmembernote import ListMemberNote
-from mailchimp3.entities.listmergefield import ListMergeField
-from mailchimp3.entities.listsegment import ListSegment
-from mailchimp3.entities.listsegmentmember import ListSegmentMember
-from mailchimp3.entities.listtwitter import ListTwitter
-from mailchimp3.entities.listwebhook import ListWebhook
+from mailchimp3.entities.listmembergoals import ListMemberGoals
+from mailchimp3.entities.listmembernotes import ListMemberNotes
+from mailchimp3.entities.listmergefields import ListMergeFields
+from mailchimp3.entities.listsegments import ListSegments
+from mailchimp3.entities.listsegmentmembers import ListSegmentMembers
+from mailchimp3.entities.listtwitterleadgenerationcards import ListTwitterLeadGenerationCards
+from mailchimp3.entities.listwebhooks import ListWebhooks
 # Reports
 from mailchimp3.entities.report import Report
 from mailchimp3.entities.reportabuse import ReportAbuse
@@ -96,69 +96,25 @@ class MailChimp(MailChimpClient):
         self.authorizedapps = AuthorizedApps(self)
         # Automations - Paid feature
         self.automations = Automations(self)
-        self.automationactions = self.automations.actions
-        self.automationemails = self.automations.emails
-        self.automationemailactions = self.automations.emails.actions
-        self.automationemailqueue = self.automations.emails.queue
-        self.automationeremovedsubscribers = self.automations.removedsubscribers
         # Batch operations
         self.batches = self.batch_operations = Batches(self)
         # Campaign Folders
         self.campaignfolders = CampaignFolders(self)
         # Campaigns
         self.campaigns = Campaigns(self)
-        self.campaignactions = self.campaigns.actions
-        self.campaigncontent = self.campaigns.content
-        self.campaignfeedback = self.campaigns.feedback
-        self.campaignsendchecklist = self.campaigns.sendchecklist
         # Conversations - Paid feature
         self.conversations = Conversations(self)
-        self.conversationmessages = self.messages = self.conversations.messages
         # E-commerce Stores
         self.store = self.ecommerce = Stores(self)
-        self.storecarts = self.carts = self.store.carts
-        self.storecartlines = self.cartlines = self.store.carts.lines
-        self.storecustomers = self.customers = self.store.customers
-        self.storeorders = self.orders = self.store.orders
-        self.storeorderlines = self.orderlines = self.store.orders.lines
-        self.storeproducts = self.products = self.store.products
-        self.storeproductvariants = self.productvariants = self.store.products.variants
         # File Manager Files
         self.files = FileManagerFiles(self)
         # File Manager Folders
         self.folders = FileManagerFolders(self)
         # Lists
-        self.list = List(self)
-        self.listabuse = self.listabusereport = self.list.abusereport
-        self.listactivity = self.list.activity
-        self.client = self.listclient = self.list.client
-        self.growth = self.listgrowthhistory = self.list.growthhistory
-        self.category = self.listinterestcategory = self.list.interestcategory
-        self.interest = self.interestcategoryinterest = self.list.interestcategory.interest
-        self.member = self.listmember = self.list.member
-        self.memberactivity = self.listmemberactivity = self.list.member.activity
-        self.goal = self.listmembergoal = self.list.member.goal
-        self.note = self.listmembernote = self.list.member.note
-        self.mergefield = self.listmergefield = self.list.mergefield
-        self.segment = self.listsegment = self.list.segment
-        self.segmentmember = self.listsegmentmember = self.list.segment.member
-        self.twitter = self.listtwitter = self.list.twitter
-        self.webhook = self.listwebhook = self.list.webhook
+        self.lists = Lists(self)
         # Reports
         self.report = Report(self)
-        self.reportabuse = self.report.abuse
-        self.advice = self.reportadvice = self.report.advice
-        self.clickdetail = self.reportclickdetail = self.report.clickdetail
-        self.clickdetailmember = self.reportclickdetailmember = self.report.clickdetail.member
-        self.domainperformance = self.reportdomainperformance = self.report.domainperformance
-        self.eepurl = self.reporteepurl = self.report.eepurl
-        self.reportactivity = self.reportemailactivity = self.report.emailactivity
-        self.location = self.reportlocation = self.report.location
-        self.sentto = self.reportsentto = self.report.sentto
-        self.subreport = self.reportsubreport = self.report.subreport
-        self.reportunsubscribed = self.report.unsubscribe
         # Template Folders
         self.templatefolder = TemplateFolder(self)
         # Templates
         self.template = Template(self)
-        self.templatedefaultcontent = self.template.defaultcontent

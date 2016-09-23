@@ -42,7 +42,7 @@ def check_subscriber_hash(potential_hash):
     :returns: A valid MD5 hash in hex
     :rtype: :py:class:`str`
     """
-    if re.match('^[0-9a-f]{32}$', potential_hash):
+    if re.match(r"^[0-9a-f]{32}$", potential_hash):
         return potential_hash
     else:
         return get_subscriber_hash(potential_hash)
@@ -58,10 +58,7 @@ def check_email(email):
     :type email: :py:class:`str`
     :return: Nothing
     """
-    if not re.match(
-        r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
-        email
-    ):
+    if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
         raise ValueError('String passed is not a valid email address')
     return
 

@@ -33,8 +33,11 @@ class CampaignFolders(BaseApi):
             "name": string*
         }
         """
-        if not data['name']:
-            raise ValueError("You must provide a name for the folder")
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The campaign folder must have a name'
+            raise
         response = self._mc_client._post(url=self._build_path(), data=data)
         self.folder_id = response['id']
         return response
@@ -86,8 +89,11 @@ class CampaignFolders(BaseApi):
         }
         """
         self.folder_id = folder_id
-        if not data['name']:
-            raise ValueError("You must provide a new name for the folder")
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The campaign folder must have a name'
+            raise
         return self._mc_client._patch(url=self._build_path(folder_id), data=data)
 
 

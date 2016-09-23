@@ -37,8 +37,16 @@ class AutomationRemovedSubscribers(BaseApi):
         :type workflow_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "email_address": string*
+        }
         """
         self.workflow_id = workflow_id
+        try:
+            test = data['email_address']
+        except KeyError as error:
+            error.message += ' The automation removed subscriber must have an email_address'
+            raise
         check_email(data['email_address'])
         return self._mc_client._post(url=self._build_path(workflow_id, 'removed-subscribers'), data=data)
 

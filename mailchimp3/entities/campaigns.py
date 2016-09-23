@@ -37,7 +37,7 @@ class Campaigns(BaseApi):
         """
         Create a new MailChimp campaign.
 
-        The ValueError raised by an invalid type in the data does not mention
+        The ValueError raised by an invalid type in data does not mention
         'absplit' as a potential value because the documentation indicates
         that the absplit type has been deprecated.
 
@@ -66,26 +66,57 @@ class Campaigns(BaseApi):
             "type": string* (Must be one of "regular", "plaintext", "rss", "variate", or "absplit")
         }
         """
+        try:
+            test = data['recipients']
+        except KeyError as error:
+            error.message += ' The campaign must have recipients'
+            raise
         for recipient in data['recipients']:
-            if not recipient['list_id']:
-                raise ValueError('You must provide a list_id for each recipient')
-        if not data['settings']['subject_line']:
-            raise ValueError('You must include a subject_line in your settings')
-        if not data['settings']['from_name']:
-            raise ValueError('You must include a from_name in your settings')
-        if not data['settings']['reply_to']:
-            raise ValueError('You must include a reply_to address in your settings')
+            try:
+                test = recipient['list_id']
+            except KeyError as error:
+                error.message += ' The campaign recipient must have a list_id'
+                raise
+        try:
+            test = data['settings']['subject_line']
+        except KeyError as error:
+            error.message += ' The campaign settings must have a subject_line'
+            raise
+        try:
+            test = data['settings']['from_name']
+        except KeyError as error:
+            error.message += ' The campaign settings must have a from_name'
+            raise
+        try:
+            test = data['settings']['reply_to']
+        except KeyError as error:
+            error.message += ' The campaign settings must have a reply_to'
+            raise
         check_email(data['settings']['reply_to'])
+        try:
+            test = data['type']
+        except KeyError as error:
+            error.message += ' The campaign must have a type'
+            raise
         if not data['type'] in ['regular', 'plaintext', 'rss', 'variate', 'abspilt']:
-            raise ValueError('Your type must be one of "regular", "plaintext", "rss", or "variate"')
+            raise ValueError('The campaign type must be one of "regular", "plaintext", "rss", or "variate"')
         if data['type'] == 'variate':
+            try:
+                test = data['variate_settings']['winner_criteria']
+            except KeyError as error:
+                error.message += 'The campaign variate_settings must have a winner_criteria'
+                raise
             if data['variate_settings']['winner_criteria'] not in ['opens', 'clicks', 'total_revenue', 'manual']:
-                raise ValueError('The winner_criteria must be one of "opens", "clicks", "total_revenue", or "manual"')
+                raise ValueError('The campaign variate_settings '
+                                 'winner_criteria must be one of "opens", "clicks", "total_revenue", or "manual"')
         if data['type'] == 'rss':
-            if not data['rss_opts']['feed_url']:
-                raise ValueError('You must provide the url of the RSS feed in feed_url in your rss_opts')
+            try:
+                test = data['rss_opts']['feed_url']
+            except KeyError as error:
+                error.message += ' The campaign rss_opts must have a feed_url'
+                raise
             if not data['rss_opts']['frequency'] in ['daily', 'weekly', 'monthly']:
-                raise ValueError('Your rss_opts frequency must be one of "daily", "weekly", or "monthly"')
+                raise ValueError('The rss_opts frequency must be one of "daily", "weekly", or "monthly"')
         response = self._mc_client._post(url=self._build_path(), data=data)
         self.campaign_id = response['id']
         return response
@@ -136,41 +167,41 @@ class Campaigns(BaseApi):
         """
         Update some or all of the settings for a specific campaign.
 
-        The type value for updating a campaign is not listed as one of the
-        request body parameters, but it is listed as not read only in the
-        output listed from the endpoint.
-
-        No error checking for request body parameters as whether they are
-        required or not is not clear from the documentation.
-
         :param campaign_id: The unique id for the campaign.
         :type campaign_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
         data = {
-            "recipients": object*
-            {
-                "list_id": string*
-            },
             "settings": object*
             {
                 "subject_line": string*,
                 "from_name": string*,
                 "reply_to": string*
             },
-            "variate_settings": object* (Required if type is "variate")
-            {
-                "winner_criteria": string* (Must be one of "opens", "clicks", "total_revenue", or "manual")
-            },
-            "rss_opts": object* (Required if type is "rss")
-            {
-                "feed_url": string*,
-                "frequency": string* (Must be one of "daily", "weekly", or "monthly")
-            },
-            "type": string* (Must be one of "regular", "plaintext", "rss", "variate", or "absplit")
         }
         """
         self.campaign_id = campaign_id
+        try:
+            test = data['settings']
+        except KeyError as error:
+            error.message += ' The campaign must have settings'
+            raise
+        try:
+            test = data['settings']['subject_line']
+        except KeyError as error:
+            error.message += ' The campaign settings must have a subject_line'
+            raise
+        try:
+            test = data['settings']['from_name']
+        except KeyError as error:
+            error.message += ' The campaign settings must have a from_name'
+            raise
+        try:
+            test = data['settings']['reply_to']
+        except KeyError as error:
+            error.message += ' The campaign settings must have a reply_to'
+            raise
+        check_email(data['settings']['reply_to'])
         return self._mc_client._patch(url=self._build_path(campaign_id), data=data)
 
 

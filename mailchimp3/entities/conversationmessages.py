@@ -42,12 +42,19 @@ class ConversationMessages(BaseApi):
         }
         """
         self.conversation_id = conversation_id
-        if not data['from_email']:
-            raise ValueError('You must supply a from_email')
-        else:
-            check_email(data['from_email'])
-        if data['read'] is not True and data['read'] is not False:
-            raise ValueError('You must indicate if this message has been read or not')
+        try:
+            test = data['from_email']
+        except KeyError as error:
+            error.message += ' The conversation message must have a from_email'
+            raise
+        check_email(data['from_email'])
+        try:
+            test = data['read']
+        except KeyError as error:
+            error.message += ' The conversation message must have a read'
+            raise
+        if data['read'] not in [True, False]:
+            raise TypeError('The conversation message read must be True or False')
         response =  self._mc_client._post(url=self._build_path(conversation_id, 'messages'), data=data)
         self.message_id = response['id']
         return response

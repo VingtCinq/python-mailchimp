@@ -31,19 +31,34 @@ class Batches(BaseApi):
         :param data: The request body parameters
         :type data: :py:class:`dict`
         data = {
-            "operations": [
+            "operations": array*
+            [
                 {
                     "method": string* (Must be one of "GET", "POST", "PUT", or "PATCH")
                     "path": string*,
-                }*
-            ]*
+                }
+            ]
         }
         """
+        try:
+            test = data['operations']
+        except KeyError as error:
+            error.message += ' The batch must have operations'
+            raise
         for op in data['operations']:
+            try:
+                test = op['method']
+            except KeyError as error:
+                error.message += ' The batch operation must have a method'
+                raise
             if op['method'] not in ['GET', 'POST', 'PUT', 'PATCH']:
-                raise ValueError('The method for each operation must be "GET", "POST", "PUT", or "PATCH", not {0}'.format(op['method']))
-            if not op['path']:
-                raise ValueError('You must specify a path for the batch operation')
+                raise ValueError('The batch operation method must be one of "GET", "POST", "PUT", or "PATCH", not {0}'
+                                 ''.format(op['method']))
+            try:
+                test = op['path']
+            except KeyError as error:
+                error.message += ' The batch operation must have a path'
+                raise
         return self._mc_client._post(url=self._build_path(), data=data)
 
 

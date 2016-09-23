@@ -31,8 +31,22 @@ class AuthorizedApps(BaseApi):
 
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "client_id": string*,
+            "client_secret": string*
+        }
         """
         self.app_id = None
+        try:
+            test = data['client_id']
+        except KeyError as error:
+            error.message += ' The authorized app must have a client_id'
+            raise
+        try:
+            test = data['client_secret']
+        except KeyError as error:
+            error.message += ' The authorized app must have a client_secret'
+            raise
         return self._mc_client._post(url=self._build_path(), data=data)
 
 

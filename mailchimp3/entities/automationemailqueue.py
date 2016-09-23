@@ -41,9 +41,17 @@ class AutomationEmailQueue(BaseApi):
         :type email_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "email_address": string*
+        }
         """
         self.workflow_id = workflow_id
         self.email_id = email_id
+        try:
+            test = data['email_address']
+        except KeyError as error:
+            error.message += ' The automation email queue must have an email_address'
+            raise
         check_email(data['email_address'])
         response = self._mc_client._post(
             url=self._build_path(workflow_id, 'emails', email_id, 'actions/pause-all-emails'),

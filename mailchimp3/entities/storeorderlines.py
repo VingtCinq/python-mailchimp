@@ -10,18 +10,16 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class StoreOrderLine(BaseApi):
+class StoreOrderLines(BaseApi):
     """
-    Orders represent successful e-commerce transactions, and this data can be
-    used to provide more detailed campaign reports, track sales, and
-    personalize emails to your targeted consumers, and view other e-commerce
-    data in your MailChimp account.
+    Each Order contains one or more Order Lines, which represent a specific
+    Product Variant that a Customer purchases.
     """
     def __init__(self, *args, **kwargs):
         """
         Initialize the endpoint
         """
-        super(StoreOrderLine, self).__init__(*args, **kwargs)
+        super(StoreOrderLines, self).__init__(*args, **kwargs)
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
         self.order_id = None
@@ -38,9 +36,41 @@ class StoreOrderLine(BaseApi):
         :type order_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "id": string*,
+            "product_id": string*,
+            "product_variant_id": string*,
+            "quantity": integer*,
+            "price": number*
+        }
         """
         self.store_id = store_id
         self.order_id = order_id
+        try:
+            test = data['id']
+        except KeyError as error:
+            error.message += ' The order line must have an id'
+            raise
+        try:
+            test = data['product_id']
+        except KeyError as error:
+            error.message += ' The order line must have a product_id'
+            raise
+        try:
+            test = data['product_variant_id']
+        except KeyError as error:
+            error.message += ' The order line must have a product_variant_id'
+            raise
+        try:
+            test = data['quantity']
+        except KeyError as error:
+            error.message += ' The order line must have a quantity'
+            raise
+        try:
+            test = data['price']
+        except KeyError as error:
+            error.message += ' The order line must have a price'
+            raise
         response = self._mc_client._post(url=self._build_path(store_id, 'orders', order_id, 'lines'))
         self.line_id = response['id']
         return response

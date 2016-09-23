@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class StoreProductVariant(BaseApi):
+class StoreProductVariants(BaseApi):
     """
     A Product Variant represents a specific item for purchase, and is
     contained within a parent Product. At least one Product Variant is
@@ -20,7 +20,7 @@ class StoreProductVariant(BaseApi):
         """
         Initialize the endpoint
         """
-        super(StoreProductVariant, self).__init__(*args, **kwargs)
+        super(StoreProductVariants, self).__init__(*args, **kwargs)
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
         self.product_id = None
@@ -37,9 +37,22 @@ class StoreProductVariant(BaseApi):
         :type product_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "id": string*,
+            "title": string*
+        }
         """
         self.store_id = store_id
         self.product_id = product_id
+        try:
+            test = data['id']
+        except KeyError as error:
+            error.message += ' The product variant must have an id'
+            raise
+        try:
+            test = data['title']
+        except KeyError as error:
+            error.message += ' The product variant must have a title'
         response = self._mc_client._post(url=self._build_path(store_id, 'products', product_id, 'variants'), data=data)
         self.variant_id = response['id']
         return response
@@ -127,10 +140,24 @@ class StoreProductVariant(BaseApi):
         :type variant_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "id": string*,
+            "title": string*
+        }
         """
         self.store_id = store_id
         self.product_id = product_id
         self.variant_id = variant_id
+        try:
+            test = data['id']
+        except KeyError as error:
+            error.message += ' The product variant must have an id'
+            raise
+        try:
+            test = data['title']
+        except KeyError as error:
+            error.message += ' The product variant must have a title'
+            raise
         return self._mc_client._put(
             url=self._build_path(store_id, 'products', product_id, 'variants', variant_id),
             data=data

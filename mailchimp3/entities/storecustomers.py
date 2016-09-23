@@ -8,9 +8,10 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Customers/Instance
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_email
 
 
-class StoreCustomer(BaseApi):
+class StoreCustomers(BaseApi):
     """
     Add Customers to your Store to track their orders and to view E-Commerce
     Data for your MailChimp lists and campaigns. Each Customer is connected to
@@ -21,7 +22,7 @@ class StoreCustomer(BaseApi):
         """
         Initialize the endpoint
         """
-        super(StoreCustomer, self).__init__(*args, **kwargs)
+        super(StoreCustomers, self).__init__(*args, **kwargs)
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
         self.customer_id = None
@@ -35,8 +36,31 @@ class StoreCustomer(BaseApi):
         :type store_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "id": string*,
+            "email_address": string*,
+            "opt_in_status": boolean*
+        }
         """
         self.store_id = store_id
+        try:
+            test = data['id']
+        except KeyError as error:
+            error.message += ' The store customer must have an id'
+            raise
+        try:
+            test = data['email_address']
+        except KeyError as error:
+            error.message += ' The store customer must have an email_address'
+            raise
+        check_email(data['email_address'])
+        try:
+            test = data['opt_in_status']
+        except KeyError as error:
+            error.message += ' The store customer must have an opt_in_status'
+            raise
+        if data['opt_in_status'] not in [True, False]:
+            raise TypeError('The opt_in_status must be True or False')
         response = self._mc_client._post(url=self._build_path(store_id, 'customers'), data=data)
         self.customer_id = response['id']
         return response
@@ -55,6 +79,7 @@ class StoreCustomer(BaseApi):
         queryparams['exclude_fields'] = []
         queryparams['count'] = integer
         queryparams['offset'] = integer
+        queryparams['email_address'] = string
         """
         self.store_id = store_id
         self.customer_id = None
@@ -107,9 +132,32 @@ class StoreCustomer(BaseApi):
         :type customer_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "id": string*,
+            "email_address": string*,
+            "opt_in_status": boolean
+        }
         """
         self.store_id = store_id
         self.customer_id = customer_id
+        try:
+            test = data['id']
+        except KeyError as error:
+            error.message += ' The store customer must have an id'
+            raise
+        try:
+            test = data['email_address']
+        except KeyError as error:
+            error.message += ' Each store customer must have an email_address'
+            raise
+        check_email(data['email_address'])
+        try:
+            test = data['opt_in_status']
+        except KeyError as error:
+            error.message += ' The store customer must have an opt_in_status'
+            raise
+        if data['opt_in_status'] not in [True, False]:
+            raise TypeError('The opt_in_status must be True or False')
         return self._mc_client._put(url=self._build_path(store_id, 'customers', customer_id), data=data)
 
 

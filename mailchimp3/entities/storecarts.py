@@ -7,11 +7,13 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Carts/Instance.jso
 """
 from __future__ import unicode_literals
 
+import re
+
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.entities.storecartline import StoreCartLine
+from mailchimp3.entities.storecartlines import StoreCartLines
 
 
-class StoreCart(BaseApi):
+class StoreCarts(BaseApi):
     """
     Use Carts to represent unfinished e-commerce transactions. This can be
     used to create an Abandoned Cart workflow, or to save a consumer’s
@@ -21,11 +23,11 @@ class StoreCart(BaseApi):
         """
         Initialize the endpoint
         """
-        super(StoreCart, self).__init__(*args, **kwargs)
+        super(StoreCarts, self).__init__(*args, **kwargs)
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
         self.cart_id = None
-        self.line = StoreCartLine(self)
+        self.lines = StoreCartLines(self)
 
 
     def create(self, store_id, data):
@@ -36,8 +38,85 @@ class StoreCart(BaseApi):
         :type store_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "id": string*,
+            "customer": object*
+            {
+                "id": string*
+            },
+            "currency_code": string*,
+            "order_total": number*,
+            "lines": array*
+            [
+                {
+                    "id": string*,
+                    "product_id": string*,
+                    "product_variant_id": string*,
+                    "quantity": integer*,
+                    "price": number*
+                }
+            ]
+        }
         """
         self.store_id = store_id
+        try:
+            test = data['id']
+        except KeyError as error:
+            error.message += ' The cart must have an id'
+            raise
+        try:
+            test = data['customer']
+        except KeyError as error:
+            error.message += ' The cart must have a customer'
+            raise
+        try:
+            test = data['customer']['id']
+        except KeyError as error:
+            error.message += ' The cart customer must have an id'
+            raise
+        try:
+            test = data['currency_code']
+        except KeyError as error:
+            error.message += ' The cart must have a currency_code'
+            raise
+        if not re.match(r"^[A-Z]{3}$", data['currency_code']):
+            raise ValueError('The currency_code must be a valid 3-letter ISO 4217 currency code')
+        try:
+            test = data['order_total']
+        except KeyError as error:
+            error.message += ' The cart must have an order_total'
+            raise
+        try:
+            test = data['lines']
+        except KeyError as error:
+            error.message += ' The cart must have at least one cart line'
+            raise
+        for line in data['lines']:
+            try:
+                test = line['id']
+            except KeyError as error:
+                error.message += ' Each cart line must have an id'
+                raise
+            try:
+                test = line['product_id']
+            except KeyError as error:
+                error.message += ' Each cart line must have a product_id'
+                raise
+            try:
+                test = line['product_variant_id']
+            except KeyError as error:
+                error.message += ' Each cart line must have a product_variant_id'
+                raise
+            try:
+                test = line['quantity']
+            except KeyError as error:
+                error.message += ' Each cart line must have a quantity'
+                raise
+            try:
+                test = line['price']
+            except KeyError as error:
+                error.message += ' Each cart line must have a price'
+                raise
         response = self._mc_client._post(url=self._build_path(store_id, 'carts'), data=data)
         self.cart_id = response['id']
         return response

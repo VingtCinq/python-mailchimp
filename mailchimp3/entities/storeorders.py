@@ -7,11 +7,13 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Customers/Instance
 """
 from __future__ import unicode_literals
 
+import re
+
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.entities.storeorderline import StoreOrderLine
+from mailchimp3.entities.storeorderlines import StoreOrderLines
 
 
-class StoreOrder(BaseApi):
+class StoreOrders(BaseApi):
     """
     Orders represent successful e-commerce transactions, and this data can be
     used to provide more detailed campaign reports, track sales, and
@@ -22,11 +24,11 @@ class StoreOrder(BaseApi):
         """
         Initialize the endpoint
         """
-        super(StoreOrder, self).__init__(*args, **kwargs)
+        super(StoreOrders, self).__init__(*args, **kwargs)
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
         self.order_id = None
-        self.line = StoreOrderLine(self)
+        self.lines = StoreOrderLines(self)
 
 
     def create(self, store_id, data):
@@ -37,8 +39,85 @@ class StoreOrder(BaseApi):
         :type store_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "id": string*,
+            "customer": object*
+            {
+                "'id": string*
+            },
+            "curency_code": string*,
+            "order_total": number*,
+            "lines": array*
+            [
+                {
+                    "id": string*,
+                    "product_id": string*,
+                    "product_variant_id": string*,
+                    "quantity": integer*,
+                    "price": number*
+                }
+            ]
+        }
         """
         self.store_id = store_id
+        try:
+            test = data['id']
+        except KeyError as error:
+            error.message += ' The order must have an id'
+            raise
+        try:
+            test = data['customer']
+        except KeyError as error:
+            error.message += ' The order must have a customer'
+            raise
+        try:
+            test = data['customer']['id']
+        except KeyError as error:
+            error.message += ' The order customer must have an id'
+            raise
+        try:
+            test = data['currency_code']
+        except KeyError as error:
+            error.message += ' The order must have a currency_code'
+            raise
+        if not re.match(r"^[A-Z]{3}$", data['currency_code']):
+            raise ValueError('The currency_code must be a valid 3-letter ISO 4217 currency code')
+        try:
+            test = data['order_total']
+        except KeyError as error:
+            error.message += ' The order must have an order_total'
+            raise
+        try:
+            test = data['lines']
+        except KeyError as error:
+            error.message += ' The order must have at least one order line'
+            raise
+        for line in data['lines']:
+            try:
+                test = line['id']
+            except KeyError as error:
+                error.message += ' Each order line must have an id'
+                raise
+            try:
+                test = line['product_id']
+            except KeyError as error:
+                error.message += ' Each order line must have a product_id'
+                raise
+            try:
+                test = line['product_variant_id']
+            except KeyError as error:
+                error.message += ' Each order line must have a product_variant_id'
+                raise
+            try:
+                test = line['quantity']
+            except KeyError as error:
+                error.message += ' Each order line must have a quantity'
+                raise
+            try:
+                test = line['price']
+            except KeyError as error:
+                error.message += ' Each order line must have a price'
+                raise
         response = self._mc_client._post(url=self._build_path(store_id, 'orders'), data=data)
         self.order_id = response['id']
         return response
@@ -57,6 +136,7 @@ class StoreOrder(BaseApi):
         queryparams['exclude_fields'] = []
         queryparams['count'] = integer
         queryparams['offset'] = integer
+        queryparams['customer_id'] = string
         """
         self.store_id = store_id
         self.order_id = None

@@ -7,14 +7,16 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Instance.json
 """
 from __future__ import unicode_literals
 
+import re
+
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.entities.storecart import StoreCart
-from mailchimp3.entities.storecustomer import StoreCustomer
-from mailchimp3.entities.storeorder import StoreOrder
-from mailchimp3.entities.storeproduct import StoreProduct
+from mailchimp3.entities.storecarts import StoreCarts
+from mailchimp3.entities.storecustomers import StoreCustomers
+from mailchimp3.entities.storeorders import StoreOrders
+from mailchimp3.entities.storeproducts import StoreProducts
 
 
-class Store(BaseApi):
+class Stores(BaseApi):
     """
     Connect your E-commerce Store to MailChimp to take advantage of powerful
     reporting and personalization features and to learn more about your
@@ -24,21 +26,54 @@ class Store(BaseApi):
         """
         Initialize the endpoint
         """
-        super(Store, self).__init__(*args, **kwargs)
+        super(Stores, self).__init__(*args, **kwargs)
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
-        self.cart = StoreCart(self)
-        self.customer = StoreCustomer(self)
-        self.order = StoreOrder(self)
-        self.product = StoreProduct(self)
+        self.carts = StoreCarts(self)
+        self.customers = StoreCustomers(self)
+        self.orders = StoreOrders(self)
+        self.products = StoreProducts(self)
 
     def create(self, data):
         """
         Add a new store to your MailChimp account.
 
+        Error checking on the currency code verifies that it is in the correct
+        three-letter, all-caps format as specified by ISO 4217 but does not
+        check that it is a valid code as the list of valid codes changes over
+        time.
+
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "id": string*,
+            "list_id": string*,
+            "name": string*,
+            "currency_code": string*
+        }
         """
+        try:
+            test = data['id']
+        except KeyError as error:
+            error.message += ' The store must have an id'
+            raise
+        try:
+            test = data['list_id']
+        except KeyError as error:
+            error.message += ' The store must have a list_id'
+            raise
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The store must have a name'
+            raise
+        try:
+            test = data['currency_code']
+        except KeyError as error:
+            error.message += ' The store must have a currency_code'
+            raise
+        if not re.match(r"^[A-Z]{3}$", data['currency_code']):
+            raise ValueError('The currency_code must be a valid 3-letter ISO 4217 currency code')
         response = self._mc_client._post(url=self._build_path(), data=data)
         self.store_id = response['id']
         return response

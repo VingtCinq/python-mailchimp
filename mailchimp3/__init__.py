@@ -31,14 +31,14 @@ from mailchimp3.entities.campaignsendchecklist import CampaignSendChecklist
 from mailchimp3.entities.conversations import Conversations
 from mailchimp3.entities.conversationmessages import ConversationMessages
 # E-commerce Stores
-from mailchimp3.entities.store import Store
-from mailchimp3.entities.storecart import StoreCart
-from mailchimp3.entities.storecartline import StoreCartLine
-from mailchimp3.entities.storecustomer import StoreCustomer
-from mailchimp3.entities.storeorder import StoreOrder
-from mailchimp3.entities.storeorderline import StoreOrderLine
-from mailchimp3.entities.storeproduct import StoreProduct
-from mailchimp3.entities.storeproductvariant import StoreProductVariant
+from mailchimp3.entities.stores import Stores
+from mailchimp3.entities.storecarts import StoreCarts
+from mailchimp3.entities.storecartlines import StoreCartLines
+from mailchimp3.entities.storecustomers import StoreCustomers
+from mailchimp3.entities.storeorders import StoreOrders
+from mailchimp3.entities.storeorderlines import StoreOrderLines
+from mailchimp3.entities.storeproducts import StoreProducts
+from mailchimp3.entities.storeproductvariants import StoreProductVariants
 # File Manager Files
 from mailchimp3.entities.file import File
 # File Manager Folders
@@ -115,14 +115,14 @@ class MailChimp(MailChimpClient):
         self.conversations = Conversations(self)
         self.conversationmessages = self.messages = self.conversations.messages
         # E-commerce Stores
-        self.store = self.ecommerce = Store(self)
-        self.cart = self.storecart = self.store.cart
-        self.cartline = self.storecartline = self.store.cart.line
-        self.customer = self.storecustomer = self.store.customer
-        self.order = self.storeorder = self.store.order
-        self.orderline = self.storeorderline = self.store.order.line
-        self.product = self.storeproduct = self.store.product
-        self.productvariant = self.storeproductvariant = self.store.product.variant
+        self.store = self.ecommerce = Stores(self)
+        self.storecarts = self.carts = self.store.carts
+        self.storecartlines = self.cartlines = self.store.carts.lines
+        self.storecustomers = self.customers = self.store.customers
+        self.storeorders = self.orders = self.store.orders
+        self.storeorderlines = self.orderlines = self.store.orders.lines
+        self.storeproducts = self.products = self.store.products
+        self.storeproductvariants = self.productvariants = self.store.products.variants
         # File Manager Files
         self.file = File(self)
         # File Manager Folders

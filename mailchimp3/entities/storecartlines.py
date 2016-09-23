@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class StoreCartLine(BaseApi):
+class StoreCartLines(BaseApi):
     """
     Each Cart contains one or more Cart Lines, which represent a specific
     Product Variant that a Customer has added to their shopping cart.
@@ -19,7 +19,7 @@ class StoreCartLine(BaseApi):
         """
         Initialize the endpoint
         """
-        super(StoreCartLine, self).__init__(*args, **kwargs)
+        super(StoreCartLines, self).__init__(*args, **kwargs)
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
         self.cart_id = None
@@ -36,9 +36,41 @@ class StoreCartLine(BaseApi):
         :type cart_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "id": string*,
+            "product_id": string*,
+            "product_variant_id": string*,
+            "quantity": integer*,
+            "price": number*
+        }
         """
         self.store_id = store_id
         self.cart_id = cart_id
+        try:
+            test = data['id']
+        except KeyError as error:
+            error.message += ' The cart line must have an id'
+            raise
+        try:
+            test = data['product_id']
+        except KeyError as error:
+            error.message += ' The cart line must have a product_id'
+            raise
+        try:
+            test = data['product_variant_id']
+        except KeyError as error:
+            error.message += ' The cart line must have a product_variant_id'
+            raise
+        try:
+            test = data['quantity']
+        except KeyError as error:
+            error.message += ' The cart line must have a quantity'
+            raise
+        try:
+            test = data['price']
+        except KeyError as error:
+            error.message += ' The cart line must have a price'
+            raise
         response = self._mc_client._post(url=self._build_path(store_id, 'carts', cart_id, 'lines'), data=data)
         self.line_id = response['id']
         return response

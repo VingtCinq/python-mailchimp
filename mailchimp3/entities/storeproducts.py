@@ -8,10 +8,10 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Products/Instance.
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.entities.storeproductvariant import StoreProductVariant
+from mailchimp3.entities.storeproductvariants import StoreProductVariants
 
 
-class StoreProduct(BaseApi):
+class StoreProducts(BaseApi):
     """
     E-commerce items for sale in your store need to be created as Products so
     you can add the items to a Cart or an Order. Each Product requires at
@@ -21,12 +21,11 @@ class StoreProduct(BaseApi):
         """
         Initialize the endpoint
         """
-        super(StoreProduct, self).__init__(*args, **kwargs)
+        super(StoreProducts, self).__init__(*args, **kwargs)
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
         self.product_id = None
-        self.variant_id = None
-        self.variant = StoreProductVariant(self)
+        self.variants = StoreProductVariants(self)
 
 
     def create(self, store_id, data):
@@ -37,11 +36,47 @@ class StoreProduct(BaseApi):
         :type store_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "id": string*,
+            "title": string*,
+            "variants": array*
+            [
+                {
+                    "id": string*,
+                    "title": string*
+                }
+            ]
+        }
         """
         self.store_id = store_id
+        try:
+            test = data['id']
+        except KeyError as error:
+            error.message += ' The product must have an id'
+            raise
+        try:
+            test = data['title']
+        except KeyError as error:
+            error.message += ' The product must have a title'
+            raise
+        try:
+            test = data['variants']
+        except KeyError as error:
+            error.message += ' The product must have at least one variant'
+            raise
+        for variant in data['variants']:
+            try:
+                test = variant['id']
+            except KeyError as error:
+                error.message += ' Each product variant must have an id'
+                raise
+            try:
+                test = variant['title']
+            except KeyError as error:
+                error.message += ' Each product variant must have a title'
+                raise
         response = self._mc_client._post(url=self._build_path(store_id, 'products'), data=data)
         self.product_id = response['id']
-        self.variant_id = response['variants']['id']
         return response
 
 
@@ -61,7 +96,6 @@ class StoreProduct(BaseApi):
         """
         self.store_id = store_id
         self.product_id = None
-        self.variant_id = None
         if get_all:
             return self._iterate(url=self._build_path(store_id, 'products'), **queryparams)
         else:
@@ -82,7 +116,6 @@ class StoreProduct(BaseApi):
         """
         self.store_id = store_id
         self.product_id = product_id
-        self.variant_id = None
         return self._mc_client._get(url=self._build_path(store_id, 'products', product_id), **queryparams)
 
 
@@ -97,5 +130,4 @@ class StoreProduct(BaseApi):
         """
         self.store_id = store_id
         self.product_id = product_id
-        self.variant_id = None
         return self._mc_client._delete(url=self._build_path(store_id, 'products', product_id))

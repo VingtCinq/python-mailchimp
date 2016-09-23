@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class Folder(BaseApi):
+class FileManagerFolders(BaseApi):
     """
     Manage specific folders in the File Manager for your MailChimp account.
     The File Manager is a place to store images, documents, and other files
@@ -20,7 +20,7 @@ class Folder(BaseApi):
         """
         Initialize the endpoint
         """
-        super(Folder, self).__init__(*args, **kwargs)
+        super(FileManagerFolders, self).__init__(*args, **kwargs)
         self.endpoint = 'file-manager/folders'
         self.folder_id = None
 
@@ -31,7 +31,15 @@ class Folder(BaseApi):
 
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*
+        }
         """
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The folder must have a name'
+            raise
         response = self._mc_client._post(url=self._build_path(), data=data)
         self.folder_id = response['id']
         return response
@@ -81,8 +89,16 @@ class Folder(BaseApi):
         :type folder_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*
+        }
         """
         self.folder_id = folder_id
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The folder must have a name'
+            raise
         return self._mc_client._patch(url=self._build_path(folder_id), data=data)
 
 

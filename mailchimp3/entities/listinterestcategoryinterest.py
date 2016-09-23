@@ -31,15 +31,27 @@ class ListInterestCategoryInterest(BaseApi):
         """
         Create a new interest or ‘group name’ for a specific category.
 
+        The documentation lists only the name request body parameter so it is
+        being documented and error-checked as if it were required based on the
+        description of the method.
+
         :param list_id: The unique id for the list.
         :type list_id: :py:class:`str`
         :param category_id: The unique id for the interest category.
         :type category_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*
+        }
         """
         self.list_id = list_id
         self.category_id = category_id
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The list interest category interest must have a name'
+            raise
         response =  self._mc_client._post(
             url=self._build_path(list_id, 'interest-categories', category_id, 'interests'),
             data=data
@@ -111,10 +123,18 @@ class ListInterestCategoryInterest(BaseApi):
         :type interest_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*
+        }
         """
         self.list_id = list_id
         self.category_id = category_id
         self.interest_id = interest_id
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The list interest category interest must have a name'
+            raise
         return self._mc_client._patch(
             url=self._build_path(list_id, 'interest-categories', category_id, 'interests', interest_id),
             data=data

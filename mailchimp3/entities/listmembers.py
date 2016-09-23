@@ -9,11 +9,12 @@ from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.listmemberactivity import ListMemberActivity
-from mailchimp3.entities.listmembergoal import ListMemberGoal
-from mailchimp3.entities.listmembernote import ListMemberNote
+from mailchimp3.entities.listmembergoals import ListMemberGoals
+from mailchimp3.entities.listmembernotes import ListMemberNotes
+from mailchimp3.helpers import check_email, check_subscriber_hash
 
 
-class ListMember(BaseApi):
+class ListMembers(BaseApi):
     """
     Manage members of a specific MailChimp list, including currently
     subscribed, unsubscribed, and bounced members.
@@ -22,13 +23,13 @@ class ListMember(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ListMember, self).__init__(*args, **kwargs)
+        super(ListMembers, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
         self.list_id = None
         self.subscriber_hash = None
         self.activity = ListMemberActivity(self)
-        self.goal = ListMemberGoal(self)
-        self.note = ListMemberNote(self)
+        self.goals = ListMemberGoals(self)
+        self.notes = ListMemberNotes(self)
 
 
     def create(self, list_id, data):
@@ -39,8 +40,26 @@ class ListMember(BaseApi):
         :type list_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "status": string*, (Must be one of 'subscribed', 'unsubscribed', 'cleaned', or 'pending')
+            "email_address": string*
+        }
         """
         self.list_id = list_id
+        try:
+            test = data['status']
+        except KeyError as error:
+            error.message += ' The list member must have a status'
+            raise
+        if data['status'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
+            raise ValueError('The list member status must be one of "subscribed", "unsubscribed", "cleaned", or '
+                             '"pending"')
+        try:
+            test = data['email_address']
+        except KeyError as error:
+            error.message += ' The list member must have an email_address'
+            raise
+        check_email(data['email_address'])
         response = self._mc_client._post(url=self._build_path(list_id, 'members'), data=data)
         self.subscriber_hash = response['id']
         return response
@@ -91,6 +110,7 @@ class ListMember(BaseApi):
         queryparams['exclude_fields'] = []
         """
         self.list_id = list_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         return self._mc_client._get(url=self._build_path(list_id, 'members', subscriber_hash), **queryparams)
 
@@ -108,6 +128,7 @@ class ListMember(BaseApi):
         :type data: :py:class:`dict`
         """
         self.list_id = list_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         return self._mc_client._patch(url=self._build_path(list_id, 'members', subscriber_hash), data=data)
 
@@ -123,9 +144,28 @@ class ListMember(BaseApi):
         :type subscriber_hash: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "email_address": string*,
+            "status_if_new": string* (Must be one of 'subscribed', 'unsubscribed', 'cleaned' or 'pending')
+        }
         """
         self.list_id = list_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
+        try:
+            test = data['email_address']
+        except KeyError as error:
+            error.message += ' The list member must have an email_address'
+            raise
+        check_email(data['email_address'])
+        try:
+            test = data['status_if_new']
+        except KeyError as error:
+            error.message += ' The list member must have a status_if_new'
+            raise
+        if data['status'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
+            raise ValueError('The list member status_if_new must be one of "subscribed", "unsubscribed", "cleaned", '
+                             'or "pending"')
         return self._mc_client._put(url=self._build_path(list_id, 'members', subscriber_hash), data=data)
 
 
@@ -140,5 +180,6 @@ class ListMember(BaseApi):
         :type subscriber_hash: :py:class:`str`
         """
         self.list_id = list_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         return self._mc_client._delete(url=self._build_path(list_id, 'members', subscriber_hash))

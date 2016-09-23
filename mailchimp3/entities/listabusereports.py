@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class ListAbuseReport(BaseApi):
+class ListAbuseReports(BaseApi):
     """
     Manage abuse complaints for a specific list. An abuse complaint occurs
     when your recipient reports an email as spam in their mail program.
@@ -19,7 +19,7 @@ class ListAbuseReport(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ListAbuseReport, self).__init__(*args, **kwargs)
+        super(ListAbuseReports, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
         self.list_id = None
         self.report_id = None

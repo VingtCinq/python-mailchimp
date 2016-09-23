@@ -8,9 +8,10 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/TwitterLeadGenCards/Instance.
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_url
 
 
-class ListTwitter(BaseApi):
+class ListTwitterLeadGenerationCards(BaseApi):
     """
     Manage Twitter Lead Generation Cards for a specific MailChimp list.
     """
@@ -18,7 +19,7 @@ class ListTwitter(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ListTwitter, self).__init__(*args, **kwargs)
+        super(ListTwitterLeadGenerationCards, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
         self.list_id = None
         self.twitter_card_id = None
@@ -32,8 +33,50 @@ class ListTwitter(BaseApi):
         :type list_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*,
+            "title": string*,
+            "cta_text": string*,
+            "privacy_policy_url": string*,
+            "image_url": string*,
+            "twitter_account_id": string*
+        }
         """
         self.list_id = list_id
+        try:
+            data['name']
+        except KeyError as error:
+            error.message += ' The twitter lead generation card must have a name'
+            raise
+        try:
+            data['title']
+        except KeyError as error:
+            error.message += ' The twitter lead generation card must have a title'
+            raise
+        try:
+            data['cta_text']
+        except KeyError as error:
+            error.message += ' The twitter lead generation card must have a cta_text'
+            raise
+        if len(data['cta_text']) > 20:
+            raise ValueError('The twitter lead generation card cta_text must be 20 characters or less')
+        try:
+            data['privacy_policy_url']
+        except KeyError as error:
+            error.message += ' The twitter lead generation card must have a privacy_policy_url'
+            raise
+        check_url(data['privacy_policy_url'])
+        try:
+            data['image_url']
+        except KeyError as error:
+            error.message += ' The twitter lead generation card must have a image_url'
+            raise
+        check_url(data['image_url'])
+        try:
+            data['twitter_account_id']
+        except KeyError as error:
+            error.message += ' The twitter lead generation card must have a twitter_account_id'
+            raise
         response = self._mc_client._post(url=self._build_path(list_id, 'twitter-lead-gen-cards'), data=data)
         self.twitter_card_id = response['id']
         return response

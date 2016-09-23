@@ -8,9 +8,10 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Members/Notes/Instance.json
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_subscriber_hash
 
 
-class ListMemberNote(BaseApi):
+class ListMemberNotes(BaseApi):
     """
     Retrieve recent notes for a specific list member.
     """
@@ -18,7 +19,7 @@ class ListMemberNote(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ListMemberNote, self).__init__(*args, **kwargs)
+        super(ListMemberNotes, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
         self.list_id = None
         self.subscriber_hash = None
@@ -29,6 +30,10 @@ class ListMemberNote(BaseApi):
         """
         Add a new note for a specific subscriber.
 
+        The documentation lists only the note request body parameter so it is
+        being documented and error-checked as if it were required based on the
+        description of the method.
+
         :param list_id: The unique id for the list.
         :type list_id: :py:class:`str`
         :param subscriber_hash: The MD5 hash of the lowercase version of the
@@ -36,9 +41,18 @@ class ListMemberNote(BaseApi):
         :type subscriber_hash: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "note": string*
+        }
         """
         self.list_id = list_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
+        try:
+            test = data['note']
+        except KeyError as error:
+            error.message += ' The list member note must have a note'
+            raise
         response = self._mc_client._post(url=self._build_path(list_id, 'members', subscriber_hash, 'notes'), data=data)
         self.note_id = response['id']
         return response
@@ -62,6 +76,7 @@ class ListMemberNote(BaseApi):
         queryparams['offset'] = integer
         """
         self.list_id = list_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         self.note_id = None
         if get_all:
@@ -86,6 +101,7 @@ class ListMemberNote(BaseApi):
         queryparams['exclude_fields'] = []
         """
         self.list_id = list_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         self.note_id = note_id
         return self._mc_client._get(
@@ -98,6 +114,10 @@ class ListMemberNote(BaseApi):
         """
         Update a specific note for a specific list member.
 
+        The documentation lists only the note request body parameter so it is
+        being documented and error-checked as if it were required based on the
+        description of the method.
+
         :param list_id: The unique id for the list.
         :type list_id: :py:class:`str`
         :param subscriber_hash: The MD5 hash of the lowercase version of the
@@ -107,10 +127,19 @@ class ListMemberNote(BaseApi):
         :type note_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "note": string*
+        }
         """
         self.list_id = list_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         self.note_id = note_id
+        try:
+            test = data['note']
+        except KeyError as error:
+            error.message += ' The list member note must have a note'
+            raise
         return self._mc_client._patch(
             url=self._build_path(list_id, 'members', subscriber_hash, 'notes', note_id),
             data=data
@@ -130,6 +159,7 @@ class ListMemberNote(BaseApi):
         :type note_id: :py:class:`str`
         """
         self.list_id = list_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         self.note_id = note_id
         return self._mc_client._delete(url=self._build_path(list_id, 'members', subscriber_hash, 'notes', note_id))

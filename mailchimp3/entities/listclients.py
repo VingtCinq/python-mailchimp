@@ -10,10 +10,16 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class ListClient(BaseApi):
-
+class ListClients(BaseApi):
+    """
+    Get information about the most popular email clients for subscribers in a
+    specific MailChimp list.
+    """
     def __init__(self, *args, **kwargs):
-        super(ListClient, self).__init__(*args, **kwargs)
+        """
+        Initialize the endpoint
+        """
+        super(ListClients, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
         self.list_id = None
 

@@ -8,10 +8,10 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Segments/Instance.json
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.entities.listsegmentmember import ListSegmentMember
+from mailchimp3.entities.listsegmentmembers import ListSegmentMembers
 
 
-class ListSegment(BaseApi):
+class ListSegments(BaseApi):
     """
     Manage segments for a specific MailChimp list. A segment is a section of
     your list that includes only those subscribers who share specific common
@@ -21,11 +21,11 @@ class ListSegment(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ListSegment, self).__init__(*args, **kwargs)
+        super(ListSegments, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
         self.list_id = None
         self.segment_id = None
-        self.member = ListSegmentMember(self)
+        self.members = ListSegmentMembers(self)
 
 
     def create(self, list_id, data):
@@ -36,8 +36,16 @@ class ListSegment(BaseApi):
         :type list_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*
+        }
         """
         self.list_id = list_id
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The list segment must have a name'
+            raise
         response = self._mc_client._post(url=self._build_path(list_id, 'segments'), data=data)
         self.segment_id = response['id']
         return response
@@ -97,9 +105,17 @@ class ListSegment(BaseApi):
         :type segment_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*
+        }
         """
         self.list_id = list_id
         self.segment_id = segment_id
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The list segment must have a name'
+            raise
         return self._mc_client._patch(url=self._build_path(list_id, 'segments', segment_id), data=data)
 
 

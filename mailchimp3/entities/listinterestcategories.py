@@ -11,7 +11,7 @@ from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.listinterestcategoryinterest import ListInterestCategoryInterest
 
 
-class ListInterestCategory(BaseApi):
+class ListInterestCategories(BaseApi):
     """
     Manage interest categories for a specific list. Interest categories
     organize interests, which are used to group subscribers based on their
@@ -22,11 +22,11 @@ class ListInterestCategory(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ListInterestCategory, self).__init__(*args, **kwargs)
+        super(ListInterestCategories, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
         self.list_id = None
         self.category_id = None
-        self.interest = ListInterestCategoryInterest(self)
+        self.interests = ListInterestCategoryInterest(self)
 
 
     def create(self, list_id, data):
@@ -37,8 +37,25 @@ class ListInterestCategory(BaseApi):
         :type list_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "title": string*,
+            "type": string* (Must be one of 'checkboxes', 'dropdown', 'radio', or 'hidden')
+        }
         """
         self.list_id = list_id
+        try:
+            test = data['title']
+        except KeyError as error:
+            error.message += ' The list interest category must have a title'
+            raise
+        try:
+            test = data['type']
+        except KeyError as error:
+            error.message += ' The list interest category must have a type'
+            raise
+        if data['type'] not in ['checkboxes', 'dropdown', 'radio', 'hidden']:
+            raise ValueError('The list interest category type must be one of "checkboxes", "dropdown", "radio", or '
+                             '"hidden"')
         response = self._mc_client._post(url=self._build_path(list_id, 'interest-categories'), data=data)
         self.category_id = response['id']
         return response
@@ -94,9 +111,26 @@ class ListInterestCategory(BaseApi):
         :type category_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "title": string*,
+            "type": string* (Must be one of 'checkboxes', 'dropdown', 'radio', or 'hidden')
+        }
         """
         self.list_id = list_id
         self.category_id = category_id
+        try:
+            test = data['title']
+        except KeyError as error:
+            error.message += ' The list interest category must have a title'
+            raise
+        try:
+            test = data['type']
+        except KeyError as error:
+            error.message += ' The list interest category must have a type'
+            raise
+        if data['type'] not in ['checkboxes', 'dropdown', 'radio', 'hidden']:
+            raise ValueError('The list interest category type must be one of "checkboxes", "dropdown", "radio", or '
+                             '"hidden"')
         return self._mc_client._patch(url=self._build_path(list_id, 'interest-categories', category_id), data=data)
 
 

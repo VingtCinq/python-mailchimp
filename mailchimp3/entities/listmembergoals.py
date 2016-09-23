@@ -8,9 +8,10 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Members/Goals/Collection.json
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_subscriber_hash
 
 
-class ListMemberGoal(BaseApi):
+class ListMemberGoals(BaseApi):
     """
     Get information about recent goal events for a specific list member.
     """
@@ -18,7 +19,7 @@ class ListMemberGoal(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ListMemberGoal, self).__init__(*args, **kwargs)
+        super(ListMemberGoals, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
         self.list_id = None
         self.subscriber_hash = None
@@ -38,5 +39,6 @@ class ListMemberGoal(BaseApi):
         queryparams['exclude_fields'] = []
         """
         self.list_id = list_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         return self._mc_client._get(url=self._build_path(list_id, 'members', subscriber_hash, 'goals'), **queryparams)

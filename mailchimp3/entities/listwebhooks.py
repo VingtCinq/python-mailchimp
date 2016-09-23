@@ -8,9 +8,10 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Webhooks/Instance.json
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_url
 
 
-class ListWebhook(BaseApi):
+class ListWebhooks(BaseApi):
     """
     Manage webhooks for a specific MailChimp list.
     """
@@ -18,7 +19,7 @@ class ListWebhook(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ListWebhook, self).__init__(*args, **kwargs)
+        super(ListWebhooks, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
         self.list_id = None
         self.webhook_id = None
@@ -28,12 +29,26 @@ class ListWebhook(BaseApi):
         """
         Create a new webhook for a specific list.
 
+        The documentation does not include any required request body
+        parameters but the url parameter is being listed here as a required
+        parameter in documentation and error-checking based on the description
+        of the method
+
         :param list_id: The unique id for the list.
         :type list_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "url": string*
+        }
         """
         self.list_id = list_id
+        try:
+            test = data['url']
+        except KeyError as error:
+            error.message += ' The list webhook must have a url'
+            raise
+        check_url(data['url'])
         response = self._mc_client._post(url=self._build_path(list_id, 'webhooks'), data=data)
         self.webhook_id = response['id']
         return response
@@ -67,7 +82,7 @@ class ListWebhook(BaseApi):
 
     def delete(self, list_id, webhook_id):
         """
-        Get information about a specific webhook.
+        Delete a specific webhook in a list.
 
         :param list_id: The unique id for the list.
         :type list_id: :py:class:`str`

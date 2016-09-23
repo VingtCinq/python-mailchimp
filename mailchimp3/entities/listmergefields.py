@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class ListMergeField(BaseApi):
+class ListMergeFields(BaseApi):
     """
     Manage merge fields (formerly merge vars) for a specific list.
     """
@@ -18,7 +18,7 @@ class ListMergeField(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ListMergeField, self).__init__(*args, **kwargs)
+        super(ListMergeFields, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
         self.list_id = None
         self.merge_id = None
@@ -32,8 +32,22 @@ class ListMergeField(BaseApi):
         :type list_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*,
+            "type": string*
+        }
         """
         self.list_id = list_id
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The list merge field must have a name'
+            raise
+        try:
+            test = data['type']
+        except KeyError as error:
+            error.message += ' The list merge field must have a type'
+            raise
         response = self._mc_client._post(url=self._build_path(list_id, 'merge-fields'), data=data)
         self.merge_id = response['id']
         return response
@@ -87,9 +101,17 @@ class ListMergeField(BaseApi):
         :type merge_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*
+        }
         """
         self.list_id = list_id
         self.merge_id = merge_id
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The list merge field must have a name'
+            raise
         return self._mc_client._patch(url=self._build_path(list_id, 'merge-fields', merge_id), data=data)
 
 

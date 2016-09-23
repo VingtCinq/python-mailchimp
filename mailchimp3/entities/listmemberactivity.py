@@ -8,6 +8,7 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Members/Activity/Collection.j
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_subscriber_hash
 
 
 class ListMemberActivity(BaseApi):
@@ -39,5 +40,6 @@ class ListMemberActivity(BaseApi):
         queryparams['exclude_fields'] = []
         """
         self.list_id = list_id
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         return self._mc_client._get(url=self._build_path(list_id, 'members', subscriber_hash, 'activity'), **queryparams)

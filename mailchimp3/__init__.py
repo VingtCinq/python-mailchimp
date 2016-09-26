@@ -31,7 +31,7 @@ from mailchimp3.entities.lists import Lists
 # Reports
 from mailchimp3.entities.reports import Reports
 # Template Folders
-from mailchimp3.entities.templatefolder import TemplateFolder
+from mailchimp3.entities.templatefolders import TemplateFolders
 # Templates
 from mailchimp3.entities.template import Template
 
@@ -71,6 +71,6 @@ class MailChimp(MailChimpClient):
         # Reports
         self.report = Reports(self)
         # Template Folders
-        self.templatefolder = TemplateFolder(self)
+        self.templatefolders = TemplateFolders(self)
         # Templates
         self.template = Template(self)

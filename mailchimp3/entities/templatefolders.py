@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class TemplateFolder(BaseApi):
+class TemplateFolders(BaseApi):
     """
     Organize your templates using folders.
     """
@@ -18,7 +18,7 @@ class TemplateFolder(BaseApi):
         """
         Initialize the endpoint
         """
-        super(TemplateFolder, self).__init__(*args, **kwargs)
+        super(TemplateFolders, self).__init__(*args, **kwargs)
         self.endpoint = 'template-folders'
         self.folder_id = None
 
@@ -29,7 +29,15 @@ class TemplateFolder(BaseApi):
 
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*
+        }
         """
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The template folder must have a name'
+            raise
         response = self._mc_client._post(url=self._build_path(), data=data)
         self.folder_id = response['id']
         return response
@@ -46,9 +54,6 @@ class TemplateFolder(BaseApi):
         queryparams['exclude_fields'] = []
         queryparams['count'] = integer
         queryparams['offset'] = integer
-        queryparams['created_by'] = string
-        queryparams['before_created_at'] = string
-        queryparams['since_created_at'] = string
         """
         self.folder_id = None
         if get_all:
@@ -79,7 +84,15 @@ class TemplateFolder(BaseApi):
         :type folder_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*
+        }
         """
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The template folder must have a name'
+            raise
         self.folder_id = folder_id
         return self._mc_client._patch(url=self._build_path(folder_id), data=data)
 

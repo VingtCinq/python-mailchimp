@@ -33,16 +33,16 @@ class Lists(BaseApi):
         super(Lists, self).__init__(*args, **kwargs)
         self.endpoint = 'lists'
         self.list_id = None
-        self.abusereports = ListAbuseReports(self)
+        self.abuse_reports = ListAbuseReports(self)
         self.activity = ListActivity(self)
         self.clients = ListClients(self)
-        self.growthhistory = ListGrowthHistory(self)
-        self.interestcategories = ListInterestCategories(self)
+        self.growth_history = ListGrowthHistory(self)
+        self.interest_categories = ListInterestCategories(self)
         self.members = ListMembers(self)
-        self.mergefields = ListMergeFields(self)
+        self.merge_fields = ListMergeFields(self)
         self.segments = ListSegments(self)
-        self.signupforms = ListSignupForms(self)
-        self.twittercards = ListTwitterLeadGenerationCards(self)
+        self.signup_forms = ListSignupForms(self)
+        self.twitter_cards = ListTwitterLeadGenerationCards(self)
         self.webhooks = ListWebhooks(self)
 
 

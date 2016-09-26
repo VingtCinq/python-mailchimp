@@ -23,7 +23,7 @@ class Templates(BaseApi):
         super(Templates, self).__init__(*args, **kwargs)
         self.endpoint = 'templates'
         self.template_id = None
-        self.defaultcontent = TemplateDefaultContent(self)
+        self.default_content = TemplateDefaultContent(self)
 
 
     def create(self, data):

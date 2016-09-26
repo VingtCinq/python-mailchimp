@@ -30,7 +30,7 @@ class Campaigns(BaseApi):
         self.actions = CampaignActions(self)
         self.content = CampaignContent(self)
         self.feedback = CampaignFeedback(self)
-        self.sendchecklist = CampaignSendChecklist(self)
+        self.send_checklist = CampaignSendChecklist(self)
 
 
     def create(self, data):

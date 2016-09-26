@@ -33,14 +33,14 @@ class Reports(BaseApi):
         super(Reports, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
         self.campaign_id = None
-        self.abusereports = ReportCampaignAbuseReports(self)
+        self.abuse_reports = ReportCampaignAbuseReports(self)
         self.advice = ReportCampaignAdvice(self)
-        self.clickdetails = ReportClickDetailReports(self)
-        self.domainperformance = ReportDomainPerformance(self)
+        self.click_details = ReportClickDetailReports(self)
+        self.domain_performance = ReportDomainPerformance(self)
         self.eepurl = ReportEepURL(self)
-        self.emailactivity = ReportEmailActivity(self)
+        self.email_activity = ReportEmailActivity(self)
         self.locations = ReportLocations(self)
-        self.sentto = ReportSentTo(self)
+        self.sent_to = ReportSentTo(self)
         self.subreports = ReportSubReports(self)
         self.unsubscribes = ReportUnsubscribes(self)
 

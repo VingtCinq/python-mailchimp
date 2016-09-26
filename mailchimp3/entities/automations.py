@@ -30,7 +30,7 @@ class Automations(BaseApi):
         self.workflow_id = None
         self.actions = AutomationActions(self)
         self.emails = AutomationEmails(self)
-        self.removedsubscribers = AutomationRemovedSubscribers(self)
+        self.removed_subscribers = AutomationRemovedSubscribers(self)
 
 
     # Paid feature

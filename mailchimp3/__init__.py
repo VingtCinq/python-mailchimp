@@ -47,15 +47,15 @@ class MailChimp(MailChimpClient):
         """
         super(MailChimp, self).__init__(*args, **kwargs)
         # API Root
-        self.root = self.apiroot = Root(self)
+        self.root = self.api_root = Root(self)
         # Authorized Apps
-        self.authorizedapps = AuthorizedApps(self)
+        self.authorized_apps = AuthorizedApps(self)
         # Automations - Paid feature
         self.automations = Automations(self)
         # Batch operations
         self.batches = self.batch_operations = Batches(self)
         # Campaign Folders
-        self.campaignfolders = CampaignFolders(self)
+        self.campaign_folders = CampaignFolders(self)
         # Campaigns
         self.campaigns = Campaigns(self)
         # Conversations - Paid feature
@@ -69,8 +69,8 @@ class MailChimp(MailChimpClient):
         # Lists
         self.lists = Lists(self)
         # Reports
-        self.report = Reports(self)
+        self.reports = Reports(self)
         # Template Folders
-        self.templatefolders = TemplateFolders(self)
+        self.template_folders = TemplateFolders(self)
         # Templates
         self.templates = Templates(self)

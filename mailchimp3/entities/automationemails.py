@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.automationemailactions import AutomationEmailActions
-from mailchimp3.entities.automationemailqueue import AutomationEmailQueue
+from mailchimp3.entities.automationemailqueues import AutomationEmailQueues
 
 
 class AutomationEmails(BaseApi):
@@ -27,7 +27,7 @@ class AutomationEmails(BaseApi):
         self.workflow_id = None
         self.email_id = None
         self.actions = AutomationEmailActions(self)
-        self.queue = AutomationEmailQueue(self)
+        self.queues = AutomationEmailQueues(self)
 
 
     # Paid feature

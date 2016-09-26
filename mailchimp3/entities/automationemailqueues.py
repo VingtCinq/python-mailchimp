@@ -13,7 +13,7 @@ from mailchimp3.baseapi import BaseApi
 from mailchimp3.helpers import check_email, check_subscriber_hash
 
 
-class AutomationEmailQueue(BaseApi):
+class AutomationEmailQueues(BaseApi):
     """
     Manage list member queues for Automation emails.
     """
@@ -21,7 +21,7 @@ class AutomationEmailQueue(BaseApi):
         """
         Initialize the endpoint
         """
-        super(AutomationEmailQueue, self).__init__(*args, **kwargs)
+        super(AutomationEmailQueues, self).__init__(*args, **kwargs)
         self.endpoint = 'automations'
         self.workflow_id = None
         self.email_id = None

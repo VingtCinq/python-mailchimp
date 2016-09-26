@@ -105,7 +105,7 @@ class MailChimp(MailChimpClient):
         # Conversations - Paid feature
         self.conversations = Conversations(self)
         # E-commerce Stores
-        self.store = self.ecommerce = Stores(self)
+        self.stores = self.ecommerce = Stores(self)
         # File Manager Files
         self.files = FileManagerFiles(self)
         # File Manager Folders

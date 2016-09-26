@@ -45,8 +45,8 @@ class ListMemberNotes(BaseApi):
             "note": string*
         }
         """
-        self.list_id = list_id
         subscriber_hash = check_subscriber_hash(subscriber_hash)
+        self.list_id = list_id
         self.subscriber_hash = subscriber_hash
         try:
             test = data['note']
@@ -75,8 +75,8 @@ class ListMemberNotes(BaseApi):
         queryparams['count'] = integer
         queryparams['offset'] = integer
         """
-        self.list_id = list_id
         subscriber_hash = check_subscriber_hash(subscriber_hash)
+        self.list_id = list_id
         self.subscriber_hash = subscriber_hash
         self.note_id = None
         if get_all:
@@ -100,8 +100,8 @@ class ListMemberNotes(BaseApi):
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
         """
-        self.list_id = list_id
         subscriber_hash = check_subscriber_hash(subscriber_hash)
+        self.list_id = list_id
         self.subscriber_hash = subscriber_hash
         self.note_id = note_id
         return self._mc_client._get(
@@ -131,8 +131,8 @@ class ListMemberNotes(BaseApi):
             "note": string*
         }
         """
-        self.list_id = list_id
         subscriber_hash = check_subscriber_hash(subscriber_hash)
+        self.list_id = list_id
         self.subscriber_hash = subscriber_hash
         self.note_id = note_id
         try:
@@ -158,8 +158,8 @@ class ListMemberNotes(BaseApi):
         :param note_id: The id for the note.
         :type note_id: :py:class:`str`
         """
-        self.list_id = list_id
         subscriber_hash = check_subscriber_hash(subscriber_hash)
+        self.list_id = list_id
         self.subscriber_hash = subscriber_hash
         self.note_id = note_id
         return self._mc_client._delete(url=self._build_path(list_id, 'members', subscriber_hash, 'notes', note_id))

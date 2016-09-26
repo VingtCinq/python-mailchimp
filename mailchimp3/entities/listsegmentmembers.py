@@ -104,9 +104,9 @@ class ListSegmentMembers(BaseApi):
           list member’s email address.
         :type subscriber_hash: :py:class:`str`
         """
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.list_id = list_id
         self.segment_id = segment_id
-        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         return self._mc_client._delete(
             url=self._build_path(list_id, 'segments', segment_id, 'members', subscriber_hash)

@@ -38,7 +38,7 @@ class ListMemberGoals(BaseApi):
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
         """
-        self.list_id = list_id
         subscriber_hash = check_subscriber_hash(subscriber_hash)
+        self.list_id = list_id
         self.subscriber_hash = subscriber_hash
         return self._mc_client._get(url=self._build_path(list_id, 'members', subscriber_hash, 'goals'), **queryparams)

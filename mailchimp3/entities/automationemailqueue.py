@@ -91,9 +91,9 @@ class AutomationEmailQueue(BaseApi):
           list member’s email address.
         :type subscriber_hash: :py:class:`str`
         """
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.workflow_id = workflow_id
         self.email_id = email_id
-        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.subscriber_hash = subscriber_hash
         return self._mc_client._get(url=self._build_path(workflow_id, 'emails', email_id, 'queue', subscriber_hash))
 

@@ -109,8 +109,8 @@ class ListMembers(BaseApi):
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
         """
-        self.list_id = list_id
         subscriber_hash = check_subscriber_hash(subscriber_hash)
+        self.list_id = list_id
         self.subscriber_hash = subscriber_hash
         return self._mc_client._get(url=self._build_path(list_id, 'members', subscriber_hash), **queryparams)
 
@@ -127,8 +127,8 @@ class ListMembers(BaseApi):
         :param data: The request body parameters
         :type data: :py:class:`dict`
         """
-        self.list_id = list_id
         subscriber_hash = check_subscriber_hash(subscriber_hash)
+        self.list_id = list_id
         self.subscriber_hash = subscriber_hash
         return self._mc_client._patch(url=self._build_path(list_id, 'members', subscriber_hash), data=data)
 
@@ -149,8 +149,8 @@ class ListMembers(BaseApi):
             "status_if_new": string* (Must be one of 'subscribed', 'unsubscribed', 'cleaned' or 'pending')
         }
         """
-        self.list_id = list_id
         subscriber_hash = check_subscriber_hash(subscriber_hash)
+        self.list_id = list_id
         self.subscriber_hash = subscriber_hash
         try:
             test = data['email_address']
@@ -179,7 +179,7 @@ class ListMembers(BaseApi):
           list member’s email address.
         :type subscriber_hash: :py:class:`str`
         """
-        self.list_id = list_id
         subscriber_hash = check_subscriber_hash(subscriber_hash)
+        self.list_id = list_id
         self.subscriber_hash = subscriber_hash
         return self._mc_client._delete(url=self._build_path(list_id, 'members', subscriber_hash))

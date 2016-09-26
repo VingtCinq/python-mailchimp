@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class ReportSubReport(BaseApi):
+class ReportSubReports(BaseApi):
     """
     A list of reports for child campaigns of a specific parent campaign. For
     example, use this endpoint to view Multivariate, RSS, and A/B Testing
@@ -20,14 +20,15 @@ class ReportSubReport(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ReportSubReport, self).__init__(*args, **kwargs)
+        super(ReportSubReports, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
         self.campaign_id = None
 
 
     def all(self, campaign_id, **queryparams):
         """
-        Get top open locations for a specific campaign.
+        Get a list of reports with child campaigns for a specific parent
+        campaign.
 
         :param campaign_id: The unique id for the campaign.
         :type campaign_id: :py:class:`str`

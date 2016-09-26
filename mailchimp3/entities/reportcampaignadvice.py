@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class ReportAdvice(BaseApi):
+class ReportCampaignAdvice(BaseApi):
     """
     Get recent feedback based on a campaign’s statistics.
     """
@@ -18,7 +18,7 @@ class ReportAdvice(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ReportAdvice, self).__init__(*args, **kwargs)
+        super(ReportCampaignAdvice, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
         self.campaign_id = None
 

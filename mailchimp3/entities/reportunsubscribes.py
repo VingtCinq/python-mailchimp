@@ -8,14 +8,15 @@ Schema: https://api.mailchimp.com/schema/3.0/Reports/Unsubs/Instance.json
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_subscriber_hash
 
 
-class ReportUnsubscribe(BaseApi):
+class ReportUnsubscribes(BaseApi):
     """
     Get information about list members who unsubscribed from a specific campaign.
     """
     def __init__(self, *args, **kwargs):
-        super(ReportUnsubscribe, self).__init__(*args, **kwargs)
+        super(ReportUnsubscribes, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
         self.campaign_id = None
         self.subscriber_hash = None
@@ -58,6 +59,7 @@ class ReportUnsubscribe(BaseApi):
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
         """
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.campaign_id = campaign_id
         self.subscriber_hash = subscriber_hash
         return self._mc_client._get(url=self._build_path(campaign_id, 'unsubscribed', subscriber_hash), **queryparams)

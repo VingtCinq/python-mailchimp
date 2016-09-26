@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class ReportLocation(BaseApi):
+class ReportLocations(BaseApi):
     """
     Get top open locations for a specific campaign.
     """
@@ -18,7 +18,7 @@ class ReportLocation(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ReportLocation, self).__init__(*args, **kwargs)
+        super(ReportLocations, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
         self.campaign_id = None
 

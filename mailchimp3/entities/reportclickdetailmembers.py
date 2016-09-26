@@ -8,9 +8,10 @@ Schema: https://api.mailchimp.com/schema/3.0/Reports/ClickDetails/Members/Instan
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_subscriber_hash
 
 
-class ReportClickDetailMember(BaseApi):
+class ReportClickDetailMembers(BaseApi):
     """
     Get information about specific subscribers who clicked on links in a
     campaign.
@@ -19,7 +20,7 @@ class ReportClickDetailMember(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ReportClickDetailMember, self).__init__(*args, **kwargs)
+        super(ReportClickDetailMembers, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
         self.campaign_id = None
         self.link_id = None
@@ -28,8 +29,8 @@ class ReportClickDetailMember(BaseApi):
 
     def all(self, campaign_id, link_id, get_all=False, **queryparams):
         """
-        Get information about clicks on specific links in your MailChimp
-        campaigns.
+        Get information about list members who clicked on a specific link in a
+        campaign.
 
         :param campaign_id: The unique id for the campaign.
         :type campaign_id: :py:class:`str`
@@ -57,7 +58,8 @@ class ReportClickDetailMember(BaseApi):
 
     def get(self, campaign_id, link_id, subscriber_hash, **queryparams):
         """
-        Get click details for a specific link in a campaign.
+        Get information about a specific subscriber who clicked a link in a
+        specific campaign.
 
         :param campaign_id: The unique id for the campaign.
         :type campaign_id: :py:class:`str`
@@ -70,6 +72,7 @@ class ReportClickDetailMember(BaseApi):
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
         """
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.campaign_id = campaign_id
         self.link_id = link_id
         self.subscriber_hash = subscriber_hash

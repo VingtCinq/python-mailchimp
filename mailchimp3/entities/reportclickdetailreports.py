@@ -8,10 +8,10 @@ Schema: https://api.mailchimp.com/schema/3.0/Reports/ClickDetails/Instance.json
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.entities.reportclickdetailmember import ReportClickDetailMember
+from mailchimp3.entities.reportclickdetailmembers import ReportClickDetailMembers
 
 
-class ReportClickDetail(BaseApi):
+class ReportClickDetailReports(BaseApi):
     """
     Get detailed information about links clicked in campaigns.
     """
@@ -19,11 +19,11 @@ class ReportClickDetail(BaseApi):
         """
         Initialize the endpoint
         """
-        super(ReportClickDetail, self).__init__(*args, **kwargs)
+        super(ReportClickDetailReports, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
         self.campaign_id = None
         self.link_id = None
-        self.member = ReportClickDetailMember(self)
+        self.members = ReportClickDetailMembers(self)
 
 
     def all(self, campaign_id, get_all=False, **queryparams):

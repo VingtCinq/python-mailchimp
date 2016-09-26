@@ -8,19 +8,19 @@ Schema: https://api.mailchimp.com/schema/3.0/Reports/Instance.json
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.entities.reportabuse import ReportAbuse
-from mailchimp3.entities.reportadvice import ReportAdvice
-from mailchimp3.entities.reportclickdetail import ReportClickDetail
+from mailchimp3.entities.reportcampaignabusereports import ReportCampaignAbuseReports
+from mailchimp3.entities.reportcampaignadvice import ReportCampaignAdvice
+from mailchimp3.entities.reportclickdetailreports import ReportClickDetailReports
 from mailchimp3.entities.reportdomainperformance import ReportDomainPerformance
 from mailchimp3.entities.reporteepurl import ReportEepURL
 from mailchimp3.entities.reportemailactivity import ReportEmailActivity
-from mailchimp3.entities.reportlocation import ReportLocation
+from mailchimp3.entities.reportlocations import ReportLocations
 from mailchimp3.entities.reportsentto import ReportSentTo
-from mailchimp3.entities.reportsubreport import ReportSubReport
-from mailchimp3.entities.reportunsubscribe import ReportUnsubscribe
+from mailchimp3.entities.reportsubreports import ReportSubReports
+from mailchimp3.entities.reportunsubscribes import ReportUnsubscribes
 
 
-class Report(BaseApi):
+class Reports(BaseApi):
     """
     Manage campaign reports for your MailChimp account. All Reports endpoints
     are read-only. MailChimp’s campaign and Automation reports analyze clicks,
@@ -30,19 +30,19 @@ class Report(BaseApi):
         """
         Initialize the endpoint
         """
-        super(Report, self).__init__(*args, **kwargs)
+        super(Reports, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
         self.campaign_id = None
-        self.abuse = ReportAbuse(self)
-        self.advice = ReportAdvice(self)
-        self.clickdetail = ReportClickDetail(self)
+        self.abusereports = ReportCampaignAbuseReports(self)
+        self.advice = ReportCampaignAdvice(self)
+        self.clickdetails = ReportClickDetailReports(self)
         self.domainperformance = ReportDomainPerformance(self)
         self.eepurl = ReportEepURL(self)
         self.emailactivity = ReportEmailActivity(self)
-        self.location = ReportLocation(self)
+        self.locations = ReportLocations(self)
         self.sentto = ReportSentTo(self)
-        self.subreport = ReportSubReport(self)
-        self.unsubscribe = ReportUnsubscribe(self)
+        self.subreports = ReportSubReports(self)
+        self.unsubscribes = ReportUnsubscribes(self)
 
 
     def all(self, get_all=False, **queryparams):

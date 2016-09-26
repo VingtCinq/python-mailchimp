@@ -8,6 +8,7 @@ Schema: https://api.mailchimp.com/schema/3.0/Reports/EmailActivity/Instance.json
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.helpers import check_subscriber_hash
 
 
 class ReportEmailActivity(BaseApi):
@@ -60,6 +61,7 @@ class ReportEmailActivity(BaseApi):
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
         """
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.campaign_id = campaign_id
         self.subscriber_hash = subscriber_hash
         return self._mc_client._get(

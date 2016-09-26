@@ -11,7 +11,7 @@ from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.templatedefaultcontent import TemplateDefaultContent
 
 
-class Template(BaseApi):
+class Templates(BaseApi):
     """
     Manage your MailChimp templates. A template is an HTML file used to create
     the layout and basic design for a campaign.
@@ -20,7 +20,7 @@ class Template(BaseApi):
         """
         Initialize the endpoint
         """
-        super(Template, self).__init__(*args, **kwargs)
+        super(Templates, self).__init__(*args, **kwargs)
         self.endpoint = 'templates'
         self.template_id = None
         self.defaultcontent = TemplateDefaultContent(self)
@@ -33,7 +33,21 @@ class Template(BaseApi):
 
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*,
+            "html": string*
+        }
         """
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The template must have a name'
+            raise
+        try:
+            test = data['html']
+        except KeyError as error:
+            error.message += ' The template must have html'
+            raise
         response = self._mc_client._post(url=self._build_path(), data=data)
         self.template_id = response['id']
         return response
@@ -54,6 +68,7 @@ class Template(BaseApi):
         queryparams['before_created_at'] = string
         queryparams['since_created_at'] = string
         queryparams['type'] = string
+        queryparams['folder_id'] = string
         """
         self.template_id = None
         if get_all:
@@ -84,7 +99,21 @@ class Template(BaseApi):
         :type template_id: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*,
+            "html": string*
+        }
         """
+        try:
+            test = data['name']
+        except KeyError as error:
+            error.message += ' The template must have a name'
+            raise
+        try:
+            test = data['html']
+        except KeyError as error:
+            error.message += ' The template must have html'
+            raise
         self.template_id = template_id
         return self._mc_client._patch(url=self._build_path(template_id), data=data)
 

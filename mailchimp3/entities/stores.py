@@ -29,10 +29,10 @@ class Stores(BaseApi):
         super(Stores, self).__init__(*args, **kwargs)
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
-        self.carts = StoreCarts(self)
-        self.customers = StoreCustomers(self)
-        self.orders = StoreOrders(self)
-        self.products = StoreProducts(self)
+        self.carts = StoreCarts(*args, **kwargs)
+        self.customers = StoreCustomers(*args, **kwargs)
+        self.orders = StoreOrders(*args, **kwargs)
+        self.products = StoreProducts(*args, **kwargs)
 
     def create(self, data):
         """

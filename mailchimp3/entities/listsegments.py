@@ -25,7 +25,7 @@ class ListSegments(BaseApi):
         self.endpoint = 'lists'
         self.list_id = None
         self.segment_id = None
-        self.members = ListSegmentMembers(self)
+        self.members = ListSegmentMembers(*args, **kwargs)
 
 
     def create(self, list_id, data):

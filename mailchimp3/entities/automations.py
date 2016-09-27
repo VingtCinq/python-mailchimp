@@ -28,9 +28,9 @@ class Automations(BaseApi):
         super(Automations, self).__init__(*args, **kwargs)
         self.endpoint = 'automations'
         self.workflow_id = None
-        self.actions = AutomationActions(self)
-        self.emails = AutomationEmails(self)
-        self.removed_subscribers = AutomationRemovedSubscribers(self)
+        self.actions = AutomationActions(*args, **kwargs)
+        self.emails = AutomationEmails(*args, **kwargs)
+        self.removed_subscribers = AutomationRemovedSubscribers(*args, **kwargs)
 
 
     # Paid feature

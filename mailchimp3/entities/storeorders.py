@@ -44,7 +44,7 @@ class StoreOrders(BaseApi):
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
         self.order_id = None
-        self.lines = StoreOrderLines(self)
+        self.lines = StoreOrderLines(*args, **kwargs)
 
 
     def create(self, store_id, data):

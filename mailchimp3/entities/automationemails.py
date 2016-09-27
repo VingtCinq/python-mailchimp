@@ -26,8 +26,8 @@ class AutomationEmails(BaseApi):
         self.endpoint = 'automations'
         self.workflow_id = None
         self.email_id = None
-        self.actions = AutomationEmailActions(self)
-        self.queues = AutomationEmailQueues(self)
+        self.actions = AutomationEmailActions(*args, **kwargs)
+        self.queues = AutomationEmailQueues(*args, **kwargs)
 
 
     # Paid feature

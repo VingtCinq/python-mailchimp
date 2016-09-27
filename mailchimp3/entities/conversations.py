@@ -25,7 +25,7 @@ class Conversations(BaseApi):
         super(Conversations, self).__init__(*args, **kwargs)
         self.endpoint = 'conversations'
         self.conversation_id = None
-        self.messages = ConversationMessages(self)
+        self.messages = ConversationMessages(*args, **kwargs)
 
 
     # Paid feature

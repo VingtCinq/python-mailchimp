@@ -23,7 +23,7 @@ class ReportClickDetailReports(BaseApi):
         self.endpoint = 'reports'
         self.campaign_id = None
         self.link_id = None
-        self.members = ReportClickDetailMembers(self)
+        self.members = ReportClickDetailMembers(*args, **kwargs)
 
 
     def all(self, campaign_id, get_all=False, **queryparams):

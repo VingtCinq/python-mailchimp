@@ -27,10 +27,10 @@ class Campaigns(BaseApi):
         super(Campaigns, self).__init__(*args, **kwargs)
         self.endpoint = 'campaigns'
         self.campaign_id = None
-        self.actions = CampaignActions(self)
-        self.content = CampaignContent(self)
-        self.feedback = CampaignFeedback(self)
-        self.send_checklist = CampaignSendChecklist(self)
+        self.actions = CampaignActions(*args, **kwargs)
+        self.content = CampaignContent(*args, **kwargs)
+        self.feedback = CampaignFeedback(*args, **kwargs)
+        self.send_checklist = CampaignSendChecklist(*args, **kwargs)
 
 
     def create(self, data):

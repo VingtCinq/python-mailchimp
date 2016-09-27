@@ -27,7 +27,7 @@ class StoreCarts(BaseApi):
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
         self.cart_id = None
-        self.lines = StoreCartLines(self)
+        self.lines = StoreCartLines(*args, **kwargs)
 
 
     def create(self, store_id, data):

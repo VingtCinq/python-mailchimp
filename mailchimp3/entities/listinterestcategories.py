@@ -26,7 +26,7 @@ class ListInterestCategories(BaseApi):
         self.endpoint = 'lists'
         self.list_id = None
         self.category_id = None
-        self.interests = ListInterestCategoryInterest(self)
+        self.interests = ListInterestCategoryInterest(*args, **kwargs)
 
 
     def create(self, list_id, data):

@@ -33,16 +33,16 @@ class Reports(BaseApi):
         super(Reports, self).__init__(*args, **kwargs)
         self.endpoint = 'reports'
         self.campaign_id = None
-        self.abuse_reports = ReportCampaignAbuseReports(self)
-        self.advice = ReportCampaignAdvice(self)
-        self.click_details = ReportClickDetailReports(self)
-        self.domain_performance = ReportDomainPerformance(self)
-        self.eepurl = ReportEepURL(self)
-        self.email_activity = ReportEmailActivity(self)
-        self.locations = ReportLocations(self)
-        self.sent_to = ReportSentTo(self)
-        self.subreports = ReportSubReports(self)
-        self.unsubscribes = ReportUnsubscribes(self)
+        self.abuse_reports = ReportCampaignAbuseReports(*args, **kwargs)
+        self.advice = ReportCampaignAdvice(*args, **kwargs)
+        self.click_details = ReportClickDetailReports(*args, **kwargs)
+        self.domain_performance = ReportDomainPerformance(*args, **kwargs)
+        self.eepurl = ReportEepURL(*args, **kwargs)
+        self.email_activity = ReportEmailActivity(*args, **kwargs)
+        self.locations = ReportLocations(*args, **kwargs)
+        self.sent_to = ReportSentTo(*args, **kwargs)
+        self.subreports = ReportSubReports(*args, **kwargs)
+        self.unsubscribes = ReportUnsubscribes(*args, **kwargs)
 
 
     def all(self, get_all=False, **queryparams):

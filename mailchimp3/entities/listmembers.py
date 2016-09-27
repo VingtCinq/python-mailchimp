@@ -28,10 +28,10 @@ class ListMembers(BaseApi):
         self.endpoint = 'lists'
         self.list_id = None
         self.subscriber_hash = None
-        self.activity = ListMemberActivity(self)
-        self.events = ListMemberEvents(self)
-        self.goals = ListMemberGoals(self)
-        self.notes = ListMemberNotes(self)
+        self.activity = ListMemberActivity(*args, **kwargs)
+        self.events = ListMemberEvents(*args, **kwargs)
+        self.goals = ListMemberGoals(*args, **kwargs)
+        self.notes = ListMemberNotes(*args, **kwargs)
 
 
     def create(self, list_id, data):

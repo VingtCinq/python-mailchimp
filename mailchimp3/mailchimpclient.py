@@ -110,6 +110,8 @@ class MailChimpClient(object):
             raise e
         else:
             r.raise_for_status()
+            if r.status_code == 204:
+                return
             return r.json()
 
 

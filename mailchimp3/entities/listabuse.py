@@ -12,10 +12,10 @@ class ListAbuse(BaseApi):
         """
         returns list of abuse complaints for a specific list.
         """
-        return self._mc_client._get(url=self._build_path(list_id, 'abuse-report'), **queryparams)
+        return self._mc_client._get(url=self._build_path(list_id, 'abuse-reports'), **queryparams)
 
     def get(self, list_id, abuse_id):
         """
         returns an individual abuse report.
         """
-        return self._mc_client._get(url=self._build_path(list_id, 'abuse-report', abuse_id))
+        return self._mc_client._get(url=self._build_path(list_id, 'abuse-reports', abuse_id))

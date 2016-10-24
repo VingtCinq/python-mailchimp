@@ -27,6 +27,11 @@ below carefully for information on the new structure and expanded
 functionality. With this release, all documented endpoints are implemented and
 all endpoint methods are available.
 
+History
+~~~~~~~
+
+Up to date with `changelog`_ features listed thru 9/28/2016.
+
 Initialization
 ~~~~~~~~~~~~~~
 
@@ -167,6 +172,8 @@ MailChimp
 |  +- Sent To
 |  +- Sub-Reports
 |  +- Unsubscribes
++- Search Campaigns
++- Search Members
 +- Template Folders
 +- Templates
    +- Default Content
@@ -596,8 +603,9 @@ List Segments
 
     client.lists.segments.create(list_id='', data={})
     client.lists.segments.all(list_id='', get_all=False)
-    client.lists.segments.gett(list_id='', segment_id='')
+    client.lists.segments.get(list_id='', segment_id='')
     client.lists.segments.update(list_id='', segment_id='', data={})
+    client.lists.segments.update_members(list_id='', segment_id='', data={})
     client.lists.segments.delete(list_id='', segment_id='')
 
 List Segment Members
@@ -730,6 +738,23 @@ Unsubscribes
     client.reports.unsubscribes.all(campaign_id='', get_all=False)
     client.reports.unsubscribes.get(campaign_id='', subscriber_hash='')
 
+Search
+~~~~~~
+
+Campaigns
+^^^^^^^^^
+
+::
+
+   client.search_campaigns.get()
+
+Members
+^^^^^^^
+
+::
+
+   client.search_members.get()
+
 Templates
 ~~~~~~~~~
 
@@ -776,3 +801,4 @@ The project is licensed under the MIT License.
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
+.. _changelog: http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/

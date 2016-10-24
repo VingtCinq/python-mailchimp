@@ -74,6 +74,10 @@ from mailchimp3.entities.reportlocations import ReportLocations
 from mailchimp3.entities.reportsentto import ReportSentTo
 from mailchimp3.entities.reportsubreports import ReportSubReports
 from mailchimp3.entities.reportunsubscribes import ReportUnsubscribes
+# Search Campaigns
+from mailchimp3.entities.searchcampaigns import SearchCampaigns
+# Search Members
+from mailchimp3.entities.searchmembers import SearchMembers
 # Template Folders
 from mailchimp3.entities.templatefolders import TemplateFolders
 # Templates
@@ -159,6 +163,10 @@ class MailChimp(MailChimpClient):
         self.reports.sent_to = ReportSentTo(self)
         self.reports.subreports = ReportSubReports(self)
         self.reports.unsubscribes = ReportUnsubscribes(self)
+        # Search Campaigns
+        self.search_campaigns = SearchCampaigns(self)
+        # Search Members
+        self.search_members = SearchMembers(self)
         # Template Folders
         self.template_folders = TemplateFolders(self)
         # Templates

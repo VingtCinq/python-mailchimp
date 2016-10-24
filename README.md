@@ -7,7 +7,6 @@
 A straighforward python client for v3 of MailChimp API using requests >=
 2.7.0.
 
-
 ## Getting Started
 
 ### Installation
@@ -25,6 +24,10 @@ this wrapper and the way in which certain methods are called. Please
 read the documentation below carefully for information on the new
 structure and expanded functionality. With this release, all documented
 endpoints are implemented and all endpoint methods are available.
+
+### History
+
+Up to date with [changelog](http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/) features listed thru 9/28/2016.
 
 ### Initialization
 
@@ -153,6 +156,8 @@ MailChimp
 |  +- Sent To
 |  +- Sub-Reports
 |  +- Unsubscribes
++- Seach Campaigns
++- Search Members
 +- Template Folders
 +- Templates
    +- Default Content
@@ -453,8 +458,9 @@ above with the name `client`.
 
     client.lists.segments.create(list_id='', data={})
     client.lists.segments.all(list_id='', get_all=False)
-    client.lists.segments.gett(list_id='', segment_id='')
+    client.lists.segments.get(list_id='', segment_id='')
     client.lists.segments.update(list_id='', segment_id='', data={})
+    client.lists.segments.update_members(list_id='', segment_id='', data={})
     client.lists.segments.delete(list_id='', segment_id='')
 
 #### List Segment Members
@@ -537,6 +543,16 @@ above with the name `client`.
 
     client.reports.unsubscribes.all(campaign_id='', get_all=False)
     client.reports.unsubscribes.get(campaign_id='', subscriber_hash='')
+
+### Search
+
+#### Campaigns
+
+    client.search_campaigns.get()
+
+#### Members
+
+    client.search_members.get()
 
 ### Templates
 

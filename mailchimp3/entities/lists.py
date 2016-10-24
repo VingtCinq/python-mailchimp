@@ -186,6 +186,8 @@ class Lists(BaseApi):
         self.list_id = list_id
         try:
             test = data['members']
+            if not len(test) <= 500:
+                raise ValueError('You may only batch sub/unsub 500 members at a time')
         except KeyError as error:
             error.message += ' The update must have at least one member'
             raise

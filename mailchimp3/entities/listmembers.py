@@ -86,6 +86,9 @@ class ListMembers(BaseApi):
         queryparams['since_last_changed'] = string
         queryparams['unique_email_id'] = string
         queryparams['vip_only'] = boolean
+        queryparams['interest_category_id'] = string
+        queryparams['interest_ids'] = string
+        queryparams['interest_match'] = string
         """
         self.list_id = list_id
         self.subscriber_hash = None

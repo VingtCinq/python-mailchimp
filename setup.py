@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 README = os.path.join(os.path.dirname(__file__), 'README.rst')
 
-# when running tests using tox, README.md is not found
+# When running tests using tox, README.md is not found
 try:
     with open(README) as file:
         long_description = file.read()
@@ -15,7 +15,7 @@ except Exception:
 
 setup(
     name='mailchimp3',
-    version='1.0.26',
+    version='2.0.0',
     description='A python client for v3 of MailChimp API',
     long_description=long_description,
     url='https://github.com/charlesthk/python-mailchimp',

@@ -101,7 +101,13 @@ def check_url(url):
 
 def merge_two_dicts(x, y):
     """
-    Given two dicts, merge them into a new dict as a shallow copy.
+    Given two dicts, x and y, merge them into a new dict as a shallow copy.
+
+    The result only differs from `x.update(y)` in the way that it handles list
+    values when both x and y have list values for the same key. In which case
+    the returned dictionary, z, has a value according to:
+      z[key] = x[key] + z[key]
+      
 
     :param x: The first dictionary
     :type x: :py:class:`dict`
@@ -109,14 +115,6 @@ def merge_two_dicts(x, y):
     :type y: :py:class:`dict`
     :returns: The merged dictionary
     :rtype: :py:class:`dict`
-    """
-    def merge_two(x, y):
-    """
-    Merges two dictionaries, x and y. Same as `x.update(y)` except in the case where the values of
-    x[key] and y[key] are both lists, in which case it joins the list values.
-
-    Returns a copy of x, z, updated by y, where:
-      z[key] = x[key] + y[key]
     """
     z = x.copy()
     for key, value in y.items():

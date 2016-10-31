@@ -45,7 +45,7 @@ class BaseApi(object):
         result = self._mc_client._get(url=url, offset=0, count=100, **kwargs)
         total = result['total_items']
         if total > 100:
-            for offset in range(0, int(total / 100) +1):
+            for offset in range(1, int(total / 100) +1):
                 result = merge_two_dicts(result, self._mc_client._get(
                     url=url,
                     offset=int(offset*100),

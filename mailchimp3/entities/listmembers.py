@@ -166,7 +166,7 @@ class ListMembers(BaseApi):
         except KeyError as error:
             error.message += ' The list member must have a status_if_new'
             raise
-        if data['status'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
+        if data['status_if_new'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
             raise ValueError('The list member status_if_new must be one of "subscribed", "unsubscribed", "cleaned", '
                              'or "pending"')
         return self._mc_client._put(url=self._build_path(list_id, 'members', subscriber_hash), data=data)

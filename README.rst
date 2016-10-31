@@ -80,10 +80,10 @@ Examples
 ::
 
     # returns all the lists (only name and id)
-    client.lists.all(get_all=True, fields="lists.name,lists.id")
+    client.lists.all(fields="lists.name,lists.id", get_all=True)
 
     # returns all members inside list '123456'
-    client.lists.members.all(get_all=True, '123456')
+    client.lists.members.all('123456', get_all=True)
 
     # return the first 100 member's email addresses for the list with id 123456
     client.lists.members.all('123456', count=100, offset=0, fields="members.email_address")

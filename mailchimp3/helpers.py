@@ -110,6 +110,18 @@ def merge_two_dicts(x, y):
     :returns: The merged dictionary
     :rtype: :py:class:`dict`
     """
+    def merge_two(x, y):
+    """
+    Merges two dictionaries, x and y. Same as `x.update(y)` except in the case where the values of
+    x[key] and y[key] are both lists, in which case it joins the list values.
+
+    Returns a copy of x, z, updated by y, where:
+      z[key] = x[key] + y[key]
+    """
     z = x.copy()
-    z.update(y)
+    for key, value in y.items():
+        if isinstance(value, list) and isinstance(z.get(key, None), list):
+            z[key] += value
+        else:
+            z[key] = value
     return z

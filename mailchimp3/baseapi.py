@@ -44,11 +44,11 @@ class BaseApi(object):
         """
         #fields as a kwarg ought to be a string with comma-separated substring
         #values to pass along to self._mc_client._get(). it also ought to
-        #contain 'total_items' in all cases, so that is enforced here
+        #contain total_items whenever the kwarg is employed, this is enforced
         if 'fields' in kwargs:
             if not 'total_items' in kwargs['fields'].split(','):
                 kwargs['fields'] += ',total_items'
-        #Fetch results from mailchmimp, up to first 100
+        #Fetch results from mailchimp, up to first 100
         result = self._mc_client._get(url=url, offset=0, count=100, **kwargs)
         total = result['total_items']
         #Fetch further results if necessary

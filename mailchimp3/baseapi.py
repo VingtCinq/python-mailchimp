@@ -48,7 +48,8 @@ class BaseApi(object):
         if kwargs.get('fields') is None:
             kwargs['fields'] = 'total_items'
         else:  # assume well formed string, just missing 'total_items'
-            kwargs['fields'] += ',total_items'
+            if not 'total_items' in kwargs['fields'].split(','):
+                kwargs['fields'] += ',total_items'
 
         #Fetch results from mailchmimp, up to first 100
         result = self._mc_client._get(url=url, offset=0, count=100, **kwargs)

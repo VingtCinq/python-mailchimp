@@ -57,7 +57,7 @@ class BaseApi(object):
         total = result['total_items']
         #Fetch further results if necessary
         if total > 100:
-            for offset in range(1, int(total / 100) +1):
+            for offset in range(1, int(total / 100) + 1):
                 result = merge_results(result, self._mc_client._get(
                     url=url,
                     offset=int(offset*100),

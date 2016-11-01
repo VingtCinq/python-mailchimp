@@ -7,6 +7,9 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Customers/Instance
 """
 from __future__ import unicode_literals
 
+import six
+import sys
+
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.helpers import check_email
 
@@ -46,19 +49,19 @@ class StoreCustomers(BaseApi):
         try:
             test = data['id']
         except KeyError as error:
-            error.message += ' The store customer must have an id'
-            raise
+            new_msg = 'The store customer must have an id, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['email_address']
         except KeyError as error:
-            error.message += ' The store customer must have an email_address'
-            raise
+            new_msg = 'The store customer must have an email_address, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         check_email(data['email_address'])
         try:
             test = data['opt_in_status']
         except KeyError as error:
-            error.message += ' The store customer must have an opt_in_status'
-            raise
+            new_msg = 'The store customer must have an opt_in_status, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         if data['opt_in_status'] not in [True, False]:
             raise TypeError('The opt_in_status must be True or False')
         response = self._mc_client._post(url=self._build_path(store_id, 'customers'), data=data)
@@ -146,19 +149,19 @@ class StoreCustomers(BaseApi):
         try:
             test = data['id']
         except KeyError as error:
-            error.message += ' The store customer must have an id'
-            raise
+            new_msg = 'The store customer must have an id, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['email_address']
         except KeyError as error:
-            error.message += ' Each store customer must have an email_address'
-            raise
+            new_msg = 'Each store customer must have an email_address, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         check_email(data['email_address'])
         try:
             test = data['opt_in_status']
         except KeyError as error:
-            error.message += ' The store customer must have an opt_in_status'
-            raise
+            new_msg = 'The store customer must have an opt_in_status, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         if data['opt_in_status'] not in [True, False]:
             raise TypeError('The opt_in_status must be True or False')
         return self._mc_client._put(url=self._build_path(store_id, 'customers', customer_id), data=data)

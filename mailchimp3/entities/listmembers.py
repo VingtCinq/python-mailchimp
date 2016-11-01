@@ -7,6 +7,9 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Members/Instance.json
 """
 from __future__ import unicode_literals
 
+import six
+import sys
+
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.listmemberactivity import ListMemberActivity
 from mailchimp3.entities.listmembergoals import ListMemberGoals
@@ -49,16 +52,16 @@ class ListMembers(BaseApi):
         try:
             test = data['status']
         except KeyError as error:
-            error.message += ' The list member must have a status'
-            raise
+            new_msg = 'The list member must have a status, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         if data['status'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
             raise ValueError('The list member status must be one of "subscribed", "unsubscribed", "cleaned", or '
                              '"pending"')
         try:
             test = data['email_address']
         except KeyError as error:
-            error.message += ' The list member must have an email_address'
-            raise
+            new_msg = 'The list member must have an email_address, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         check_email(data['email_address'])
         response = self._mc_client._post(url=self._build_path(list_id, 'members'), data=data)
         if response is not None:
@@ -161,14 +164,14 @@ class ListMembers(BaseApi):
         try:
             test = data['email_address']
         except KeyError as error:
-            error.message += ' The list member must have an email_address'
-            raise
+            new_msg = 'The list member must have an email_address, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         check_email(data['email_address'])
         try:
             test = data['status_if_new']
         except KeyError as error:
-            error.message += ' The list member must have a status_if_new'
-            raise
+            new_msg = 'The list member must have a status_if_new, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         if data['status_if_new'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
             raise ValueError('The list member status_if_new must be one of "subscribed", "unsubscribed", "cleaned", '
                              'or "pending"')

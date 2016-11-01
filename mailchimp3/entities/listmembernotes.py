@@ -7,6 +7,9 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Members/Notes/Instance.json
 """
 from __future__ import unicode_literals
 
+import six
+import sys
+
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.helpers import check_subscriber_hash
 
@@ -51,8 +54,8 @@ class ListMemberNotes(BaseApi):
         try:
             test = data['note']
         except KeyError as error:
-            error.message += ' The list member note must have a note'
-            raise
+            new_msg = 'The list member note must have a note, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         response = self._mc_client._post(url=self._build_path(list_id, 'members', subscriber_hash, 'notes'), data=data)
         if response is not None:
             self.note_id = response['id']
@@ -141,8 +144,8 @@ class ListMemberNotes(BaseApi):
         try:
             test = data['note']
         except KeyError as error:
-            error.message += ' The list member note must have a note'
-            raise
+            new_msg = 'The list member note must have a note, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         return self._mc_client._patch(
             url=self._build_path(list_id, 'members', subscriber_hash, 'notes', note_id),
             data=data

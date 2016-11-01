@@ -72,7 +72,7 @@ email_address and id for each member in list 123456:
 
 ::
 
-    client.lists.members.all(get_all=True, '123456', fields="members.email_address,members.id")
+    client.lists.members.all('123456', get_all=True, fields="members.email_address,members.id")
 
 Examples
 ~~~~~~~~
@@ -83,7 +83,7 @@ Examples
     client.lists.all(get_all=True, fields="lists.name,lists.id")
 
     # returns all members inside list '123456'
-    client.lists.members.all(get_all=True, '123456')
+    client.lists.members.all('123456', get_all=True)
 
     # return the first 100 member's email addresses for the list with id 123456
     client.lists.members.all('123456', count=100, offset=0, fields="members.email_address")

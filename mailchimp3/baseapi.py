@@ -2,7 +2,7 @@
 """
 The base API object that allows constructions of various endpoint paths
 """
-from mailchimp3.helpers import merge_two_dicts
+from mailchimp3.helpers import  merge_results
 
 class BaseApi(object):
     """
@@ -42,16 +42,24 @@ class BaseApi(object):
         kwargs['count'] = integer
         kwargs['offset'] = integer
         """
+        #fields as a kwarg ought to be a string with comma-separated substring
+        #values to pass along to self._mc_client._get(). it also ought to
+        #contain total_items whenever the kwarg is employed, this is enforced
+        if 'fields' in kwargs:
+            if not 'total_items' in kwargs['fields'].split(','):
+                kwargs['fields'] += ',total_items'
+        #Fetch results from mailchimp, up to first 100
         result = self._mc_client._get(url=url, offset=0, count=100, **kwargs)
         total = result['total_items']
+        #Fetch further results if necessary
         if total > 100:
-            for offset in range(0, int(total / 100) +1):
-                result = merge_two_dicts(result, self._mc_client._get(
+            for offset in range(1, int(total / 100) + 1):
+                result = merge_results(result, self._mc_client._get(
                     url=url,
                     offset=int(offset*100),
                     count=100,
                     **kwargs
                 ))
             return result
-        else:
+        else:  # Further results not necessary
             return result

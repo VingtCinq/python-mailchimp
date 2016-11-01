@@ -45,9 +45,7 @@ class BaseApi(object):
         #fields as a kwarg ought to be a string with comma-separated substring
         #values to pass along to self._mc_client._get(). it also ought to
         #contain 'total_items' in all cases, so that is enforced here
-        if kwargs.get('fields') is None:
-            kwargs['fields'] = 'total_items'
-        else:  # assume well formed string, just missing 'total_items'
+        if 'fields' in kwargs:
             if not 'total_items' in kwargs['fields'].split(','):
                 kwargs['fields'] += ',total_items'
 

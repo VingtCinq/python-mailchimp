@@ -7,6 +7,9 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/InterestCategories/Instance.j
 """
 from __future__ import unicode_literals
 
+import six
+import sys
+
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.listinterestcategoryinterest import ListInterestCategoryInterest
 
@@ -46,13 +49,13 @@ class ListInterestCategories(BaseApi):
         try:
             test = data['title']
         except KeyError as error:
-            error.message += ' The list interest category must have a title'
-            raise
+            new_msg = 'The list interest category must have a title, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['type']
         except KeyError as error:
-            error.message += ' The list interest category must have a type'
-            raise
+            new_msg = 'The list interest category must have a type, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         if data['type'] not in ['checkboxes', 'dropdown', 'radio', 'hidden']:
             raise ValueError('The list interest category type must be one of "checkboxes", "dropdown", "radio", or '
                              '"hidden"')
@@ -124,13 +127,13 @@ class ListInterestCategories(BaseApi):
         try:
             test = data['title']
         except KeyError as error:
-            error.message += ' The list interest category must have a title'
-            raise
+            new_msg = 'The list interest category must have a title, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['type']
         except KeyError as error:
-            error.message += ' The list interest category must have a type'
-            raise
+            new_msg = 'The list interest category must have a type, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         if data['type'] not in ['checkboxes', 'dropdown', 'radio', 'hidden']:
             raise ValueError('The list interest category type must be one of "checkboxes", "dropdown", "radio", or '
                              '"hidden"')

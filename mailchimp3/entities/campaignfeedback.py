@@ -7,6 +7,9 @@ Schema: https://api.mailchimp.com/schema/3.0/Campaigns/Feedback/Instance.json
 """
 from __future__ import unicode_literals
 
+import six
+import sys
+
 from mailchimp3.baseapi import BaseApi
 
 
@@ -44,8 +47,8 @@ class CampaignFeedback(BaseApi):
         try:
             test = data['message']
         except KeyError as error:
-            error.message += ' The campaign feedback must have a message'
-            raise
+            new_msg = 'The campaign feedback must have a message, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         response = self._mc_client._post(url=self._build_path(campaign_id, 'feedback'), data=data, **queryparams)
         if response is not None:
             self.feedback_id = response['feedback_id']
@@ -111,8 +114,8 @@ class CampaignFeedback(BaseApi):
         try:
             test = data['message']
         except KeyError as error:
-            error.message += ' The campaign feedback must have a message'
-            raise
+            new_msg = 'The campaign feedback must have a message, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         return self._mc_client._patch(url=self._build_path(campaign_id, 'feedback', feedback_id), data=data)
 
 

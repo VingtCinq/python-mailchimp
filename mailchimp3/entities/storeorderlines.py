@@ -7,6 +7,9 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Customers/Instance
 """
 from __future__ import unicode_literals
 
+import six
+import sys
+
 from mailchimp3.baseapi import BaseApi
 
 
@@ -49,28 +52,28 @@ class StoreOrderLines(BaseApi):
         try:
             test = data['id']
         except KeyError as error:
-            error.message += ' The order line must have an id'
-            raise
+            new_msg = 'The order line must have an id, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['product_id']
         except KeyError as error:
-            error.message += ' The order line must have a product_id'
-            raise
+            new_msg = 'The order line must have a product_id, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['product_variant_id']
         except KeyError as error:
-            error.message += ' The order line must have a product_variant_id'
-            raise
+            new_msg = 'The order line must have a product_variant_id, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['quantity']
         except KeyError as error:
-            error.message += ' The order line must have a quantity'
-            raise
+            new_msg = 'The order line must have a quantity, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['price']
         except KeyError as error:
-            error.message += ' The order line must have a price'
-            raise
+            new_msg = 'The order line must have a price, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         response = self._mc_client._post(url=self._build_path(store_id, 'orders', order_id, 'lines'))
         if response is not None:
             self.line_id = response['id']

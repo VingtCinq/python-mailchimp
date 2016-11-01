@@ -7,6 +7,9 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/MergeFields/Instance.json
 """
 from __future__ import unicode_literals
 
+import six
+import sys
+
 from mailchimp3.baseapi import BaseApi
 
 
@@ -41,13 +44,13 @@ class ListMergeFields(BaseApi):
         try:
             test = data['name']
         except KeyError as error:
-            error.message += ' The list merge field must have a name'
-            raise
+            new_msg = 'The list merge field must have a name, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['type']
         except KeyError as error:
-            error.message += ' The list merge field must have a type'
-            raise
+            new_msg = 'The list merge field must have a type, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         response = self._mc_client._post(url=self._build_path(list_id, 'merge-fields'), data=data)
         if response is not None:
             self.merge_id = response['id']
@@ -113,8 +116,8 @@ class ListMergeFields(BaseApi):
         try:
             test = data['name']
         except KeyError as error:
-            error.message += ' The list merge field must have a name'
-            raise
+            new_msg = 'The list merge field must have a name, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         return self._mc_client._patch(url=self._build_path(list_id, 'merge-fields', merge_id), data=data)
 
 

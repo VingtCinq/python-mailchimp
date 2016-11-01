@@ -7,6 +7,9 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Products/Variants/
 """
 from __future__ import unicode_literals
 
+import six
+import sys
+
 from mailchimp3.baseapi import BaseApi
 
 
@@ -47,12 +50,13 @@ class StoreProductVariants(BaseApi):
         try:
             test = data['id']
         except KeyError as error:
-            error.message += ' The product variant must have an id'
-            raise
+            new_msg = 'The product variant must have an id, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['title']
         except KeyError as error:
-            error.message += ' The product variant must have a title'
+            new_msg = 'The product variant must have a title, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         response = self._mc_client._post(url=self._build_path(store_id, 'products', product_id, 'variants'), data=data)
         if response is not None:
             self.variant_id = response['id']
@@ -154,13 +158,13 @@ class StoreProductVariants(BaseApi):
         try:
             test = data['id']
         except KeyError as error:
-            error.message += ' The product variant must have an id'
-            raise
+            new_msg = 'The product variant must have an id, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['title']
         except KeyError as error:
-            error.message += ' The product variant must have a title'
-            raise
+            new_msg = 'The product variant must have a title, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         return self._mc_client._put(
             url=self._build_path(store_id, 'products', product_id, 'variants', variant_id),
             data=data

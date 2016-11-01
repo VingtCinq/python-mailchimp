@@ -7,6 +7,9 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Interests/Instance.json
 """
 from __future__ import unicode_literals
 
+import six
+import sys
+
 from mailchimp3.baseapi import BaseApi
 
 
@@ -50,8 +53,8 @@ class ListInterestCategoryInterest(BaseApi):
         try:
             test = data['name']
         except KeyError as error:
-            error.message += ' The list interest category interest must have a name'
-            raise
+            new_msg = 'The list interest category interest must have a name, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         response =  self._mc_client._post(
             url=self._build_path(list_id, 'interest-categories', category_id, 'interests'),
             data=data
@@ -136,8 +139,8 @@ class ListInterestCategoryInterest(BaseApi):
         try:
             test = data['name']
         except KeyError as error:
-            error.message += ' The list interest category interest must have a name'
-            raise
+            new_msg = 'The list interest category interest must have a name, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         return self._mc_client._patch(
             url=self._build_path(list_id, 'interest-categories', category_id, 'interests', interest_id),
             data=data

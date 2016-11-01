@@ -7,6 +7,9 @@ Schema: https://api.mailchimp.com/schema/3.0/FileManager/Files/Instance.json
 """
 from __future__ import unicode_literals
 
+import six
+import sys
+
 from mailchimp3.baseapi import BaseApi
 
 
@@ -39,13 +42,13 @@ class FileManagerFiles(BaseApi):
         try:
             test = data['name']
         except KeyError as error:
-            error.message += ' The file must have a name'
-            raise
+            new_msg = 'The file must have a name, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['file_data']
         except KeyError as error:
-            error.message += ' The file must have file_data'
-            raise
+            new_msg = 'The file must have file_data, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         response = self._mc_client._post(url=self._build_path(), data=data)
         if response is not None:
             self.file_id = response['id']
@@ -110,13 +113,13 @@ class FileManagerFiles(BaseApi):
         try:
             test = data['name']
         except KeyError as error:
-            error.message += ' The file must have a name'
-            raise
+            new_msg = 'The file must have a name, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['file_data']
         except KeyError as error:
-            error.message += ' The file must have file_data'
-            raise
+            new_msg = 'The file must have file_data, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         return self._mc_client._patch(url=self._build_path(file_id), data=data)
 
 

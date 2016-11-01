@@ -7,6 +7,9 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Webhooks/Instance.json
 """
 from __future__ import unicode_literals
 
+import six
+import sys
+
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.helpers import check_url
 
@@ -46,8 +49,8 @@ class ListWebhooks(BaseApi):
         try:
             test = data['url']
         except KeyError as error:
-            error.message += ' The list webhook must have a url'
-            raise
+            new_msg = 'The list webhook must have a url, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         check_url(data['url'])
         response = self._mc_client._post(url=self._build_path(list_id, 'webhooks'), data=data)
         if response is not None:

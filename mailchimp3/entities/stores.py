@@ -8,6 +8,8 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Instance.json
 from __future__ import unicode_literals
 
 import re
+import six
+import sys
 
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.storecarts import StoreCarts
@@ -55,23 +57,23 @@ class Stores(BaseApi):
         try:
             test = data['id']
         except KeyError as error:
-            error.message += ' The store must have an id'
-            raise
+            new_msg = 'The store must have an id, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['list_id']
         except KeyError as error:
-            error.message += ' The store must have a list_id'
-            raise
+            new_msg = 'The store must have a list_id, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['name']
         except KeyError as error:
-            error.message += ' The store must have a name'
-            raise
+            new_msg = 'The store must have a name, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['currency_code']
         except KeyError as error:
-            error.message += ' The store must have a currency_code'
-            raise
+            new_msg = 'The store must have a currency_code, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         if not re.match(r"^[A-Z]{3}$", data['currency_code']):
             raise ValueError('The currency_code must be a valid 3-letter ISO 4217 currency code')
         response = self._mc_client._post(url=self._build_path(), data=data)

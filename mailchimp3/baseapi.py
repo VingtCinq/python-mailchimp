@@ -50,8 +50,8 @@ class BaseApi(object):
                 kwargs['fields'] += ',total_items'
         #Fetch results from mailchmimp, up to first 100
         result = self._mc_client._get(url=url, offset=0, count=100, **kwargs)
-        #Fetch further results if necessary
         total = result['total_items']
+        #Fetch further results if necessary
         if total > 100:
             for offset in range(1, int(total / 100) + 1):
                 result = merge_results(result, self._mc_client._get(

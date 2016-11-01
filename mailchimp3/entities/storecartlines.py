@@ -72,7 +72,10 @@ class StoreCartLines(BaseApi):
             error.message += ' The cart line must have a price'
             raise
         response = self._mc_client._post(url=self._build_path(store_id, 'carts', cart_id, 'lines'), data=data)
-        self.line_id = response['id']
+        if response is not None:
+            self.line_id = response['id']
+        else:
+            self.line_id = None
         return response
 
 

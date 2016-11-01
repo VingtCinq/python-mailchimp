@@ -62,7 +62,10 @@ class StoreCustomers(BaseApi):
         if data['opt_in_status'] not in [True, False]:
             raise TypeError('The opt_in_status must be True or False')
         response = self._mc_client._post(url=self._build_path(store_id, 'customers'), data=data)
-        self.customer_id = response['id']
+        if response is not None:
+            self.customer_id = response['id']
+        else:
+            self.customer_id = None
         return response
 
 

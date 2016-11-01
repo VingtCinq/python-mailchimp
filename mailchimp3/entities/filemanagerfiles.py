@@ -47,7 +47,10 @@ class FileManagerFiles(BaseApi):
             error.message += ' The file must have file_data'
             raise
         response = self._mc_client._post(url=self._build_path(), data=data)
-        self.file_id = response['id']
+        if response is not None:
+            self.file_id = response['id']
+        else:
+            self.file_id = None
         return response
 
 

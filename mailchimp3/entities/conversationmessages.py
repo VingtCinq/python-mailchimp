@@ -56,7 +56,10 @@ class ConversationMessages(BaseApi):
         if data['read'] not in [True, False]:
             raise TypeError('The conversation message read must be True or False')
         response =  self._mc_client._post(url=self._build_path(conversation_id, 'messages'), data=data)
-        self.message_id = response['id']
+        if response is not None:
+            self.message_id = response['id']
+        else:
+            self.message_id = None
         return response
 
 

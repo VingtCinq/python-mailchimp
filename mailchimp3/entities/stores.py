@@ -75,7 +75,10 @@ class Stores(BaseApi):
         if not re.match(r"^[A-Z]{3}$", data['currency_code']):
             raise ValueError('The currency_code must be a valid 3-letter ISO 4217 currency code')
         response = self._mc_client._post(url=self._build_path(), data=data)
-        self.store_id = response['id']
+        if response is not None:
+            self.store_id = response['id']
+        else:
+            self.store_id = None
         return response
 
 

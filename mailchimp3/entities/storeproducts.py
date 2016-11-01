@@ -76,7 +76,10 @@ class StoreProducts(BaseApi):
                 error.message += ' Each product variant must have a title'
                 raise
         response = self._mc_client._post(url=self._build_path(store_id, 'products'), data=data)
-        self.product_id = response['id']
+        if response is not None:
+            self.product_id = response['id']
+        else:
+            self.product_id = None
         return response
 
 

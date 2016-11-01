@@ -78,7 +78,10 @@ class ListTwitterLeadGenerationCards(BaseApi):
             error.message += ' The twitter lead generation card must have a twitter_account_id'
             raise
         response = self._mc_client._post(url=self._build_path(list_id, 'twitter-lead-gen-cards'), data=data)
-        self.twitter_card_id = response['id']
+        if response is not None:
+            self.twitter_card_id = response['id']
+        else:
+            self.twitter_card_id = None
         return response
 
 

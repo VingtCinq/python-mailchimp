@@ -54,7 +54,10 @@ class StoreProductVariants(BaseApi):
         except KeyError as error:
             error.message += ' The product variant must have a title'
         response = self._mc_client._post(url=self._build_path(store_id, 'products', product_id, 'variants'), data=data)
-        self.variant_id = response['id']
+        if response is not None:
+            self.variant_id = response['id']
+        else:
+            self.variant_id = None
         return response
 
 

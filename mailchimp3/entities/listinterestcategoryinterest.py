@@ -56,7 +56,10 @@ class ListInterestCategoryInterest(BaseApi):
             url=self._build_path(list_id, 'interest-categories', category_id, 'interests'),
             data=data
         )
-        self.interest_id = response['id']
+        if response is not None:
+            self.interest_id = response['id']
+        else:
+            self.interest_id = None
         return response
 
 

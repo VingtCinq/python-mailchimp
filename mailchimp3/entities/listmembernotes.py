@@ -54,7 +54,10 @@ class ListMemberNotes(BaseApi):
             error.message += ' The list member note must have a note'
             raise
         response = self._mc_client._post(url=self._build_path(list_id, 'members', subscriber_hash, 'notes'), data=data)
-        self.note_id = response['id']
+        if response is not None:
+            self.note_id = response['id']
+        else:
+            self.note_id = None
         return response
 
 

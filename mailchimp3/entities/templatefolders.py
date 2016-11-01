@@ -39,7 +39,10 @@ class TemplateFolders(BaseApi):
             error.message += ' The template folder must have a name'
             raise
         response = self._mc_client._post(url=self._build_path(), data=data)
-        self.folder_id = response['id']
+        if response is not None:
+            self.folder_id = response['id']
+        else:
+            self.folder_id = None
         return response
 
 

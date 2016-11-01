@@ -47,7 +47,10 @@ class ListSegments(BaseApi):
             error.message += ' The list segment must have a name'
             raise
         response = self._mc_client._post(url=self._build_path(list_id, 'segments'), data=data)
-        self.segment_id = response['id']
+        if response is not None:
+            self.segment_id = response['id']
+        else:
+            self.segment_id = None
         return response
 
 

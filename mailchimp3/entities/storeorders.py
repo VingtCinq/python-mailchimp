@@ -119,7 +119,10 @@ class StoreOrders(BaseApi):
                 error.message += ' Each order line must have a price'
                 raise
         response = self._mc_client._post(url=self._build_path(store_id, 'orders'), data=data)
-        self.order_id = response['id']
+        if response is not None:
+            self.order_id = response['id']
+        else:
+            self.order_id = None
         return response
 
 

@@ -50,7 +50,10 @@ class ListWebhooks(BaseApi):
             raise
         check_url(data['url'])
         response = self._mc_client._post(url=self._build_path(list_id, 'webhooks'), data=data)
-        self.webhook_id = response['id']
+        if response is not None:
+            self.webhook_id = response['id']
+        else:
+            self.webhook_id = None
         return response
 
 

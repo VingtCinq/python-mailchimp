@@ -57,7 +57,10 @@ class ListInterestCategories(BaseApi):
             raise ValueError('The list interest category type must be one of "checkboxes", "dropdown", "radio", or '
                              '"hidden"')
         response = self._mc_client._post(url=self._build_path(list_id, 'interest-categories'), data=data)
-        self.category_id = response['id']
+        if response is not None:
+            self.category_id = response['id']
+        else:
+            self.category_id = None
         return response
 
 

@@ -47,7 +47,10 @@ class CampaignFeedback(BaseApi):
             error.message += ' The campaign feedback must have a message'
             raise
         response = self._mc_client._post(url=self._build_path(campaign_id, 'feedback'), data=data, **queryparams)
-        self.feedback_id = response['feedback_id']
+        if response is not None:
+            self.feedback_id = response['feedback_id']
+        else:
+            self.feedback_id = None
         return response
 
 

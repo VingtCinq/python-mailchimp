@@ -63,7 +63,10 @@ class ListSegmentMembers(BaseApi):
             raise ValueError('The list segment member status must be one of "subscribed", "unsubscribed", "cleaned" or'
                              '"pending"')
         response = self._mc_client._post(url=self._build_path(list_id, 'segments', segment_id, 'members'), data=data)
-        self.subscriber_hash = response['id']
+        if response is not None:
+            self.subscriber_hash = response['id']
+        else:
+            self.subscriber_hash = None
         return response
 
 

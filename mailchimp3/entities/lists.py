@@ -153,7 +153,10 @@ class Lists(BaseApi):
         if data['email_type_option'] not in [True, False]:
             raise TypeError('The list email_type_option must be True or False')
         response = self._mc_client._post(url=self._build_path(), data=data)
-        self.list_id = response['id']
+        if response is not None:
+            self.list_id = response['id']
+        else:
+            self.list_id = None
         return response
 
 

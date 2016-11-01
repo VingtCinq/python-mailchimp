@@ -61,7 +61,10 @@ class ListMembers(BaseApi):
             raise
         check_email(data['email_address'])
         response = self._mc_client._post(url=self._build_path(list_id, 'members'), data=data)
-        self.subscriber_hash = response['id']
+        if response is not None:
+            self.subscriber_hash = response['id']
+        else:
+            self.subscriber_hash = None
         return response
 
 

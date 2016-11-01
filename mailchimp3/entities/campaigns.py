@@ -118,7 +118,10 @@ class Campaigns(BaseApi):
             if not data['rss_opts']['frequency'] in ['daily', 'weekly', 'monthly']:
                 raise ValueError('The rss_opts frequency must be one of "daily", "weekly", or "monthly"')
         response = self._mc_client._post(url=self._build_path(), data=data)
-        self.campaign_id = response['id']
+        if response is not None:
+            self.campaign_id = response['id']
+        else:
+            self.campaign_id = None
         return response
 
 

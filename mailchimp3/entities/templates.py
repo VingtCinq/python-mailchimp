@@ -49,7 +49,10 @@ class Templates(BaseApi):
             error.message += ' The template must have html'
             raise
         response = self._mc_client._post(url=self._build_path(), data=data)
-        self.template_id = response['id']
+        if response is not None:
+            self.template_id = response['id']
+        else:
+            self.template_id = None
         return response
 
 

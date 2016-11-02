@@ -167,12 +167,11 @@ class Lists(BaseApi):
         """
         Batch subscribe or unsubscribe list members.
 
-        Only the members array is required in the request body parameters, but
-        the description of it mentions both the email_address and status
-        values, so those are going to be treated as required. The
-        update_existing parameter will also be considered required to help
-        prevent accidental updates to existing members and will default to
-        false if not present.
+        Only the members array is required in the request body parameters. 
+        Within the members array, each member requires an email_address 
+        and either a status or status_if_new. The update_existing parameter
+        will also be considered required to help prevent accidental updates
+        to existing members and will default to false if not present.
 
         :param list_id: The unique id for the list.
         :type list_id: :py:class:`str`
@@ -183,7 +182,8 @@ class Lists(BaseApi):
             [
                 {
                     "email_address": string*,
-                    "status": string* (Must be one of 'subscribed', 'unsubscribed', 'cleaned', or 'pending')
+                    "status": string* (Must be one of 'subscribed', 'unsubscribed', 'cleaned', or 'pending'),
+                    "status_if_new": string* (Must be one of 'subscribed', 'unsubscribed', 'cleaned', or 'pending')
                 }
             ],
             "update_existing": boolean*

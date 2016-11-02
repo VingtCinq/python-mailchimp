@@ -216,7 +216,7 @@ class Lists(BaseApi):
             test = data['update_existing']
         except KeyError:
             data['update_existing'] = False
-        return self._mc_client._post(url=self._build_path(), data=data)
+        return self._mc_client._post(url=self._build_path(list_id), data=data)
 
 
     def all(self, get_all=False, **queryparams):

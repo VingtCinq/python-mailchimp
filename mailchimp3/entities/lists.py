@@ -204,14 +204,15 @@ class Lists(BaseApi):
                 new_msg = 'Each list member must have an email_address, {}'.format(error)
                 six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
             check_email(member['email_address'])
-            try:
-                test = member['status']
-            except KeyError as error:
-                new_msg = 'Each list member must have a status, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-            if member['status'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
+            if 'status' not in member and 'status_if_new' not in member:
+                raise KeyError('Each list member must have either a status or a status_if_new')
+            valid_statuses = ['subscribed', 'unsubscribed', 'cleaned', 'pending']
+            if 'status' in member and member['status'] not in valid_statuses:
                 raise ValueError('The list member status must be one of "subscribed", "unsubscribed", "cleaned", or '
                                  '"pending"')
+            if 'status_if_new' in member and member['status_if_new'] not in valid_statuses:
+                raise ValueError('The list member status_if_new must be one of "subscribed", "unsubscribed", '
+                                 '"cleaned", or "pending"')
         try:
             test = data['update_existing']
         except KeyError:

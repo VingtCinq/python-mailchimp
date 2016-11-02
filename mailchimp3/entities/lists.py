@@ -167,12 +167,11 @@ class Lists(BaseApi):
         """
         Batch subscribe or unsubscribe list members.
 
-        Only the members array is required in the request body parameters, but
-        the description of it mentions both the email_address and status
-        values, so those are going to be treated as required. The
-        update_existing parameter will also be considered required to help
-        prevent accidental updates to existing members and will default to
-        false if not present.
+        Only the members array is required in the request body parameters. 
+        Within the members array, each member requires an email_address 
+        and either a status or status_if_new. The update_existing parameter
+        will also be considered required to help prevent accidental updates
+        to existing members and will default to false if not present.
 
         :param list_id: The unique id for the list.
         :type list_id: :py:class:`str`
@@ -183,7 +182,8 @@ class Lists(BaseApi):
             [
                 {
                     "email_address": string*,
-                    "status": string* (Must be one of 'subscribed', 'unsubscribed', 'cleaned', or 'pending')
+                    "status": string* (Must be one of 'subscribed', 'unsubscribed', 'cleaned', or 'pending'),
+                    "status_if_new": string* (Must be one of 'subscribed', 'unsubscribed', 'cleaned', or 'pending')
                 }
             ],
             "update_existing": boolean*
@@ -204,14 +204,15 @@ class Lists(BaseApi):
                 new_msg = 'Each list member must have an email_address, {}'.format(error)
                 six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
             check_email(member['email_address'])
-            try:
-                test = member['status']
-            except KeyError as error:
-                new_msg = 'Each list member must have a status, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-            if member['status'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
+            if 'status' not in member and 'status_if_new' not in member:
+                raise KeyError('Each list member must have either a status or a status_if_new')
+            valid_statuses = ['subscribed', 'unsubscribed', 'cleaned', 'pending']
+            if 'status' in member and member['status'] not in valid_statuses:
                 raise ValueError('The list member status must be one of "subscribed", "unsubscribed", "cleaned", or '
                                  '"pending"')
+            if 'status_if_new' in member and member['status_if_new'] not in valid_statuses:
+                raise ValueError('The list member status_if_new must be one of "subscribed", "unsubscribed", '
+                                 '"cleaned", or "pending"')
         try:
             test = data['update_existing']
         except KeyError:

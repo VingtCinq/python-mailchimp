@@ -74,12 +74,11 @@ class Campaigns(BaseApi):
         except KeyError as error:
             new_msg = 'The campaign must have recipients, {}'.format(error)
             six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        for recipient in data['recipients']:
-            try:
-                test = recipient['list_id']
-            except KeyError as error:
-                new_msg = 'The campaign recipient must have a list_id, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        try:
+            test = data['recipients']['list_id']
+        except KeyError as error:
+            new_msg = 'The campaign recipients must have a list_id, {}'.format(error)
+            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         try:
             test = data['settings']['subject_line']
         except KeyError as error:

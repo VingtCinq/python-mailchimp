@@ -30,7 +30,7 @@ all endpoint methods are available.
 History
 ~~~~~~~
 
-Up to date with `changelog`_ features listed thru 9/28/2016.
+Up to date with `changelog`_ features listed thru 10/27/2016.
 
 Initialization
 ~~~~~~~~~~~~~~

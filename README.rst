@@ -115,68 +115,70 @@ All endpoints follow the structure listed in the official MailChimp API v3
 documentation. The structure will be listed below and then the individual
 methods available after.
 
-MailChimp
-+- Root
-+- Authorized Apps
-+- Automations
-|  +- Actions
-|  +- Emails
-|  |  +- Actions
-|  |  +- Queues
-|  +- Removed Subscribers
-+- Batch Operations
-+- Campaign Folders
-+- Campaigns
-|  +- Actions
-|  +- Content
-|  +- Feedback
-|  +- Send Checklist
-+- Conversations
-|  +- Messages
-+- Stores
-|  +- Carts
-|  |  +- Lines
-|  +- Customers
-|  +- Orders
-|  |  +- Lines
-|  +- Products
-|     +- Variants
-+- File Manager Files
-+- File Manager Folders
-+- Lists
-|  +- Abuse Reports
-|  +- Activity
-|  +- Clients
-|  +- Growth History
-|  +- Interest Categories
-|  |  +- Interests
-|  +- Members
-|  |  +- Activity
-|  |  +- Goals
-|  |  +- Notes
-|  +- Merge Fields
-|  +- Segments
-|  |  +- Segment Members
-|  +- Signup Forms
-|  +- Twitter Lead Generation Carts
-|  +- Webhooks
-+- Reports
-|  +- Campaign Abuse
-|  +- Campaign Advice
-|  +- Click Reports
-|  |  +- Members
-|  +- Domain Performance
-|  +- EepURL Reports
-|  +- Email Activity
-|  +- Location
-|  +- Sent To
-|  +- Sub-Reports
-|  +- Unsubscribes
-+- Search Campaigns
-+- Search Members
-+- Template Folders
-+- Templates
-   +- Default Content
+::
+
+    MailChimp
+    +- Root
+    +- Authorized Apps
+    +- Automations
+    |  +- Actions
+    |  +- Emails
+    |  |  +- Actions
+    |  |  +- Queues
+    |  +- Removed Subscribers
+    +- Batch Operations
+    +- Campaign Folders
+    +- Campaigns
+    |  +- Actions
+    |  +- Content
+    |  +- Feedback
+    |  +- Send Checklist
+    +- Conversations
+    |  +- Messages
+    +- Stores
+    |  +- Carts
+    |  |  +- Lines
+    |  +- Customers
+    |  +- Orders
+    |  |  +- Lines
+    |  +- Products
+    |     +- Variants
+    +- File Manager Files
+    +- File Manager Folders
+    +- Lists
+    |  +- Abuse Reports
+    |  +- Activity
+    |  +- Clients
+    |  +- Growth History
+    |  +- Interest Categories
+    |  |  +- Interests
+    |  +- Members
+    |  |  +- Activity
+    |  |  +- Goals
+    |  |  +- Notes
+    |  +- Merge Fields
+    |  +- Segments
+    |  |  +- Segment Members
+    |  +- Signup Forms
+    |  +- Twitter Lead Generation Carts
+    |  +- Webhooks
+    +- Reports
+    |  +- Campaign Abuse
+    |  +- Campaign Advice
+    |  +- Click Reports
+    |  |  +- Members
+    |  +- Domain Performance
+    |  +- EepURL Reports
+    |  +- Email Activity
+    |  +- Location
+    |  +- Sent To
+    |  +- Sub-Reports
+    |  +- Unsubscribes
+    +- Search Campaigns
+    +- Search Members
+    +- Template Folders
+    +- Templates
+       +- Default Content
 
 API Endpoints
 -------------

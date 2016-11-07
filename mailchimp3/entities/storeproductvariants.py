@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Products/Variants/
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 
 
@@ -47,16 +44,10 @@ class StoreProductVariants(BaseApi):
         """
         self.store_id = store_id
         self.product_id = product_id
-        try:
-            test = data['id']
-        except KeyError as error:
-            new_msg = 'The product variant must have an id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['title']
-        except KeyError as error:
-            new_msg = 'The product variant must have a title, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'id' not in data:
+            raise KeyError('The product variant must have an id')
+        if 'title' not in data:
+            raise KeyError('The product variant must have a title')
         response = self._mc_client._post(url=self._build_path(store_id, 'products', product_id, 'variants'), data=data)
         if response is not None:
             self.variant_id = response['id']
@@ -155,16 +146,10 @@ class StoreProductVariants(BaseApi):
         self.store_id = store_id
         self.product_id = product_id
         self.variant_id = variant_id
-        try:
-            test = data['id']
-        except KeyError as error:
-            new_msg = 'The product variant must have an id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['title']
-        except KeyError as error:
-            new_msg = 'The product variant must have a title, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'id' not in data:
+             raise KeyError('The product variant must have an id')
+        if 'title' not in data:
+            raise KeyError('The product variant must have a title')
         return self._mc_client._put(
             url=self._build_path(store_id, 'products', product_id, 'variants', variant_id),
             data=data

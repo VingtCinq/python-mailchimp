@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Members/Instance.json
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.helpers import check_email, check_subscriber_hash
 
@@ -51,17 +48,11 @@ class ListSegmentMembers(BaseApi):
         """
         self.list_id = list_id
         self.segment_id = segment_id
-        try:
-            test = data['email_address']
-        except KeyError as error:
-            new_msg = 'The list segment member must have an email_address, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'email_address' not in data:
+            raise KeyError('The list segment member must have an email_address')
         check_email(data['email_address'])
-        try:
-            test = data['status']
-        except KeyError as error:
-            new_msg = 'The list segment member must have a status, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'status' not in data:
+            raise KeyError('The list segment member must have a status')
         if data['status'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
             raise ValueError('The list segment member status must be one of "subscribed", "unsubscribed", "cleaned" or'
                              '"pending"')

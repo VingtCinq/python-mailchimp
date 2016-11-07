@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/TwitterLeadGenCards/Instance.
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.helpers import check_url
 
@@ -46,40 +43,22 @@ class ListTwitterLeadGenerationCards(BaseApi):
         }
         """
         self.list_id = list_id
-        try:
-            data['name']
-        except KeyError as error:
-            new_msg = 'The twitter lead generation card must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            data['title']
-        except KeyError as error:
-            new_msg = 'The twitter lead generation card must have a title, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            data['cta_text']
-        except KeyError as error:
-            new_msg = 'The twitter lead generation card must have a cta_text, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The twitter lead generation card must have a name')
+        if 'title' not in data:
+            raise KeyError('The twitter lead generation card must have a title')
+        if 'cta_text' not in data:
+            raise KeyError('The twitter lead generation card must have a cta_text')
         if len(data['cta_text']) > 20:
             raise ValueError('The twitter lead generation card cta_text must be 20 characters or less')
-        try:
-            data['privacy_policy_url']
-        except KeyError as error:
-            new_msg = 'The twitter lead generation card must have a privacy_policy_url, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'privacy_policy_url' not in data:
+            raise KeyError('The twitter lead generation card must have a privacy_policy_url')
         check_url(data['privacy_policy_url'])
-        try:
-            data['image_url']
-        except KeyError as error:
-            new_msg = 'The twitter lead generation card must have a image_url, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'image_url' not in data:
+            raise KeyError('The twitter lead generation card must have a image_url')
         check_url(data['image_url'])
-        try:
-            data['twitter_account_id']
-        except KeyError as error:
-            new_msg = 'The twitter lead generation card must have a twitter_account_id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'twitter_account_id' not in data:
+            raise KeyError('The twitter lead generation card must have a twitter_account_id')
         response = self._mc_client._post(url=self._build_path(list_id, 'twitter-lead-gen-cards'), data=data)
         if response is not None:
             self.twitter_card_id = response['id']

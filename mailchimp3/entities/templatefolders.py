@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/TemplateFolders/Instance.json
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 
 
@@ -36,11 +33,8 @@ class TemplateFolders(BaseApi):
             "name": string*
         }
         """
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The template folder must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The template folder must have a name')
         response = self._mc_client._post(url=self._build_path(), data=data)
         if response is not None:
             self.folder_id = response['id']
@@ -94,11 +88,8 @@ class TemplateFolders(BaseApi):
             "name": string*
         }
         """
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The template folder must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The template folder must have a name')
         self.folder_id = folder_id
         return self._mc_client._patch(url=self._build_path(folder_id), data=data)
 

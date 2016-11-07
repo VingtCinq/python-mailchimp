@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Products/Instance.
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.storeproductvariants import StoreProductVariants
 
@@ -52,32 +49,17 @@ class StoreProducts(BaseApi):
         }
         """
         self.store_id = store_id
-        try:
-            test = data['id']
-        except KeyError as error:
-            new_msg = 'The product must have an id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['title']
-        except KeyError as error:
-            new_msg = 'The product must have a title, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['variants']
-        except KeyError as error:
-            new_msg = 'The product must have at least one variant, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'id' not in data:
+            raise KeyError('The product must have an id')
+        if 'title' not in data:
+            raise KeyError('The product must have a title')
+        if 'variants' not in data:
+            raise KeyError('The product must have at least one variant')
         for variant in data['variants']:
-            try:
-                test = variant['id']
-            except KeyError as error:
-                new_msg = 'Each product variant must have an id, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-            try:
-                test = variant['title']
-            except KeyError as error:
-                new_msg = 'Each product variant must have a title, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+            if 'id' not in variant:
+                raise KeyError('Each product variant must have an id')
+            if 'title' not in variant:
+                raise KeyError('Each product variant must have a title')
         response = self._mc_client._post(url=self._build_path(store_id, 'products'), data=data)
         if response is not None:
             self.product_id = response['id']

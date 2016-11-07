@@ -72,7 +72,7 @@ def check_url(url):
     Used under MIT license.
 
     :param url:
-    :return:
+    :return: Nothing
     """
     URL_REGEX = re.compile(
     u"^"

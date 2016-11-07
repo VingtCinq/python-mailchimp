@@ -8,8 +8,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Carts/Instance.jso
 from __future__ import unicode_literals
 
 import re
-import six
-import sys
 
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.storecartlines import StoreCartLines
@@ -61,64 +59,31 @@ class StoreCarts(BaseApi):
         }
         """
         self.store_id = store_id
-        try:
-            test = data['id']
-        except KeyError as error:
-            new_msg = 'The cart must have an id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['customer']
-        except KeyError as error:
-            new_msg = 'The cart must have a customer, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['customer']['id']
-        except KeyError as error:
-            new_msg = 'The cart customer must have an id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['currency_code']
-        except KeyError as error:
-            new_msg = 'The cart must have a currency_code, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'id' not in data:
+            raise KeyError('The cart must have an id')
+        if 'customer' not in data:
+            raise KeyError('The cart must have a customer')
+        if 'id' not in data['customer']:
+            raise KeyError('The cart customer must have an id')
+        if 'currency_code' not in data:
+            raise KeyError('The cart must have a currency_code')
         if not re.match(r"^[A-Z]{3}$", data['currency_code']):
             raise ValueError('The currency_code must be a valid 3-letter ISO 4217 currency code')
-        try:
-            test = data['order_total']
-        except KeyError as error:
-            new_msg = 'The cart must have an order_total, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['lines']
-        except KeyError as error:
-            new_msg = 'The cart must have at least one cart line, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'order_total' not in data:
+            raise KeyError('The cart must have an order_total')
+        if 'lines' not in data:
+            raise KeyError('The cart must have at least one cart line')
         for line in data['lines']:
-            try:
-                test = line['id']
-            except KeyError as error:
-                new_msg = 'Each cart line must have an id, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-            try:
-                test = line['product_id']
-            except KeyError as error:
-                new_msg = 'Each cart line must have a product_id, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-            try:
-                test = line['product_variant_id']
-            except KeyError as error:
-                new_msg = 'Each cart line must have a product_variant_id, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-            try:
-                test = line['quantity']
-            except KeyError as error:
-                new_msg = 'Each cart line must have a quantity, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-            try:
-                test = line['price']
-            except KeyError as error:
-                new_msg = 'Each cart line must have a price, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+            if 'id' not in line:
+                raise KeyError('Each cart line must have an id')
+            if 'product_id' not in line:
+                raise KeyError('Each cart line must have a product_id')
+            if 'product_variant_id' not in line:
+                raise KeyError('Each cart line must have a product_variant_id')
+            if 'quantity' not in line:
+                raise KeyError('Each cart line must have a quantity')
+            if 'price' not in line:
+                raise KeyError('Each cart line must have a price')
         response = self._mc_client._post(url=self._build_path(store_id, 'carts'), data=data)
         if response is not None:
             self.cart_id = response['id']

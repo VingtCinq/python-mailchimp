@@ -30,7 +30,7 @@ all endpoint methods are available.
 History
 ~~~~~~~
 
-Up to date with `changelog`_ features listed thru 9/28/2016.
+Up to date with `changelog`_ features listed thru 10/27/2016.
 
 Initialization
 ~~~~~~~~~~~~~~
@@ -644,6 +644,7 @@ List Webhooks
     client.lists.webhooks.create(list_id='', data={})
     client.lists.webhooks.all(list_id='')
     client.lists.webhooks.get(list_id='', webhook_id='')
+    client.lists.webhooks.update(list_id='', webhook_id='', data={})
     client.lists.webhooks.delete(list_id='', webhook_id='')
 
 Reports

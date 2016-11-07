@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Segments/Instance.json
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.listsegmentmembers import ListSegmentMembers
 
@@ -44,11 +41,8 @@ class ListSegments(BaseApi):
         }
         """
         self.list_id = list_id
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The list segment must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The list segment must have a name')
         response = self._mc_client._post(url=self._build_path(list_id, 'segments'), data=data)
         if response is not None:
             self.segment_id = response['id']
@@ -117,11 +111,8 @@ class ListSegments(BaseApi):
         """
         self.list_id = list_id
         self.segment_id = segment_id
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The list segment must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The list segment must have a name')
         return self._mc_client._patch(url=self._build_path(list_id, 'segments', segment_id), data=data)
 
 

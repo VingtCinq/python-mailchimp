@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Instance.json
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.listabusereports import ListAbuseReports
 from mailchimp3.entities.listactivity import ListActivity
@@ -77,82 +74,37 @@ class Lists(BaseApi):
             "email_type_option": boolean
         }
         """
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The list must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']
-        except KeyError as error:
-            new_msg = 'The list must have a contact, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['company']
-        except KeyError as error:
-            new_msg = 'The list contact must have a company, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['address1']
-        except KeyError as error:
-            new_msg = 'The list contact must have a address1, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['city']
-        except KeyError as error:
-            new_msg = 'The list contact must have a city, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['state']
-        except KeyError as error:
-            new_msg = 'The list contact must have a state, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['zip']
-        except KeyError as error:
-            new_msg = 'The list contact must have a zip, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['country']
-        except KeyError as error:
-            new_msg = 'The list contact must have a country, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['permission_reminder']
-        except KeyError as error:
-            new_msg = 'The list must have a permission_reminder, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['campaign_defaults']
-        except KeyError as error:
-            new_msg = 'The list must have a campaign_defaults, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['campaign_defaults']['from_name']
-        except KeyError as error:
-            new_msg = 'The list campaign_defaults must have a from_name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['campaign_defaults']['from_email']
-        except KeyError as error:
-            new_msg = 'The list campaign_defaults must have a from_email, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The list must have a name')
+        if 'contact' not in data:
+            raise KeyError('The list must have a contact')
+        if 'company' not in data['contact']:
+            raise KeyError('The list contact must have a company')
+        if 'address1' not in data['contact']:
+            raise KeyError('The list contact must have a address1')
+        if 'city' not in data['contact']:
+            raise KeyError('The list contact must have a city')
+        if 'state' not in data['contact']:
+            raise KeyError('The list contact must have a state')
+        if 'zip' not in data['contact']:
+            raise KeyError('The list contact must have a zip')
+        if 'country' not in data['contact']:
+            raise KeyError('The list contact must have a country')
+        if 'permission_reminder' not in data:
+            raise KeyError('The list must have a permission_reminder')
+        if 'campaign_defaults' not in data:
+            raise KeyError('The list must have a campaign_defaults')
+        if 'from_name' not in data['campaign_defaults']:
+            raise KeyError('The list campaign_defaults must have a from_name')
+        if 'from_email' not in data['campaign_defaults']:
+            raise KeyError('The list campaign_defaults must have a from_email')
         check_email(data['campaign_defaults']['from_email'])
-        try:
-            test = data['campaign_defaults']['subject']
-        except KeyError as error:
-            new_msg = 'The list campaign_defaults must have a subject, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['campaign_defaults']['language']
-        except KeyError as error:
-            new_msg = 'The list campaign_defaults must have a language, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['email_type_option']
-        except KeyError as error:
-            new_msg = 'The list must have an email_type_option, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'subject' not in data['campaign_defaults']:
+            raise KeyError('The list campaign_defaults must have a subject')
+        if 'language' not in data['campaign_defaults']:
+            raise KeyError('The list campaign_defaults must have a language')
+        if 'email_type_option' not in data:
+            raise KeyError('The list must have an email_type_option')
         if data['email_type_option'] not in [True, False]:
             raise TypeError('The list email_type_option must be True or False')
         response = self._mc_client._post(url=self._build_path(), data=data)
@@ -167,8 +119,8 @@ class Lists(BaseApi):
         """
         Batch subscribe or unsubscribe list members.
 
-        Only the members array is required in the request body parameters. 
-        Within the members array, each member requires an email_address 
+        Only the members array is required in the request body parameters.
+        Within the members array, each member requires an email_address
         and either a status or status_if_new. The update_existing parameter
         will also be considered required to help prevent accidental updates
         to existing members and will default to false if not present.
@@ -190,19 +142,14 @@ class Lists(BaseApi):
         }
         """
         self.list_id = list_id
-        try:
-            test = data['members']
-            if not len(test) <= 500:
+        if 'members' not in data:
+            raise KeyError('The update must have at least one member')
+        else:
+            if not len(data['members']) <= 500:
                 raise ValueError('You may only batch sub/unsub 500 members at a time')
-        except KeyError as error:
-            new_msg = 'The update must have at least one member, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
         for member in data['members']:
-            try:
-                test = member['email_address']
-            except KeyError as error:
-                new_msg = 'Each list member must have an email_address, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+            if 'email_address' not in member:
+                raise KeyError('Each list member must have an email_address')
             check_email(member['email_address'])
             if 'status' not in member and 'status_if_new' not in member:
                 raise KeyError('Each list member must have either a status or a status_if_new')
@@ -213,9 +160,7 @@ class Lists(BaseApi):
             if 'status_if_new' in member and member['status_if_new'] not in valid_statuses:
                 raise ValueError('The list member status_if_new must be one of "subscribed", "unsubscribed", '
                                  '"cleaned", or "pending"')
-        try:
-            test = data['update_existing']
-        except KeyError:
+        if 'update_existing' not in data:
             data['update_existing'] = False
         return self._mc_client._post(url=self._build_path(list_id), data=data)
 
@@ -291,82 +236,37 @@ class Lists(BaseApi):
         }
         """
         self.list_id = list_id
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The list must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']
-        except KeyError as error:
-            new_msg = 'The list must have a contact, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['company']
-        except KeyError as error:
-            new_msg = 'The list contact must have a company, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['address1']
-        except KeyError as error:
-            new_msg = 'The list contact must have a address1, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['city']
-        except KeyError as error:
-            new_msg = 'The list contact must have a city, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['state']
-        except KeyError as error:
-            new_msg = 'The list contact must have a state, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['zip']
-        except KeyError as error:
-            new_msg = 'The list contact must have a zip, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['contact']['country']
-        except KeyError as error:
-            new_msg = 'The list contact must have a country, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['permission_reminder']
-        except KeyError as error:
-            new_msg = 'The list must have a permission_reminder, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['campaign_defaults']
-        except KeyError as error:
-            new_msg = 'The list must have a campaign_defaults, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['campaign_defaults']['from_name']
-        except KeyError as error:
-            new_msg = 'The list campaign_defaults must have a from_name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['campaign_defaults']['from_email']
-        except KeyError as error:
-            new_msg = 'The list campaign_defaults must have a from_email, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The list must have a name')
+        if 'contact' not in data:
+            raise KeyError('The list must have a contact')
+        if 'company' not in data['contact']:
+            raise KeyError('The list contact must have a company')
+        if 'address1' not in data['contact']:
+            raise KeyError('The list contact must have a address1')
+        if 'city' not in data['contact']:
+            raise KeyError('The list contact must have a city')
+        if 'state' not in data['contact']:
+            raise KeyError('The list contact must have a state')
+        if 'zip' not in data['contact']:
+            raise KeyError('The list contact must have a zip')
+        if 'country' not in data['contact']:
+            raise KeyError('The list contact must have a country')
+        if 'permission_reminder' not in data:
+            raise KeyError('The list must have a permission_reminder')
+        if 'campaign_defaults' not in data:
+            raise KeyError('The list must have a campaign_defaults')
+        if 'from_name' not in data['campaign_defaults']:
+            raise KeyError('The list campaign_defaults must have a from_name')
+        if 'from_email' not in data['campaign_defaults']:
+            raise KeyError('The list campaign_defaults must have a from_email')
         check_email(data['campaign_defaults']['from_email'])
-        try:
-            test = data['campaign_defaults']['subject']
-        except KeyError as error:
-            new_msg = 'The list campaign_defaults must have a subject, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['campaign_defaults']['language']
-        except KeyError as error:
-            new_msg = 'The list campaign_defaults must have a language, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['email_type_option']
-        except KeyError as error:
-            new_msg = 'The list must have an email_type_option, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'subject' not in data['campaign_defaults']:
+            raise KeyError('The list campaign_defaults must have a subject')
+        if 'language' not in data['campaign_defaults']:
+            raise KeyError('The list campaign_defaults must have a language')
+        if 'email_type_option' not in data:
+            raise KeyError('The list must have an email_type_option')
         if data['email_type_option'] not in [True, False]:
             raise TypeError('The list email_type_option must be True or False')
         return self._mc_client._patch(url=self._build_path(list_id), data=data)

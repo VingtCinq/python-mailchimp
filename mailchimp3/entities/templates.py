@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Templates/Instance.json
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.templatedefaultcontent import TemplateDefaultContent
 
@@ -41,16 +38,10 @@ class Templates(BaseApi):
             "html": string*
         }
         """
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The template must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['html']
-        except KeyError as error:
-            new_msg = 'The template must have html, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The template must have a name')
+        if 'html' not in data:
+            raise KeyError('The template must have html')
         response = self._mc_client._post(url=self._build_path(), data=data)
         if response is not None:
             self.template_id = response['id']
@@ -110,16 +101,10 @@ class Templates(BaseApi):
             "html": string*
         }
         """
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The template must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['html']
-        except KeyError as error:
-            new_msg = 'The template must have html, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The template must have a name')
+        if 'html' not in data:
+            raise KeyError('The template must have html')
         self.template_id = template_id
         return self._mc_client._patch(url=self._build_path(template_id), data=data)
 

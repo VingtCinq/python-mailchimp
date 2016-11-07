@@ -9,9 +9,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Conversations/Messages/Instance.jso
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.helpers import check_email
 
@@ -45,17 +42,11 @@ class ConversationMessages(BaseApi):
         }
         """
         self.conversation_id = conversation_id
-        try:
-            test = data['from_email']
-        except KeyError as error:
-            new_msg = 'The conversation message must have a from_email, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'from_email' not in data:
+            raise KeyError('The conversation message must have a from_email')
         check_email(data['from_email'])
-        try:
-            test = data['read']
-        except KeyError as error:
-            new_msg = 'The conversation message must have a read, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'read' not in data:
+            raise KeyError('The conversation message must have a read')
         if data['read'] not in [True, False]:
             raise TypeError('The conversation message read must be True or False')
         response =  self._mc_client._post(url=self._build_path(conversation_id, 'messages'), data=data)

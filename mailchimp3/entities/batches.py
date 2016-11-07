@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Batches/Instance.json
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 
 
@@ -43,25 +40,16 @@ class Batches(BaseApi):
             ]
         }
         """
-        try:
-            test = data['operations']
-        except KeyError as error:
-            new_msg = 'The batch must have operations, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'operations' not in data:
+            raise KeyError('The batch must have operations')
         for op in data['operations']:
-            try:
-                test = op['method']
-            except KeyError as error:
-                new_msg = 'The batch operation must have a method, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+            if 'method' not in op:
+                raise KeyError('The batch operation must have a method')
             if op['method'] not in ['GET', 'POST', 'PUT', 'PATCH']:
                 raise ValueError('The batch operation method must be one of "GET", "POST", "PUT", or "PATCH", not {0}'
                                  ''.format(op['method']))
-            try:
-                test = op['path']
-            except KeyError as error:
-                new_msg = 'The batch operation must have a path, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+            if 'path' not in op:
+                raise KeyError('The batch operation must have a path')
         return self._mc_client._post(url=self._build_path(), data=data)
 
 

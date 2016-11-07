@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Carts/Lines/Instan
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 
 
@@ -49,31 +46,16 @@ class StoreCartLines(BaseApi):
         """
         self.store_id = store_id
         self.cart_id = cart_id
-        try:
-            test = data['id']
-        except KeyError as error:
-            new_msg = 'The cart line must have an id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['product_id']
-        except KeyError as error:
-            new_msg = 'The cart line must have a product_id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['product_variant_id']
-        except KeyError as error:
-            new_msg = 'The cart line must have a product_variant_id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['quantity']
-        except KeyError as error:
-            new_msg = 'The cart line must have a quantity, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['price']
-        except KeyError as error:
-            new_msg = 'The cart line must have a price, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'id' not in data:
+            raise KeyError('The cart line must have an id')
+        if 'product_id' not in data:
+            raise KeyError('The cart line must have a product_id')
+        if 'product_variant_id' not in data:
+            raise KeyError('The cart line must have a product_variant_id')
+        if 'quantity' not in data:
+            raise KeyError('The cart line must have a quantity')
+        if 'price' not in data:
+            raise KeyError('The cart line must have a price')
         response = self._mc_client._post(url=self._build_path(store_id, 'carts', cart_id, 'lines'), data=data)
         if response is not None:
             self.line_id = response['id']

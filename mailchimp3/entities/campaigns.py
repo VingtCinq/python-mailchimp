@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Campaigns/Instance.json
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.campaignactions import CampaignActions
 from mailchimp3.entities.campaigncontent import CampaignContent
@@ -69,54 +66,36 @@ class Campaigns(BaseApi):
             "type": string* (Must be one of "regular", "plaintext", "rss", "variate", or "absplit")
         }
         """
-        try:
-            test = data['recipients']
-        except KeyError as error:
-            new_msg = 'The campaign must have recipients, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['recipients']['list_id']
-        except KeyError as error:
-            new_msg = 'The campaign recipients must have a list_id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['settings']['subject_line']
-        except KeyError as error:
-            new_msg = 'The campaign settings must have a subject_line, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['settings']['from_name']
-        except KeyError as error:
-            new_msg = 'The campaign settings must have a from_name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['settings']['reply_to']
-        except KeyError as error:
-            new_msg = 'The campaign settings must have a reply_to, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'recipients' not in data:
+            raise KeyError('The campaign must have recipients')
+        if 'list_id' not in data['recipients']:
+            raise KeyError('The campaign recipients must have a list_id')
+        if 'settings' not in data:
+            raise KeyError('The campaign must have settings')
+        if 'subject_line' not in data['settings']:
+            raise KeyError('The campaign settings must have a subject_line')
+        if 'from_name' not in data['settings']:
+            raise KeyError('The campaign settings must have a from_name')
+        if 'reply_to' not in data['settings']:
+            raise KeyError('The campaign settings must have a reply_to')
         check_email(data['settings']['reply_to'])
-        try:
-            test = data['type']
-        except KeyError as error:
-            new_msg = 'The campaign must have a type, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'type' not in data:
+            raise KeyError('The campaign must have a type')
         if not data['type'] in ['regular', 'plaintext', 'rss', 'variate', 'abspilt']:
             raise ValueError('The campaign type must be one of "regular", "plaintext", "rss", or "variate"')
         if data['type'] == 'variate':
-            try:
-                test = data['variate_settings']['winner_criteria']
-            except KeyError as error:
-                new_msg = 'The campaign variate_settings must have a winner_criteria, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+            if 'variate_settings' not in data:
+                raise KeyError('The variate campaign must have variate_settings')
+            if 'winner_criteria' not in data['variate_settings']:
+                raise KeyError('The campaign variate_settings must have a winner_criteria')
             if data['variate_settings']['winner_criteria'] not in ['opens', 'clicks', 'total_revenue', 'manual']:
                 raise ValueError('The campaign variate_settings '
                                  'winner_criteria must be one of "opens", "clicks", "total_revenue", or "manual"')
         if data['type'] == 'rss':
-            try:
-                test = data['rss_opts']['feed_url']
-            except KeyError as error:
-                new_msg = 'The campaign rss_opts must have a feed_url, {}'.format(error)
-                six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+            if 'rss_opts' not in data:
+                raise KeyError('The rss campaign must have rss_opts')
+            if 'feed_url' not in data['rss_opts']:
+                raise KeyError('The campaign rss_opts must have a feed_url')
             if not data['rss_opts']['frequency'] in ['daily', 'weekly', 'monthly']:
                 raise ValueError('The rss_opts frequency must be one of "daily", "weekly", or "monthly"')
         response = self._mc_client._post(url=self._build_path(), data=data)
@@ -186,26 +165,14 @@ class Campaigns(BaseApi):
         }
         """
         self.campaign_id = campaign_id
-        try:
-            test = data['settings']
-        except KeyError as error:
-            new_msg = 'The campaign must have settings, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['settings']['subject_line']
-        except KeyError as error:
-            new_msg = 'The campaign settings must have a subject_line, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['settings']['from_name']
-        except KeyError as error:
-            new_msg = 'The campaign settings must have a from_name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['settings']['reply_to']
-        except KeyError as error:
-            new_msg = 'The campaign settings must have a reply_to, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'settings' not in data:
+            raise KeyError('The campaign must have settings')
+        if 'subject_line' not in data['settings']:
+            raise KeyError('The campaign settings must have a subject_line')
+        if 'from_name' not in data['settings']:
+            raise KeyError('The campaign settings must have a from_name')
+        if 'reply_to' not in data['setting']:
+            raise KeyError('The campaign settings must have a reply_to')
         check_email(data['settings']['reply_to'])
         return self._mc_client._patch(url=self._build_path(campaign_id), data=data)
 

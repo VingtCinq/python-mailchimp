@@ -7,9 +7,6 @@ Schema: http://api.mailchimp.com/schema/3.0/AuthorizedApps/Instance.json
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 
 
@@ -40,16 +37,10 @@ class AuthorizedApps(BaseApi):
         }
         """
         self.app_id = None
-        try:
-            test = data['client_id']
-        except KeyError as error:
-            new_msg = 'The authorized app must have a client_id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['client_secret']
-        except KeyError as error:
-            new_msg = 'The authorized app must have a client_secret, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'client_id' not in data:
+            raise KeyError('The authorized app must have a client_id')
+        if 'client_secret' not in data:
+            raise KeyError('The authorized app must have a client_secret')
         return self._mc_client._post(url=self._build_path(), data=data)
 
 

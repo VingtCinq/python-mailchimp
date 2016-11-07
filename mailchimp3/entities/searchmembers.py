@@ -38,8 +38,8 @@ class SearchMembers(BaseApi):
         queryparams['list_id'] = string
         queryparams['offset'] = integer
         """
-        try:
+        if 'list_id' in queryparams:
             self.list_id = queryparams['list_id']
-        except KeyError:
+        else:
             self.list_id = None
         return self._mc_client._get(url=self._build_path(), **queryparams)

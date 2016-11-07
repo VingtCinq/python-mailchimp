@@ -37,6 +37,6 @@ setup(
     ],
     keywords='mailchimp api v3 client wrapper',
     packages=find_packages(),
-    install_requires=['requests', 'six'],
+    install_requires=['requests'],
     # test_suite='tests',
 )

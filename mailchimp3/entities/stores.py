@@ -8,8 +8,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Instance.json
 from __future__ import unicode_literals
 
 import re
-import six
-import sys
 
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.storecarts import StoreCarts
@@ -54,26 +52,14 @@ class Stores(BaseApi):
             "currency_code": string*
         }
         """
-        try:
-            test = data['id']
-        except KeyError as error:
-            new_msg = 'The store must have an id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['list_id']
-        except KeyError as error:
-            new_msg = 'The store must have a list_id, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The store must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['currency_code']
-        except KeyError as error:
-            new_msg = 'The store must have a currency_code, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'id' not in data:
+            raise KeyError('The store must have an id')
+        if 'list_id' not in data:
+            raise KeyError('The store must have a list_id')
+        if 'name' not in data:
+            raise KeyError('The store must have a name')
+        if 'currency_code' not in data:
+            raise KeyError('The store must have a currency_code')
         if not re.match(r"^[A-Z]{3}$", data['currency_code']):
             raise ValueError('The currency_code must be a valid 3-letter ISO 4217 currency code')
         response = self._mc_client._post(url=self._build_path(), data=data)

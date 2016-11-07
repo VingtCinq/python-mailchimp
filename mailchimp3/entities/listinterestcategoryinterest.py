@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Lists/Interests/Instance.json
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 
 
@@ -50,11 +47,8 @@ class ListInterestCategoryInterest(BaseApi):
         """
         self.list_id = list_id
         self.category_id = category_id
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The list interest category interest must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The list interest category interest must have a name')
         response =  self._mc_client._post(
             url=self._build_path(list_id, 'interest-categories', category_id, 'interests'),
             data=data
@@ -136,11 +130,8 @@ class ListInterestCategoryInterest(BaseApi):
         self.list_id = list_id
         self.category_id = category_id
         self.interest_id = interest_id
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The list interest category interest must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The list interest category interest must have a name')
         return self._mc_client._patch(
             url=self._build_path(list_id, 'interest-categories', category_id, 'interests', interest_id),
             data=data

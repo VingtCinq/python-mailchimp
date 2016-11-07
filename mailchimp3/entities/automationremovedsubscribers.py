@@ -9,9 +9,6 @@ Schema: https://api.mailchimp.com/schema/3.0/Automations/RemovedSubscribers/Inst
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.helpers import check_email
 
@@ -45,11 +42,8 @@ class AutomationRemovedSubscribers(BaseApi):
         }
         """
         self.workflow_id = workflow_id
-        try:
-            test = data['email_address']
-        except KeyError as error:
-            new_msg = 'The automation removed subscriber must have an email_address, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'email_address' not in data:
+            raise KeyError('The automation removed subscriber must have an email_address')
         check_email(data['email_address'])
         return self._mc_client._post(url=self._build_path(workflow_id, 'removed-subscribers'), data=data)
 

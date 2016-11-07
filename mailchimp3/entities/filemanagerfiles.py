@@ -7,9 +7,6 @@ Schema: https://api.mailchimp.com/schema/3.0/FileManager/Files/Instance.json
 """
 from __future__ import unicode_literals
 
-import six
-import sys
-
 from mailchimp3.baseapi import BaseApi
 
 
@@ -39,16 +36,10 @@ class FileManagerFiles(BaseApi):
             "file_data": string*
         }
         """
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The file must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['file_data']
-        except KeyError as error:
-            new_msg = 'The file must have file_data, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The file must have a name')
+        if 'file_data' not in data:
+            raise KeyError('The file must have file_data')
         response = self._mc_client._post(url=self._build_path(), data=data)
         if response is not None:
             self.file_id = response['id']
@@ -110,16 +101,10 @@ class FileManagerFiles(BaseApi):
         }
         """
         self.file_id = file_id
-        try:
-            test = data['name']
-        except KeyError as error:
-            new_msg = 'The file must have a name, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
-        try:
-            test = data['file_data']
-        except KeyError as error:
-            new_msg = 'The file must have file_data, {}'.format(error)
-            six.reraise(KeyError, KeyError(new_msg), sys.exc_info()[2])
+        if 'name' not in data:
+            raise KeyError('The file must have a name')
+        if 'file_data' not in data:
+            raise KeyError('The file must have file_data')
         return self._mc_client._patch(url=self._build_path(file_id), data=data)
 
 

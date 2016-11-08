@@ -1,4 +1,4 @@
-|mailchimp3 v2.0.0 on PyPi| |MIT license| |Stable|
+|mailchimp3 v2.0.1 on PyPi| |MIT license| |Stable|
 
 python-mailchimp-api
 ====================
@@ -20,7 +20,7 @@ simply run
 Upgrading from v1.x
 ~~~~~~~~~~~~~~~~~~~
 
-The installation procedure for 2.0.0 is the same as before, however there are
+The installation procedure for 2.x is the same as before, however there are
 a massive number of changes to the naming conventions within this wrapper and
 the way in which certain methods are called. Please read the documentation
 below carefully for information on the new structure and expanded
@@ -800,7 +800,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |mailchimp3 v2.0.0 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.0-green.svg
+.. |mailchimp3 v2.0.1 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.1-green.svg
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

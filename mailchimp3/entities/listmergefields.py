@@ -44,7 +44,7 @@ class ListMergeFields(BaseApi):
             raise KeyError('The list merge field must have a type')
         response = self._mc_client._post(url=self._build_path(list_id, 'merge-fields'), data=data)
         if response is not None:
-            self.merge_id = response['id']
+            self.merge_id = response['merge_id']
         else:
             self.merge_id = None
         return response

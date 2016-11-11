@@ -27,7 +27,7 @@ endpoints are implemented and all endpoint methods are available.
 
 ### History
 
-Up to date with [changelog](http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/) features listed thru 10/27/2016.
+Up to date with [changelog](http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/) features listed thru 11/03/2016.
 
 ### Initialization
 

@@ -171,7 +171,7 @@ class Campaigns(BaseApi):
             raise KeyError('The campaign settings must have a subject_line')
         if 'from_name' not in data['settings']:
             raise KeyError('The campaign settings must have a from_name')
-        if 'reply_to' not in data['setting']:
+        if 'reply_to' not in data['settings']:
             raise KeyError('The campaign settings must have a reply_to')
         check_email(data['settings']['reply_to'])
         return self._mc_client._patch(url=self._build_path(campaign_id), data=data)

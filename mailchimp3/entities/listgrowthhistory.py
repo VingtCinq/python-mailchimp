@@ -41,7 +41,7 @@ class ListGrowthHistory(BaseApi):
         self.list_id = list_id
         self.month = None
         if get_all:
-            self._iterate(url=self._build_path(list_id, 'growth-history'), **queryparams)
+            return self._iterate(url=self._build_path(list_id, 'growth-history'), **queryparams)
         else:
             return self._mc_client._get(url=self._build_path(list_id, 'growth-history'), **queryparams)
 

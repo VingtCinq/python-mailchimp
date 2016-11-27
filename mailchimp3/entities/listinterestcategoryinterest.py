@@ -80,7 +80,7 @@ class ListInterestCategoryInterest(BaseApi):
         self.category_id = category_id
         self.interest_id = None
         if get_all:
-            self._iterate(url=self._build_path(list_id, 'interest-categories', category_id, 'interests'), **queryparams)
+            return self._iterate(url=self._build_path(list_id, 'interest-categories', category_id, 'interests'), **queryparams)
         else:
             return self._mc_client._get(
                 url=self._build_path(list_id, 'interest-categories', category_id, 'interests'),

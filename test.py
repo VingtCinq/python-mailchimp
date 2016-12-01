@@ -17,10 +17,16 @@ print(client.authorized_apps.all(get_all=False))
 
 print(client.automations.all(get_all=True))
 
-client = MailChimp('MAILCHIMP_USER', 'MAILCHIMP_SECRET')
+oauth_client = MailChimp(access_token=getenv('MAILCHIMP_ACCESS_TOKEN'))
 
-print client.lists.all(fields="lists.name,lists.id")
+print(client.lists.all(fields="lists.name,lists.id"))
 
-print client.authorized_apps.all(get_all=False)
+print(client.authorized_apps.all(get_all=False))
 
-print client.automations.all(get_all=True)
+print(client.automations.all(get_all=True))
+
+try:
+    bad_client = MailChimp(access_token="foobarIdontwork")
+except Exception:
+    print("Exception raised for bad access_token")
+

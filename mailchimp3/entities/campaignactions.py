@@ -98,6 +98,7 @@ class CampaignActions(BaseApi):
                     raise ValueError('The schedule_time must be in UTC')
         if data['schedule_time'].minute not in [0, 15, 30, 45]:
             raise ValueError('The schedule_time must end on the quarter hour (00, 15, 30, 45)')
+        data['schedule_time'] = data['schedule_time'].strftime('%Y-%m-%dT%H:%M:00+00:00')
         self.campaign_id = campaign_id
         return self._mc_client._post(url=self._build_path(campaign_id, 'actions/schedule'), data=data)
 

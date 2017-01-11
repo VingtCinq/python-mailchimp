@@ -51,7 +51,7 @@ class AutomationEmailQueues(BaseApi):
             raise KeyError('The automation email queue must have an email_address')
         check_email(data['email_address'])
         response = self._mc_client._post(
-            url=self._build_path(workflow_id, 'emails', email_id, 'actions/pause-all-emails'),
+            url=self._build_path(workflow_id, 'emails', email_id, 'queue'),
             data=data
         )
         if response is not None:

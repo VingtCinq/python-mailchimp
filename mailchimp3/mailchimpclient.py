@@ -48,7 +48,7 @@ class MailChimpClient(object):
         self.enabled = enabled
         self.auth = HTTPBasicAuth(mc_user, mc_secret)
         datacenter = mc_secret.split('-').pop()
-        self.base_url = 'https://{}.api.mailchimp.com/3.0/'.format(datacenter)
+        self.base_url = 'https://{0}.api.mailchimp.com/3.0/'.format(datacenter)
 
 
     @_enabled_or_noop

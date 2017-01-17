@@ -1,4 +1,4 @@
-|mailchimp3 v2.0.4 on PyPi| |MIT license| |Stable|
+|mailchimp3 v2.0.5 on PyPi| |MIT license| |Stable|
 
 python-mailchimp-api
 ====================
@@ -30,7 +30,7 @@ all endpoint methods are available.
 History
 ~~~~~~~
 
-Up to date with `changelog`_ features listed thru 11/03/2016.
+Up to date with `changelog`_ features listed thru 1/12/2017.
 
 Initialization
 ~~~~~~~~~~~~~~
@@ -627,15 +627,6 @@ List Signup Forms
     client.lists.signup_forms.create(list_id='', data={})
     client.lists.signup_forms.all(list_id='')
 
-List Twitter Lead Generation Cards
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-::
-
-    client.lists.twitter_cards.create(list_id='', data={})
-    client.lists.twitter_cards.all(list_id='')
-    client.lists.twitter_cards.get(list_id='', twitter_card_id='')
-
 List Webhooks
 ^^^^^^^^^^^^^
 
@@ -800,7 +791,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |mailchimp3 v2.0.4 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.4-green.svg
+.. |mailchimp3 v2.0.5 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.5-green.svg
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

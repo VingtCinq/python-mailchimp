@@ -17,7 +17,6 @@ from mailchimp3.entities.listmembers import ListMembers
 from mailchimp3.entities.listmergefields import ListMergeFields
 from mailchimp3.entities.listsegments import ListSegments
 from mailchimp3.entities.listsignupforms import ListSignupForms
-from mailchimp3.entities.listtwitterleadgenerationcards import ListTwitterLeadGenerationCards
 from mailchimp3.entities.listwebhooks import ListWebhooks
 from mailchimp3.helpers import check_email
 
@@ -42,7 +41,6 @@ class Lists(BaseApi):
         self.merge_fields = ListMergeFields(self)
         self.segments = ListSegments(self)
         self.signup_forms = ListSignupForms(self)
-        self.twitter_cards = ListTwitterLeadGenerationCards(self)
         self.webhooks = ListWebhooks(self)
 
 

@@ -1,4 +1,4 @@
-[![mailchimp3 v2.0.4 on PyPi](https://img.shields.io/badge/pypi-2.0.4-green.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v2.0.5 on PyPi](https://img.shields.io/badge/pypi-2.0.5-green.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -27,7 +27,7 @@ endpoints are implemented and all endpoint methods are available.
 
 ### History
 
-Up to date with [changelog](http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/) features listed thru 11/03/2016.
+Up to date with [changelog](http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/) features listed thru 1/12/2017.
 
 ### Initialization
 
@@ -473,12 +473,6 @@ above with the name `client`.
 
     client.lists.signup_forms.create(list_id='', data={})
     client.lists.signup_forms.all(list_id='')
-
-#### List Twitter Lead Generation Cards
-
-    client.lists.twitter_cards.create(list_id='', data={})
-    client.lists.twitter_cards.all(list_id='')
-    client.lists.twitter_cards.get(list_id='', twitter_card_id='')
 
 #### List Webhooks
 

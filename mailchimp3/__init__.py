@@ -59,7 +59,6 @@ from mailchimp3.entities.listmergefields import ListMergeFields
 from mailchimp3.entities.listsegments import ListSegments
 from mailchimp3.entities.listsegmentmembers import ListSegmentMembers
 from mailchimp3.entities.listsignupforms import ListSignupForms
-from mailchimp3.entities.listtwitterleadgenerationcards import ListTwitterLeadGenerationCards
 from mailchimp3.entities.listwebhooks import ListWebhooks
 # Reports
 from mailchimp3.entities.reports import Reports
@@ -148,7 +147,6 @@ class MailChimp(MailChimpClient):
         self.lists.segments = ListSegments(self)
         self.lists.segments.members = ListSegmentMembers(self)
         self.lists.signup_forms = ListSignupForms(self)
-        self.lists.twitter_cards = ListTwitterLeadGenerationCards(self)
         self.lists.webhooks = ListWebhooks(self)
         # Reports
         self.reports = Reports(self)

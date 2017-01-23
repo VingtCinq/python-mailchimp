@@ -51,16 +51,16 @@ class BaseApi(object):
         # Remove offset and count if provided in kwargs
         kwargs.pop("offset", None)
         kwargs.pop("count", None)
-        #Fetch results from mailchimp, up to first 100
-        result = self._mc_client._get(url=url, offset=0, count=100, **kwargs)
+        #Fetch results from mailchimp, up to first 5000
+        result = self._mc_client._get(url=url, offset=0, count=5000, **kwargs)
         total = result['total_items']
         #Fetch further results if necessary
-        if total > 100:
-            for offset in range(1, int(total / 100) + 1):
+        if total > 5000:
+            for offset in range(1, int(total / 5000) + 1):
                 result = merge_results(result, self._mc_client._get(
                     url=url,
-                    offset=int(offset*100),
-                    count=100,
+                    offset=int(offset*5000),
+                    count=5000,
                     **kwargs
                 ))
             return result

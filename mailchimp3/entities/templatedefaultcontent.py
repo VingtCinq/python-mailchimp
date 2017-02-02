@@ -19,7 +19,7 @@ class TemplateDefaultContent(BaseApi):
         Initialize the endpoint
         """
         super(TemplateDefaultContent, self).__init__(*args, **kwargs)
-        self.endpoint = 'reports'
+        self.endpoint = 'templates'
         self.template_id = None
 
 

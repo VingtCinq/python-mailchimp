@@ -6,6 +6,10 @@ python-mailchimp-api
 A straighforward python client for v3 of MailChimp API using requests >=
 2.7.0.
 
+Test the API on Rapid here_.
+
+.. _here: https://rapidapi.com/package/MailChimp/functions?utm_source=MailchimpGitHub-python&utm_medium=button&utm_content=Vendor_GitHub
+
 Getting Started
 ---------------
 

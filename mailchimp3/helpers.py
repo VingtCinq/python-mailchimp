@@ -58,7 +58,7 @@ def check_email(email):
     :type email: :py:class:`str`
     :return: Nothing
     """
-    if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+    if '@' not in email:
         raise ValueError('String passed is not a valid email address')
     return
 

@@ -107,6 +107,25 @@ class StoreProducts(BaseApi):
         return self._mc_client._get(url=self._build_path(store_id, 'products', product_id), **queryparams)
 
 
+    def update(self, store_id, product_id, data):
+        """
+        Update a product.
+
+        :param store_id: The store id.
+        :type store_id: :py:class:`str`
+        :param product_id: The id for the product of a store.
+        :type product_id: :py:class:`str`
+        :param data: The request body parameters
+        :type data: :py:class:`dict`
+        """
+        self.store_id = store_id
+        self.product_id = product_id
+        return self._mc_client._patch(
+            url=self._build_path(store_id, 'products', product_id),
+            data=data
+        )
+
+
     def delete(self, store_id, product_id):
         """
         Delete a product.

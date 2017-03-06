@@ -444,6 +444,7 @@ Store Products
     client.stores.products.create(store_id='', data={})
     client.stores.products.all(store_id='', get_all=False)
     client.stores.products.get(store_id='', product_id='')
+    client.stores.products.update(store_id='', product_id='')
     client.stores.products.delete(store_id='', product_id='')
 
 Store Product Variants

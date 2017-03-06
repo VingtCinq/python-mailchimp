@@ -1,4 +1,4 @@
-[![mailchimp3 v2.0.7 on PyPi](https://img.shields.io/badge/pypi-2.0.7-green.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v2.0.8 on PyPi](https://img.shields.io/badge/pypi-2.0.8-green.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -347,6 +347,7 @@ above with the name `client`.
     client.stores.products.create(store_id='', data={})
     client.stores.products.all(store_id='', get_all=False)
     client.stores.products.get(store_id='', product_id='')
+    client.stores.products.update(store_id='', product_id='')
     client.stores.products.delete(store_id='', product_id='')
 
 #### Store Product Variants

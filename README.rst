@@ -1,4 +1,4 @@
-|mailchimp3 v2.0.7 on PyPi| |MIT license| |Stable|
+|mailchimp3 v2.0.8 on PyPi| |MIT license| |Stable|
 
 python-mailchimp-api
 ====================
@@ -12,51 +12,54 @@ Getting Started
 Installation
 ~~~~~~~~~~~~
 
-This client is hosted at PyPi under the name ``mailchimp3``, to install it,
-simply run
+This client is hosted at PyPi under the name ``mailchimp3``, to install
+it, simply run
 
 ``pip install mailchimp3``
 
 Upgrading from v1.x
 ~~~~~~~~~~~~~~~~~~~
 
-The installation procedure for 2.x is the same as before, however there are
-a massive number of changes to the naming conventions within this wrapper and
-the way in which certain methods are called. Please read the documentation
-below carefully for information on the new structure and expanded
-functionality. With this release, all documented endpoints are implemented and
-all endpoint methods are available.
+The installation procedure for 2.x is the same as before, however there
+are a massive number of changes to the naming conventions within this
+wrapper and the way in which certain methods are called. Please read the
+documentation below carefully for information on the new structure and
+expanded functionality. With this release, all documented endpoints are
+implemented and all endpoint methods are available.
 
 History
 ~~~~~~~
 
-Up to date with `changelog`_ features listed thru 1/12/2017.
+Up to date with
+`changelog <http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/>`__
+features listed thru 1/12/2017.
 
 Initialization
 ~~~~~~~~~~~~~~
 
-Grab ``YOUR SECRET KEY`` from your mailchimp account (Account > Extra > Api
-Keys). ``YOUR USERNAME`` is the one you use to login.
+Grab ``YOUR_SECRET_KEY`` from your mailchimp account (Account > Extra >
+Api Keys). ``YOUR_USERNAME`` is the one you use to login.
 
 ::
 
     from mailchimp3 import MailChimp
 
-    client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY')
+    client = MailChimp('YOUR_USERNAME', 'YOUR_SECRET_KEY')
 
 Pagination
 ~~~~~~~~~~
 
-Simply add ``count`` and ``offset`` arguments in your function. The count is
-how many records to return, the offset is how many records to skip. For
-endpoints that allow the pagination parameters, the all() method has an
-additional boolean ``get_all`` argument that will loop through all records
-until the API no longer returns any to get all records without manually
-performing an additional query. By default, count is 10 and offset is 0 for
-all endpoints that support it. The ``get_all`` parameter on the all() method
-on any endpoint defaults to false, which follows the values that are provided
-in the call, and using ``get_all=True`` will ignore the provided count and
-offset to ensure that all records are returned.
+Simply add ``count`` and ``offset`` arguments in your function. The
+count is how many records to return, the offset is how many records to
+skip. For endpoints that allow the pagination parameters, the all()
+method has an additional boolean ``get_all`` argument that will loop
+through all records until the API no longer returns any to get all
+records without manually performing an additional query. By default,
+count is 10 and offset is 0 for all endpoints that support it. The
+``get_all`` parameter on the all() method on any endpoint defaults to
+false, which follows the values that are provided in the call, and using
+``get_all=True`` will ignore the provided count and offset to ensure
+that all records are returned.
 
 ::
 
@@ -65,10 +68,10 @@ offset to ensure that all records are returned.
 Fields
 ~~~~~~
 
-Many endpoints allow you to select which fields will be returned out of all
-available fields (for example, only the email_address of a member). Simply add
-``fields`` arguments in your function. The following only display
-email_address and id for each member in list 123456:
+Many endpoints allow you to select which fields will be returned out of
+all available fields (for example, only the email\_address of a member).
+Simply add ``fields`` arguments in your function. The following only
+display email\_address and id for each member in list 123456:
 
 ::
 
@@ -111,9 +114,9 @@ Examples
 API Structure
 -------------
 
-All endpoints follow the structure listed in the official MailChimp API v3
-documentation. The structure will be listed below and then the individual
-methods available after.
+All endpoints follow the structure listed in the official MailChimp API
+v3 documentation. The structure will be listed below and then the
+individual methods available after.
 
 ::
 
@@ -174,7 +177,7 @@ methods available after.
     |  +- Sent To
     |  +- Sub-Reports
     |  +- Unsubscribes
-    +- Search Campaigns
+    +- Seach Campaigns
     +- Search Members
     +- Template Folders
     +- Templates
@@ -183,15 +186,16 @@ methods available after.
 API Endpoints
 -------------
 
-Below is the list of all endpoints and the methods that can be called against
-them. Any endpoint that has a method that takes an ID argument (for example
-the app_id in the authorized_apps endpoint or the subscriber_hash in the list
-members endpoints) will record all IDs passed as well as those generated by
-methods that will only ever return a single result such as the create() method
-present on some endpoints. These stored attributes are only available at the
-level that they were passed or created at and must be passed again to interact
-with a lower or higher level such as accessing a list and then a member. The
-below code assumes that you have initialized the MailChimp class as listed
+Below is the list of all endpoints and the methods that can be called
+against them. Any endpoint that has a method that takes an ID argument
+(for example the app\_id in the authorized\_apps endpoint or the
+subscriber\_hash in the list members endpoints) will record all IDs
+passed as well as those generated by methods that will only ever return
+a single result such as the create() method present on some endpoints.
+These stored attributes are only available at the level that they were
+passed or created at and must be passed again to interact with a lower
+or higher level such as accessing a list and then a member. The below
+code assumes that you have initialized the MailChimp class as listed
 above with the name ``client``.
 
 Root
@@ -741,14 +745,14 @@ Campaigns
 
 ::
 
-   client.search_campaigns.get()
+    client.search_campaigns.get()
 
 Members
 ^^^^^^^
 
 ::
 
-   client.search_members.get()
+    client.search_members.get()
 
 Templates
 ~~~~~~~~~
@@ -785,15 +789,15 @@ Default Content
 Support
 -------
 
-If you are having issues, please let us know.
+If you are having issues, please let us know or submit a pull request.
 
 License
 -------
 
 The project is licensed under the MIT License.
 
-.. |mailchimp3 v2.0.7 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.7-green.svg
+.. |mailchimp3 v2.0.8 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.8-green.svg
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
-.. _changelog: http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/
+

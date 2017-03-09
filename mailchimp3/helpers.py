@@ -52,13 +52,14 @@ def check_email(email):
     """
     Function that verifies that the string passed is a valid email address.
 
-    Regex for email validation from http://emailregex.com/
+    Regex for email validation based on MailChimp limits:
+    http://kb.mailchimp.com/accounts/management/international-characters-in-mailchimp
 
     :param email: The potential email address
     :type email: :py:class:`str`
     :return: Nothing
     """
-    if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+    if not re.match(r"[a-zA-Z0-9_+-.]+@.+\.[^.]+", email):
         raise ValueError('String passed is not a valid email address')
     return
 

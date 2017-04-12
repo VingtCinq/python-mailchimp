@@ -31,12 +31,12 @@ Up to date with [changelog](http://developer.mailchimp.com/documentation/mailchi
 
 ### Initialization
 
-Grab `YOUR_SECRET_KEY` from your mailchimp account (Account > Extra >
-Api Keys). `YOUR_USERNAME` is the one you use to login.
+Grab `YOUR_API_KEY` from your mailchimp account (Account > Extra >
+API Keys). 
 
     from mailchimp3 import MailChimp
 
-    client = MailChimp('YOUR_USERNAME', 'YOUR_SECRET_KEY')
+    client = MailChimp('YOUR_API_KEY')
 
 ### Pagination
 
@@ -91,7 +91,7 @@ display email_address and id for each member in list 123456:
 
     # You can also disable at runtime with the optional ``enabled`` parameter.
     # Every API call will return None
-    client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', enabled=False)
+    client = MailChimp('YOUR_API_KEY', enabled=False)
 
 ## API Structure
 

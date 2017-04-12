@@ -30,24 +30,23 @@ class MailChimpClient(object):
     """
     MailChimp class to communicate with the v3 API
     """
-    def __init__(self, mc_user, mc_secret, enabled=True):
+    def __init__(self, api_key, enabled=True):
         """
-        Initialize the class with you user_id and secret_key.
+        Initialize the class with the given API key.
 
         If `enabled` is not True, these methods become no-ops. This is
         particularly useful for testing or disabling with configuration.
 
-        :param mc_user: Mailchimp user id
-        :type mc_user: :py:class:`str`
-        :param mc_secret: Mailchimp secret key
-        :type mc_secret: :py:class:`str`
+        :param api_key: Mailchimp API key
+        :type api_key: :py:class:`str`
         :param enabled: Whether the API should execute any requests
         :type enabled: :py:class:`bool`
         """
         super(MailChimpClient, self).__init__()
         self.enabled = enabled
-        self.auth = HTTPBasicAuth(mc_user, mc_secret)
-        datacenter = mc_secret.split('-').pop()
+        # MailChimp's HTTP Basic Auth accepts any string for the username.
+        self.auth = HTTPBasicAuth('user', api_key)
+        datacenter = api_key.split('-').pop()
         self.base_url = 'https://{0}.api.mailchimp.com/3.0/'.format(datacenter)
 
 

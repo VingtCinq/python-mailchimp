@@ -37,14 +37,14 @@ features listed thru 1/12/2017.
 Initialization
 ~~~~~~~~~~~~~~
 
-Grab ``YOUR_SECRET_KEY`` from your mailchimp account (Account > Extra >
-Api Keys). ``YOUR_USERNAME`` is the one you use to login.
+Grab ``YOUR_API_KEY`` from your mailchimp account (Account > Extra >
+Api Keys).
 
 ::
 
     from mailchimp3 import MailChimp
 
-    client = MailChimp('YOUR_USERNAME', 'YOUR_SECRET_KEY')
+    client = MailChimp('YOUR_API_KEY')
 
 Pagination
 ~~~~~~~~~~
@@ -109,7 +109,7 @@ Examples
 
     # You can also disable at runtime with the optional ``enabled`` parameter.
     # Every API call will return None
-    client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', enabled=False)
+    client = MailChimp('YOUR_API_KEY', enabled=False)
 
 API Structure
 -------------

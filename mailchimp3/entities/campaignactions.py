@@ -94,7 +94,7 @@ class CampaignActions(BaseApi):
             if data['schedule_time'].tzinfo is None:
                 raise ValueError('The schedule_time must be in UTC')
             else:
-                if data['schedule_time'].tzinfo.utcoffset() != timedelta(0):
+                if data['schedule_time'].tzinfo.utcoffset(None) != timedelta(0):
                     raise ValueError('The schedule_time must be in UTC')
         if data['schedule_time'].minute not in [0, 15, 30, 45]:
             raise ValueError('The schedule_time must end on the quarter hour (00, 15, 30, 45)')

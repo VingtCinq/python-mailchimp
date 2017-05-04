@@ -2,6 +2,9 @@
 """
 The base API object that allows constructions of various endpoint paths
 """
+from __future__ import unicode_literals
+from itertools import chain
+
 from mailchimp3.helpers import  merge_results
 
 class BaseApi(object):
@@ -27,7 +30,7 @@ class BaseApi(object):
         :param args: Tokens in the endpoint URL
         :type args: :py:class:`str`
         """
-        return "/".join(str(component) for component in ([self.endpoint,] + list(args)))
+        return '/'.join(chain((self.endpoint,), args))
 
 
     def _iterate(self, url, **kwargs):

@@ -93,6 +93,10 @@ display email_address and id for each member in list 123456:
     # Every API call will return None
     client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', enabled=False)
 
+    # You are encouraged to specify a value in seconds for the  ``timeout`` 
+    # parameter to avoid hanging requests.
+    client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', timeout=10.0)
+
 ## API Structure
 
 All endpoints follow the structure listed in the official MailChimp API

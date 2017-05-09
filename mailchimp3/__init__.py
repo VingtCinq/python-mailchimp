@@ -90,9 +90,14 @@ class MailChimp(MailChimpClient):
     """
     def __init__(self, *args, **kwargs):
         """
-        Initialize the class with your user_id and secret_key and attach all
-        of the endpoints
+        Initialize the class with your api_key and attach all
+        of the endpoints.
         """
+        if len(args) == 2:
+            # For backwards compatibility with v2.0.10, we need to accept the
+            # MailChimp('username', 'api_key') format, even though we don't
+            # use the provided username any more.
+            args = args[1:]
         super(MailChimp, self).__init__(*args, **kwargs)
         # API Root
         self.root = self.api_root = Root(self)

@@ -30,7 +30,7 @@ class MailChimpClient(object):
     """
     MailChimp class to communicate with the v3 API
     """
-    def __init__(self, mc_user, mc_secret, enabled=True):
+    def __init__(self, mc_user, mc_secret, enabled=True, timeout=None):
         """
         Initialize the class with you user_id and secret_key.
 
@@ -43,9 +43,14 @@ class MailChimpClient(object):
         :type mc_secret: :py:class:`str`
         :param enabled: Whether the API should execute any requests
         :type enabled: :py:class:`bool`
+        :param timeout: (optional) How long to wait for the server to send
+            data before giving up, as a float, or a :ref:`(connect timeout,
+            read timeout) <timeouts>` tuple.
+        :type timeout: float or tuple
         """
         super(MailChimpClient, self).__init__()
         self.enabled = enabled
+        self.timeout = timeout
         self.auth = HTTPBasicAuth(mc_user, mc_secret)
         datacenter = mc_secret.split('-').pop()
         self.base_url = 'https://{0}.api.mailchimp.com/3.0/'.format(datacenter)
@@ -64,7 +69,7 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.post(url, auth=self.auth, json=data)
+            r = requests.post(url, auth=self.auth, json=data, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -88,7 +93,7 @@ class MailChimpClient(object):
         if len(queryparams):
             url += '?' + urlencode(queryparams)
         try:
-            r = requests.get(url, auth=self.auth)
+            r = requests.get(url, auth=self.auth, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -107,7 +112,7 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.delete(url, auth=self.auth)
+            r = requests.delete(url, auth=self.auth, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -130,7 +135,7 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.patch(url, auth=self.auth, json=data)
+            r = requests.patch(url, auth=self.auth, json=data, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -151,7 +156,7 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.put(url, auth=self.auth, json=data)
+            r = requests.put(url, auth=self.auth, json=data, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
             raise e
         else:

@@ -28,7 +28,7 @@ class BaseApi(object):
         Build path width endpoint and args
 
         :param args: Tokens in the endpoint URL
-        :type args: :py:class:`str`
+        :type args: :py:class:`unicode`
         """
         return '/'.join(chain((self.endpoint,), args))
 

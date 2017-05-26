@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from mailchimp3.baseapi import BaseApi
 
 
-class Batches(BaseApi):
+class BatchOperations(BaseApi):
     """
     Use batch operations to complete multiple operations with a single call.
     """
@@ -18,7 +18,7 @@ class Batches(BaseApi):
         """
         Initialize the endpoint
         """
-        super(Batches, self).__init__(*args, **kwargs)
+        super(BatchOperations, self).__init__(*args, **kwargs)
         self.endpoint = 'batches'
         self.batch_id = None
         self.operation_status = None

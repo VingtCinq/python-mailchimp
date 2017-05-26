@@ -237,12 +237,12 @@ above with the name `client`.
 
 ### Batch Operations
 
-#### Batches
+#### Batch Operations
 
-    client.batches.create(data={})
-    client.batches.all(get_all=False)
-    client.batches.get(batch_id='')
-    client.batches.delete(batch_id='')
+    client.batch_operations.create(data={})
+    client.batch_operations.all(get_all=False)
+    client.batch_operations.get(batch_id='')
+    client.batch_operations.delete(batch_id='')
 
 ### Campaigns
 

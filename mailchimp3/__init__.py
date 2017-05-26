@@ -17,8 +17,8 @@ from mailchimp3.entities.automationemails import AutomationEmails
 from mailchimp3.entities.automationemailactions import AutomationEmailActions
 from mailchimp3.entities.automationemailqueues import AutomationEmailQueues
 from mailchimp3.entities.automationremovedsubscribers import AutomationRemovedSubscribers
-# Batche Operations
-from mailchimp3.entities.batches import Batches
+# Batch Operations
+from mailchimp3.entities.batchoperations import BatchOperations
 # Campaign Folders
 from mailchimp3.entities.campaignfolders import CampaignFolders
 # Campaigns
@@ -106,7 +106,7 @@ class MailChimp(MailChimpClient):
         self.automations.emails.queues = AutomationEmailQueues(self)
         self.automations.removed_subscribers = AutomationRemovedSubscribers(self)
         # Batch operations
-        self.batches = self.batch_operations = Batches(self)
+        self.batches = self.batch_operations = BatchOperations(self)
         # Campaign Folders
         self.campaign_folders = CampaignFolders(self)
         # Campaigns

@@ -41,16 +41,17 @@ class ListMembers(BaseApi):
         :param data: The request body parameters
         :type data: :py:class:`dict`
         data = {
-            "status": string*, (Must be one of 'subscribed', 'unsubscribed', 'cleaned', or 'pending')
+            "status": string*, (Must be one of 'subscribed', 'unsubscribed', 'cleaned',
+                'transactional', or 'pending')
             "email_address": string*
         }
         """
         self.list_id = list_id
         if 'status' not in data:
             raise KeyError('The list member must have a status')
-        if data['status'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
-            raise ValueError('The list member status must be one of "subscribed", "unsubscribed", "cleaned", or '
-                             '"pending"')
+        if data['status'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending', 'transactional']:
+            raise ValueError('The list member status must be one of "subscribed", "unsubscribed", "cleaned", '
+                             '"transactional"', or "pending"')
         if 'email_address' not in data:
             raise KeyError('The list member must have an email_address')
         check_email(data['email_address'])
@@ -157,9 +158,9 @@ class ListMembers(BaseApi):
         check_email(data['email_address'])
         if 'status_if_new' not in data:
             raise KeyError('The list member must have a status_if_new')
-        if data['status_if_new'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
+        if data['status_if_new'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending', 'transactional']:
             raise ValueError('The list member status_if_new must be one of "subscribed", "unsubscribed", "cleaned", '
-                             'or "pending"')
+                             '"transactional", or "pending"')
         return self._mc_client._put(url=self._build_path(list_id, 'members', subscriber_hash), data=data)
 
 

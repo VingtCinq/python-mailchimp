@@ -17,6 +17,9 @@ except ImportError:
     from urlparse import urljoin
     from urllib import urlencode
 
+import logging
+
+_logger = logging.getLogger('mailchimp3.client')
 
 def _enabled_or_noop(fn):
     @functools.wraps(fn)
@@ -56,6 +59,19 @@ class MailChimpClient(object):
         self.base_url = 'https://{0}.api.mailchimp.com/3.0/'.format(datacenter)
 
 
+    def _make_request(self, **kwargs):
+        _logger.info(u'{method} Request: {url}'.format(**kwargs))
+        if 'json' in kwargs:
+            _logger.info('PAYLOAD: {json}'.format(**kwargs))
+
+        response = requests.request(**kwargs)
+
+        _logger.info(u'{method} Response: {status} {text}'\
+            .format(method=kwargs['method'], status=response.status_code, text=response.text))
+
+        return response
+
+
     @_enabled_or_noop
     def _post(self, url, data=None):
         """
@@ -69,7 +85,13 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.post(url, auth=self.auth, json=data, timeout=self.timeout)
+            r = self._make_request(**{
+                'method': 'POST',
+                'url': url,
+                'json': data,
+                'auth': self.auth,
+                'timeout': self.timeout
+            })
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -93,7 +115,12 @@ class MailChimpClient(object):
         if len(queryparams):
             url += '?' + urlencode(queryparams)
         try:
-            r = requests.get(url, auth=self.auth, timeout=self.timeout)
+            r = self._make_request(**{
+                'method': 'GET',
+                'url': url,
+                'auth': self.auth,
+                'timeout': self.timeout
+            })
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -112,7 +139,12 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.delete(url, auth=self.auth, timeout=self.timeout)
+            r = self._make_request(**{
+                'method': 'DELETE',
+                'url': url,
+                'auth': self.auth,
+                'timeout': self.timeout
+            })
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -135,7 +167,13 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.patch(url, auth=self.auth, json=data, timeout=self.timeout)
+            r = self._make_request(**{
+                'method': 'PATCH',
+                'url': url,
+                'json': data,
+                'auth': self.auth,
+                'timeout': self.timeout
+            })
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -156,7 +194,13 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.put(url, auth=self.auth, json=data, timeout=self.timeout)
+            r = self._make_request(**{
+                'method': 'PUT',
+                'url': url,
+                'json': data,
+                'auth': self.auth,
+                'timeout': self.timeout
+            })
         except requests.exceptions.RequestException as e:
             raise e
         else:

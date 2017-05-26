@@ -121,6 +121,7 @@ individual methods available after.
     |  |  +- Queues
     |  +- Removed Subscribers
     +- Batch Operations
+    +- Batch Webhooks
     +- Campaign Folders
     +- Campaigns
     |  +- Actions
@@ -243,6 +244,16 @@ above with the name `client`.
     client.batch_operations.all(get_all=False)
     client.batch_operations.get(batch_id='')
     client.batch_operations.delete(batch_id='')
+
+### Batch Webhooks
+
+#### Batch Webhooks
+
+    client.batch_webhooks.create(data={})
+    client.batch_webhooks.all(get_all=False)
+    client.batch_webhooks.get(batch_webhook_id='')
+    client.batch_webhooks.update(batch_webhook_id='', data={})
+    client.batch_webhooks.delete(batch_webhook_id='')
 
 ### Campaigns
 

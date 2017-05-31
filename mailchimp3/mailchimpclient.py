@@ -98,8 +98,16 @@ class MailChimpClient(object):
             raise e
         else:
             r.raise_for_status()
-            return r.json()
-
+            json = r.json()
+            json['_links'].extend([
+                {
+                    'method': 'GET',
+                    'rel': r.links[key]['rel'],
+                    'href': r.links[key]['url']
+                }
+                for key in r.links
+            ])
+            return json
 
     @_enabled_or_noop
     def _delete(self, url):

@@ -20,7 +20,7 @@ class SearchCampaigns(BaseApi):
         Initialize the endpoint
         """
         super(SearchCampaigns, self).__init__(*args, **kwargs)
-        self.endpoint = 'search-members'
+        self.endpoint = 'search-campaigns'
 
 
     def get(self, **queryparams):

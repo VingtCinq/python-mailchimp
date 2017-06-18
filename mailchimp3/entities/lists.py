@@ -179,6 +179,8 @@ class Lists(BaseApi):
         queryparams['before_campaign_last_sent'] = string
         queryparams['since_campaign_last_sent'] = string
         queryparams['email'] = string
+        queryparams['sort_field'] = string (Must be 'date_created')
+        queryparams['sort_dir'] = string (Must be one of 'ASC' or 'DESC')
         """
         self.list_id = None
         if get_all:

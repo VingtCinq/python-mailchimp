@@ -158,6 +158,7 @@ individual methods available after.
     |  +- Orders
     |  |  +- Lines
     |  +- Products
+    |     +- Images
     |     +- Variants
     +- File Manager Files
     +- File Manager Folders
@@ -477,6 +478,17 @@ Store Products
     client.stores.products.get(store_id='', product_id='')
     client.stores.products.update(store_id='', product_id='')
     client.stores.products.delete(store_id='', product_id='')
+
+Store Product Images
+^^^^^^^^^^^^^^^^^^^^
+
+::
+
+    client.stores.products.images.create(store_id='', product_id='', data={})
+    client.stores.products.images.all(store_id='', product_id='', get_all=False)
+    client.stores.products.images.get(store_id='', product_id='', image_id='')
+    client.stores.products.images.update(store_id='', product_id='', image_id='', data={})
+    client.stores.products.images.delete(store_id='', product_id='', image_id='')
 
 Store Product Variants
 ^^^^^^^^^^^^^^^^^^^^^^

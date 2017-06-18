@@ -40,6 +40,7 @@ from mailchimp3.entities.storecustomers import StoreCustomers
 from mailchimp3.entities.storeorders import StoreOrders
 from mailchimp3.entities.storeorderlines import StoreOrderLines
 from mailchimp3.entities.storeproducts import StoreProducts
+from mailchimp3.entities.storeproductimages import StoreProductImages
 from mailchimp3.entities.storeproductvariants import StoreProductVariants
 # File Manager Files
 from mailchimp3.entities.filemanagerfiles import FileManagerFiles
@@ -130,6 +131,7 @@ class MailChimp(MailChimpClient):
         self.stores.orders = StoreOrders(self)
         self.stores.orders.lines = StoreOrderLines(self)
         self.stores.products = StoreProducts(self)
+        self.stores.products.images = StoreProductImages(self)
         self.stores.products.variants = StoreProductVariants(self)
         # File Manager Files
         self.files = FileManagerFiles(self)

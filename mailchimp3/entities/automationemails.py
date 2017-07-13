@@ -31,16 +31,24 @@ class AutomationEmails(BaseApi):
 
 
     # Paid feature
-    def all(self, workflow_id):
+    def all(self, workflow_id, get_all=False, **queryparams):
         """
         Get a summary of the emails in an Automation workflow.
 
         :param workflow_id: The unique id for the Automation workflow.
         :type workflow_id: :py:class:`str`
+        :param get_all: Should the query get all results
+        :type get_all: :py:class:`bool`
+        :param queryparams: the query string parameters
+        queryparams['fields'] = []
+        queryparams['exclude_fields'] = []
         """
         self.workflow_id = workflow_id
         self.email_id = None
-        return self._mc_client._get(url=self._build_path(workflow_id, 'emails'))
+        if get_all:
+            return self._iterate(url=self._build_path(workflow_id, 'emails'), **queryparams)
+        else:
+            return self._mc_client._get(url=self._build_path(workflow_id, 'emails'), **queryparams)
 
 
     # Paid feature

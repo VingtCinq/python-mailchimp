@@ -1,4 +1,4 @@
-[![mailchimp3 v2.0.14 on PyPi](https://img.shields.io/badge/pypi-2.0.14-green.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v2.0.15 on PyPi](https://img.shields.io/badge/pypi-2.0.15-green.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 

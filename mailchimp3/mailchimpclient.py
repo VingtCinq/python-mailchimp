@@ -33,7 +33,7 @@ class MailChimpClient(object):
     """
     MailChimp class to communicate with the v3 API
     """
-    def __init__(self, mc_user, mc_secret, enabled=True, timeout=None):
+    def __init__(self, mc_user, mc_secret, enabled=True, timeout=None, request_hooks=None):
         """
         Initialize the class with you user_id and secret_key.
 
@@ -57,11 +57,12 @@ class MailChimpClient(object):
         self.auth = HTTPBasicAuth(mc_user, mc_secret)
         datacenter = mc_secret.split('-').pop()
         self.base_url = 'https://{0}.api.mailchimp.com/3.0/'.format(datacenter)
+        self.request_hooks = request_hooks or requests.hooks.default_hooks()
 
 
     def _make_request(self, **kwargs):
         _logger.info(u'{method} Request: {url}'.format(**kwargs))
-        if 'json' in kwargs:
+        if kwargs.get('json'):
             _logger.info('PAYLOAD: {json}'.format(**kwargs))
 
         response = requests.request(**kwargs)
@@ -85,13 +86,14 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = self._make_request(**{
-                'method': 'POST',
-                'url': url,
-                'json': data,
-                'auth': self.auth,
-                'timeout': self.timeout
-            })
+            r = self._make_request(**dict(
+                method='POST',
+                url=url,
+                json=data,
+                auth=self.auth,
+                timeout=self.timeout,
+                hooks=self.request_hooks
+            ))
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -115,12 +117,13 @@ class MailChimpClient(object):
         if len(queryparams):
             url += '?' + urlencode(queryparams)
         try:
-            r = self._make_request(**{
-                'method': 'GET',
-                'url': url,
-                'auth': self.auth,
-                'timeout': self.timeout
-            })
+            r = self._make_request(**dict(
+                method='GET',
+                url=url,
+                auth=self.auth,
+                timeout=self.timeout,
+                hooks=self.request_hooks
+            ))
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -139,12 +142,13 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = self._make_request(**{
-                'method': 'DELETE',
-                'url': url,
-                'auth': self.auth,
-                'timeout': self.timeout
-            })
+            r = self._make_request(**dict(
+                method='DELETE',
+                url=url,
+                auth=self.auth,
+                timeout=self.timeout,
+                hooks=self.request_hooks
+            ))
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -167,13 +171,14 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = self._make_request(**{
-                'method': 'PATCH',
-                'url': url,
-                'json': data,
-                'auth': self.auth,
-                'timeout': self.timeout
-            })
+            r = self._make_request(**dict(
+                method='PATCH',
+                url=url,
+                json=data,
+                auth=self.auth,
+                timeout=self.timeout,
+                hooks=self.request_hooks
+            ))
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -194,13 +199,14 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = self._make_request(**{
-                'method': 'PUT',
-                'url': url,
-                'json': data,
-                'auth': self.auth,
-                'timeout': self.timeout
-            })
+            r = self._make_request(**dict(
+                method='PUT',
+                url=url,
+                json=data,
+                auth=self.auth,
+                timeout=self.timeout,
+                hooks=self.request_hooks
+            ))
         except requests.exceptions.RequestException as e:
             raise e
         else:

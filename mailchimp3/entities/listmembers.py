@@ -41,16 +41,17 @@ class ListMembers(BaseApi):
         :param data: The request body parameters
         :type data: :py:class:`dict`
         data = {
-            "status": string*, (Must be one of 'subscribed', 'unsubscribed', 'cleaned', or 'pending')
+            "status": string*, (Must be one of 'subscribed', 'unsubscribed', 'cleaned',
+                'pending', or 'transactional')
             "email_address": string*
         }
         """
         self.list_id = list_id
         if 'status' not in data:
             raise KeyError('The list member must have a status')
-        if data['status'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
-            raise ValueError('The list member status must be one of "subscribed", "unsubscribed", "cleaned", or '
-                             '"pending"')
+        if data['status'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending', 'transactional']:
+            raise ValueError('The list member status must be one of "subscribed", "unsubscribed", "cleaned", '
+                             '"pending", or "transactional"')
         if 'email_address' not in data:
             raise KeyError('The list member must have an email_address')
         check_email(data['email_address'])
@@ -103,7 +104,7 @@ class ListMembers(BaseApi):
         :param list_id: The unique id for the list.
         :type list_id: :py:class:`str`
         :param subscriber_hash: The MD5 hash of the lowercase version of the
-          list member’s email address.
+            list member’s email address.
         :type subscriber_hash: :py:class:`str`
         :param queryparams: The query string parameters
         queryparams['fields'] = []
@@ -122,7 +123,7 @@ class ListMembers(BaseApi):
         :param list_id: The unique id for the list.
         :type list_id: :py:class:`str`
         :param subscriber_hash: The MD5 hash of the lowercase version of the
-          list member’s email address.
+            list member’s email address.
         :type subscriber_hash: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
@@ -140,13 +141,14 @@ class ListMembers(BaseApi):
         :param list_id: The unique id for the list.
         :type list_id: :py:class:`str`
         :param subscriber_hash: The MD5 hash of the lowercase version of the
-          list member’s email address.
+            list member’s email address.
         :type subscriber_hash: :py:class:`str`
         :param data: The request body parameters
         :type data: :py:class:`dict`
         data = {
             "email_address": string*,
-            "status_if_new": string* (Must be one of 'subscribed', 'unsubscribed', 'cleaned' or 'pending')
+            "status_if_new": string* (Must be one of 'subscribed',
+                'unsubscribed', 'cleaned', 'pending', or 'transactional')
         }
         """
         subscriber_hash = check_subscriber_hash(subscriber_hash)
@@ -157,9 +159,9 @@ class ListMembers(BaseApi):
         check_email(data['email_address'])
         if 'status_if_new' not in data:
             raise KeyError('The list member must have a status_if_new')
-        if data['status_if_new'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending']:
+        if data['status_if_new'] not in ['subscribed', 'unsubscribed', 'cleaned', 'pending', 'transactional']:
             raise ValueError('The list member status_if_new must be one of "subscribed", "unsubscribed", "cleaned", '
-                             'or "pending"')
+                             '"pending", or "transactional"')
         return self._mc_client._put(url=self._build_path(list_id, 'members', subscriber_hash), data=data)
 
 

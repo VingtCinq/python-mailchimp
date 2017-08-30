@@ -4,8 +4,8 @@
 
 # python-mailchimp-api
 
-A straighforward python client for v3 of MailChimp API using requests >=
-2.7.0.
+A straighforward python client for v3 of MailChimp API using
+requests >= 2.7.0.
 
 ## Getting Started
 
@@ -31,8 +31,8 @@ Up to date with [changelog](http://developer.mailchimp.com/documentation/mailchi
 
 ### Initialization
 
-Grab `YOUR_SECRET_KEY` from your mailchimp account (Account > Extra >
-Api Keys). `YOUR_USERNAME` is the one you use to login.
+Grab `YOUR_SECRET_KEY` from your mailchimp account (Account > Extra > Api
+Keys). `YOUR_USERNAME` is the one you use to login.
 
     from mailchimp3 import MailChimp
 
@@ -40,16 +40,17 @@ Api Keys). `YOUR_USERNAME` is the one you use to login.
 
 ### Pagination
 
-Simply add `count` and `offset` arguments in your function. The count is
-how many records to return, the offset is how many records to skip. For
-endpoints that allow the pagination parameters, the all() method has an
-additional boolean `get_all` argument that will loop through all records
-until the API no longer returns any to get all records without manually
-performing an additional query. By default, count is 10 and offset is 0
-for all endpoints that support it. The `get_all` parameter on the all()
-method on any endpoint defaults to false, which follows the values that
-are provided in the call, and using `get_all=True` will ignore the
-provided count and offset to ensure that all records are returned.
+Simply add `count` and `offset` arguments in your function. The count
+is how many records to return, the offset is how many records to skip.
+For endpoints that allow the pagination parameters, the all() method
+has an additional boolean `get_all` argument that will loop through all
+records until the API no longer returns any to get all records without
+manually performing an additional query. By default, count is 10 and
+offset is 0 for all endpoints that support it. The `get_all` parameter
+on the all() method on any endpoint defaults to false, which follows
+the values that are provided in the call, and using `get_all=True` will
+ignore the provided count and offset to ensure that all records are
+returned.
 
     client.lists.members.all('123456', count=100, offset=0)
 
@@ -93,7 +94,7 @@ display email_address and id for each member in list 123456:
     # Every API call will return None
     client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', enabled=False)
 
-    # You are encouraged to specify a value in seconds for the  ``timeout`` 
+    # You are encouraged to specify a value in seconds for the ``timeout``
     # parameter to avoid hanging requests.
     client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', timeout=10.0)
 

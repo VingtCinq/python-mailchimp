@@ -1,4 +1,4 @@
-|mailchimp3 v2.0.15 on PyPi| |MIT license| |Stable|
+|mailchimp3 v2.0.16 on PyPi| |MIT license| |Stable|
 
 python-mailchimp-api
 ====================
@@ -791,6 +791,33 @@ Default Content
 
     client.templates.default_content.all(template_id='')
 
+Logging
+-------
+
+The MailChimp client will log request/response detail into the mailchimp3.client
+logging namespace. Consider the following snippet to get started with logging:
+
+::
+
+    import logging
+    fh = logging.FileHandler('/path/to/some/log.log')
+    logger = logging.getLogger('mailchimp3.client')
+    logger.addHandler(fh)
+
+    # use the client normally
+    client.lists.all(**{'fields': 'lists.date_created'})
+
+request/response detail will be appended into /path/to/some/log.log:
+
+::
+
+    GET Request: https://us15.api.mailchimp.com/3.0/lists?fields=lists.date_created
+    GET Response: 200 {"lists":[{"date_created":"2017-05-10T13:53:05+00:00"},{"date_created":"2017-08-22T20:27:56+00:00"},{"date_created":"2017-05-12T21:22:15+00:00"},{"date_created":"2017-04-27T17:42:04+00:00"},{"date_created":"2017-05-10T14:14:49+00:00"},{"date_created":"2017-05-10T13:52:37+00:00"},{"date_created":"2017-05-10T13:51:40+00:00"}]}
+
+Check the docs_ for more detail on the Python logging package.
+
+.. _docs: https://docs.python.org/2/library/logging.html/
+
 Support
 -------
 
@@ -801,8 +828,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |mailchimp3 v2.0.15 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.15-green.svg
+.. |mailchimp3 v2.0.16 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.16-green.svg
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
-

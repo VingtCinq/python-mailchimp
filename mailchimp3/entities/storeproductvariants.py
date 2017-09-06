@@ -78,7 +78,7 @@ class StoreProductVariants(BaseApi):
         if get_all:
             return self._iterate(url=self._build_path(store_id, 'products', product_id, 'variants'), **queryparams)
         else:
-            return self._mc_client._post(url=self._build_path(store_id, 'products', product_id, 'variants'), **queryparams)
+            return self._mc_client._get(url=self._build_path(store_id, 'products', product_id, 'variants'), **queryparams)
 
 
     def get(self, store_id, product_id, variant_id, **kwargs):
@@ -98,7 +98,7 @@ class StoreProductVariants(BaseApi):
         self.store_id = store_id
         self.product_id = product_id
         self.variant_id = variant_id
-        return self._mc_client._post(
+        return self._mc_client._get(
             url=self._build_path(store_id, 'products', product_id, 'variants', variant_id),
             **kwargs
         )

@@ -51,20 +51,22 @@ class BaseApi(object):
         if 'fields' in kwargs:
             if 'total_items' not in kwargs['fields'].split(','):
                 kwargs['fields'] += ',total_items'
+
         # Remove offset and count if provided in kwargs
         # to avoid 'multiple values for keyword argument' TypeError
-        kwargs.pop("offset", None)
-        kwargs.pop("count", None)
+        offset = kwargs.pop("offset", 0)
+        count = kwargs.pop("count", 5000)
+
         #Fetch results from mailchimp, up to first 5000
-        result = self._mc_client._get(url=url, offset=0, count=5000, **kwargs)
+        result = self._mc_client._get(url=url, offset=offset, count=count, **kwargs)
         total = result['total_items']
         #Fetch further results if necessary
-        if total > 5000:
-            for offset in range(1, int(total / 5000) + 1):
+        if total > count:
+            for offset in range(1, int(total / count) + 1):
                 result = merge_results(result, self._mc_client._get(
                     url=url,
-                    offset=int(offset*5000),
-                    count=5000,
+                    offset=int(offset*count),
+                    count=count,
                     **kwargs
                 ))
             return result

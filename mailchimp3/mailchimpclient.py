@@ -17,6 +17,9 @@ except ImportError:
     from urlparse import urljoin
     from urllib import urlencode
 
+import logging
+
+_logger = logging.getLogger('mailchimp3.client')
 
 def _enabled_or_noop(fn):
     @functools.wraps(fn)
@@ -31,7 +34,7 @@ class MailChimpClient(object):
     MailChimp class to communicate with the v3 API
     """
     def __init__(self, mc_user, mc_secret, enabled=True, timeout=None,
-                 user_agent=None):
+                 request_hooks=None, request_headers=None):
         """
         Initialize the class with you user_id and secret_key.
 
@@ -48,8 +51,11 @@ class MailChimpClient(object):
             data before giving up, as a float, or a :ref:`(connect timeout,
             read timeout) <timeouts>` tuple.
         :type timeout: float or tuple
-        :param user_agent: (optional) User-Agent for request headers
-        :type user_agent: :py:class:`str`
+        :param request_hooks: (optional) Hooks for :py:func:`requests.requests`.
+        :type request_hooks: :py:class:`dict`
+        :param request_headers: (optional) Headers for
+            :py:func:`requests.requests`.
+        :type request_headers: :py:class:`dict`
         """
         super(MailChimpClient, self).__init__()
         self.enabled = enabled
@@ -57,9 +63,22 @@ class MailChimpClient(object):
         self.auth = HTTPBasicAuth(mc_user, mc_secret)
         datacenter = mc_secret.split('-').pop()
         self.base_url = 'https://{0}.api.mailchimp.com/3.0/'.format(datacenter)
-        self.headers = requests.utils.default_headers()
-        if user_agent:
-            self.headers['User-Agent'] = user_agent
+        self.request_headers = request_headers or requests.utils.default_headers()
+        self.request_hooks = request_hooks or requests.hooks.default_hooks()
+
+
+    def _make_request(self, **kwargs):
+        _logger.info(u'{method} Request: {url}'.format(**kwargs))
+        if kwargs.get('json'):
+            _logger.info('PAYLOAD: {json}'.format(**kwargs))
+
+        response = requests.request(**kwargs)
+
+        _logger.info(u'{method} Response: {status} {text}'\
+            .format(method=kwargs['method'], status=response.status_code, text=response.text))
+
+        return response
+
 
     @_enabled_or_noop
     def _post(self, url, data=None):
@@ -74,8 +93,15 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.post(url, auth=self.auth, json=data,
-                              timeout=self.timeout, headers=self.headers)
+            r = self._make_request(**dict(
+                method='POST',
+                url=url,
+                json=data,
+                auth=self.auth,
+                timeout=self.timeout,
+                hooks=self.request_hooks,
+                headers=self.request_headers
+            ))
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -99,8 +125,14 @@ class MailChimpClient(object):
         if len(queryparams):
             url += '?' + urlencode(queryparams)
         try:
-            r = requests.get(url, auth=self.auth, timeout=self.timeout,
-                             headers=self.headers)
+            r = self._make_request(**dict(
+                method='GET',
+                url=url,
+                auth=self.auth,
+                timeout=self.timeout,
+                hooks=self.request_hooks,
+                headers=self.request_headers
+            ))
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -119,8 +151,14 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.delete(url, auth=self.auth, timeout=self.timeout,
-                                headers=self.headers)
+            r = self._make_request(**dict(
+                method='DELETE',
+                url=url,
+                auth=self.auth,
+                timeout=self.timeout,
+                hooks=self.request_hooks,
+                headers=self.request_headers
+            ))
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -143,8 +181,15 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.patch(url, auth=self.auth, json=data,
-                               timeout=self.timeout, headers=self.headers)
+            r = self._make_request(**dict(
+                method='PATCH',
+                url=url,
+                json=data,
+                auth=self.auth,
+                timeout=self.timeout,
+                hooks=self.request_hooks,
+                headers=self.request_headers
+            ))
         except requests.exceptions.RequestException as e:
             raise e
         else:
@@ -165,8 +210,15 @@ class MailChimpClient(object):
         """
         url = urljoin(self.base_url, url)
         try:
-            r = requests.put(url, auth=self.auth, json=data,
-                             timeout=self.timeout, headers=self.headers)
+            r = self._make_request(**dict(
+                method='PUT',
+                url=url,
+                json=data,
+                auth=self.auth,
+                timeout=self.timeout,
+                hooks=self.request_hooks,
+                headers=self.request_headers
+            ))
         except requests.exceptions.RequestException as e:
             raise e
         else:

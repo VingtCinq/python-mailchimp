@@ -1,4 +1,4 @@
-[![mailchimp3 v2.0.17 on PyPi](https://img.shields.io/badge/pypi-2.0.17-green.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v2.0.18 on PyPi](https://img.shields.io/badge/pypi-2.0.18-green.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -97,6 +97,13 @@ display email_address and id for each member in list 123456:
     # You are encouraged to specify a value in seconds for the ``timeout``
     # parameter to avoid hanging requests.
     client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', timeout=10.0)
+
+    # You are encouraged to specify a User-Agent for requests to the MailChimp
+    # API. Headers can be specified using the ``request_headers`` parameter.
+    headers = requests.utils.default_headers()
+    headers['User-Agent'] = 'Example (example@example.com)'
+    client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY',
+                       request_headers=headers)
 
 ## API Structure
 

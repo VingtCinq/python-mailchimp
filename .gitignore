@@ -59,3 +59,6 @@ target/
 
 # PyCharm project files
 .idea
+
+# dotenv files
+.env

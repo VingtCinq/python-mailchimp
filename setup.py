@@ -38,5 +38,6 @@ setup(
     keywords='mailchimp api v3 client wrapper',
     packages=find_packages(),
     install_requires=['requests>=2.7.0'],
-    # test_suite='tests',
+    test_suite='test.py',
+    tests_require=['python-dotenv'],
 )

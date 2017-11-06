@@ -64,6 +64,7 @@ from mailchimp3.entities.listwebhooks import ListWebhooks
 from mailchimp3.entities.reports import Reports
 from mailchimp3.entities.reportcampaignabusereports import ReportCampaignAbuseReports
 from mailchimp3.entities.reportcampaignadvice import ReportCampaignAdvice
+from mailchimp3.entities.reportcampaignopendetails import ReportOpenDetails
 from mailchimp3.entities.reportclickdetailreports import ReportClickDetailReports
 from mailchimp3.entities.reportclickdetailmembers import ReportClickDetailMembers
 from mailchimp3.entities.reportdomainperformance import ReportDomainPerformance
@@ -152,6 +153,7 @@ class MailChimp(MailChimpClient):
         self.reports = Reports(self)
         self.reports.abuse_reports = ReportCampaignAbuseReports(self)
         self.reports.advice = ReportCampaignAdvice(self)
+        self.reports.open_details = ReportOpenDetails(self)
         self.reports.click_details = ReportClickDetailReports(self)
         self.reports.click_details.members = ReportClickDetailMembers(self)
         self.reports.domain_performance = ReportDomainPerformance(self)

@@ -159,6 +159,7 @@ individual methods available after.
     +- Reports
     |  +- Campaign Abuse
     |  +- Campaign Advice
+    |  +- Campaign Open Details
     |  +- Click Reports
     |  |  +- Members
     |  +- Domain Performance
@@ -510,6 +511,10 @@ above with the name `client`.
 #### Campaign Advice
 
     client.reports.advice.all(campaign_id='')
+    
+#### Campaign Open Details
+
+    client.reports.open_details.all(campaign_id='')
 
 #### Click Details Report
 

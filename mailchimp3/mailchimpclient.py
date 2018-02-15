@@ -6,6 +6,7 @@ Documentation: http://developer.mailchimp.com/documentation/mailchimp/
 """
 from __future__ import unicode_literals
 import functools
+import re
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -33,18 +34,18 @@ class MailChimpClient(object):
     """
     MailChimp class to communicate with the v3 API
     """
-    def __init__(self, mc_user, mc_secret, enabled=True, timeout=None,
+    def __init__(self, mc_api, mc_user='python-mailchimp', enabled=True, timeout=None,
                  request_hooks=None, request_headers=None):
         """
-        Initialize the class with you user_id and secret_key.
+        Initialize the class with your optional user_id and required api_key.
 
         If `enabled` is not True, these methods become no-ops. This is
         particularly useful for testing or disabling with configuration.
 
         :param mc_user: Mailchimp user id
         :type mc_user: :py:class:`str`
-        :param mc_secret: Mailchimp secret key
-        :type mc_secret: :py:class:`str`
+        :param mc_api: Mailchimp API key
+        :type mc_api: :py:class:`str`
         :param enabled: Whether the API should execute any requests
         :type enabled: :py:class:`bool`
         :param timeout: (optional) How long to wait for the server to send
@@ -60,8 +61,11 @@ class MailChimpClient(object):
         super(MailChimpClient, self).__init__()
         self.enabled = enabled
         self.timeout = timeout
-        self.auth = HTTPBasicAuth(mc_user, mc_secret)
-        datacenter = mc_secret.split('-').pop()
+        self.auth = HTTPBasicAuth(mc_user, mc_api)
+        if not re.match(r"^[0-9a-f]{32}$", mc_api.split('-')[0]):
+            raise ValueError('The API key that you have entered is not valid, did you enter a username by mistake?\n'
+                             'The order of arguments for API key and username has reversed in 2.1.0')
+        datacenter = mc_api.split('-').pop()
         self.base_url = 'https://{0}.api.mailchimp.com/3.0/'.format(datacenter)
         self.request_headers = request_headers or requests.utils.default_headers()
         self.request_hooks = request_hooks or requests.hooks.default_hooks()

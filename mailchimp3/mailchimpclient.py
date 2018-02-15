@@ -34,7 +34,7 @@ class MailChimpClient(object):
     """
     MailChimp class to communicate with the v3 API
     """
-    def __init__(self, mc_api, mc_user='python-mailchimp', enabled=True, timeout=None,
+    def __init__(self, mc_api, mc_user='python-mailchimp', access_token=None, enabled=True, timeout=None,
                  request_hooks=None, request_headers=None):
         """
         Initialize the class with your optional user_id and required api_key.
@@ -42,10 +42,12 @@ class MailChimpClient(object):
         If `enabled` is not True, these methods become no-ops. This is
         particularly useful for testing or disabling with configuration.
 
-        :param mc_user: Mailchimp user id
-        :type mc_user: :py:class:`str`
         :param mc_api: Mailchimp API key
         :type mc_api: :py:class:`str`
+        :param mc_user: Mailchimp user id
+        :type mc_user: :py:class:`str`
+        :param access_token: The OAuth access token
+        :type access_token: :py:class:`str`
         :param enabled: Whether the API should execute any requests
         :type enabled: :py:class:`bool`
         :param timeout: (optional) How long to wait for the server to send
@@ -61,12 +63,18 @@ class MailChimpClient(object):
         super(MailChimpClient, self).__init__()
         self.enabled = enabled
         self.timeout = timeout
-        self.auth = HTTPBasicAuth(mc_user, mc_api)
-        if not re.match(r"^[0-9a-f]{32}$", mc_api.split('-')[0]):
-            raise ValueError('The API key that you have entered is not valid, did you enter a username by mistake?\n'
-                             'The order of arguments for API key and username has reversed in 2.1.0')
-        datacenter = mc_api.split('-').pop()
-        self.base_url = 'https://{0}.api.mailchimp.com/3.0/'.format(datacenter)
+        if access_token:
+            self.auth = MailChimpOAuth(access_token)
+            self.base_url = self.auth.get_base_url() + '/3.0/'
+        elif mc_api:
+            if not re.match(r"^[0-9a-f]{32}$", mc_api.split('-')[0]):
+                raise ValueError('The API key that you have entered is not valid, did you enter a username by mistake?\n'
+                                 'The order of arguments for API key and username has reversed in 2.1.0')
+            self.auth = HTTPBasicAuth(mc_user, mc_api)
+            datacenter = mc_api.split('-').pop()
+            self.base_url = 'https://{0}.api.mailchimp.com/3.0/'.format(datacenter)
+        else:
+            raise Exception('You must provide an OAuth access token or API key')
         self.request_headers = request_headers or requests.utils.default_headers()
         self.request_hooks = request_hooks or requests.hooks.default_hooks()
 
@@ -228,3 +236,48 @@ class MailChimpClient(object):
         else:
             r.raise_for_status()
             return r.json()
+
+
+class MailChimpOAuth(requests.auth.AuthBase):
+    """
+    Authentication class for authentication with OAuth2. Acquiring an OAuth2
+    for MailChimp can be done by following the instructions in the
+    documentation found at
+    http://developer.mailchimp.com/documentation/mailchimp/guides/how-to-use-oauth2/
+    """
+    def __init__(self, access_token):
+        """
+        Initialize the OAuth and save the access token
+
+        :param access_token: The access token provided by OAuth authentication
+        :type access_token: :py:class:`str`
+        """
+        self._access_token = access_token
+
+
+    def __call__(self, r):
+        """
+        Authorize with the access token provided in __init__
+        """
+        r.headers['Authorization'] = 'OAuth ' + self._access_token
+        return r
+
+
+    def get_metadata(self):
+        """
+        Get the metadata returned after authentication
+        """
+        try:
+            r = requests.get('https://login.mailchimp.com/oauth2/metadata', auth=self)
+        except requests.exceptions.RequestException as e:
+            raise e
+        else:
+            r.raise_for_status()
+            return r.json()
+
+
+    def get_base_url(self):
+        """
+        Get the base_url from the authentication metadata
+        """
+        return self.get_metadata()['api_endpoint']

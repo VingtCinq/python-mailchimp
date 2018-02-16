@@ -41,7 +41,7 @@ History
 
 Up to date with
 `changelog <http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/>`__
-features listed thru 2/23/2017.
+features listed thru 3/03/2017.
 
 Initialization
 ~~~~~~~~~~~~~~

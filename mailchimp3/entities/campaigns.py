@@ -113,7 +113,7 @@ class Campaigns(BaseApi):
         .. note::
             The before_create_time, since_create_time, before_send_time, and
             since_send_time queryparams expect times to be listed in the ISO
-            8601 format in UTC.
+            8601 format in UTC (ex. 2015-10-21T15:41:36+00:00).
 
         :param get_all: Should the query get all results
         :type get_all: :py:class:`bool`

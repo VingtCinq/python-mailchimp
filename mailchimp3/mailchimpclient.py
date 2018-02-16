@@ -30,6 +30,10 @@ def _enabled_or_noop(fn):
     return wrapper
 
 
+class MailChimpError(Exception):
+    pass
+
+
 class MailChimpClient(object):
     """
     MailChimp class to communicate with the v3 API
@@ -117,7 +121,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            r.raise_for_status()
+            if r.status_code >= 400:
+                raise MailChimpError(r.json())
             if r.status_code == 204:
                 return None
             return r.json()
@@ -148,7 +153,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            r.raise_for_status()
+            if r.status_code >= 400:
+                raise MailChimpError(r.json())
             return r.json()
 
 
@@ -174,7 +180,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            r.raise_for_status()
+            if r.status_code >= 400:
+                raise MailChimpError(r.json())
             if r.status_code == 204:
                 return
             return r.json()
@@ -205,7 +212,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            r.raise_for_status()
+            if r.status_code >= 400:
+                raise MailChimpError(r.json())
             return r.json()
 
 
@@ -234,7 +242,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            r.raise_for_status()
+            if r.status_code >= 400:
+                raise MailChimpError(r.json())
             return r.json()
 
 

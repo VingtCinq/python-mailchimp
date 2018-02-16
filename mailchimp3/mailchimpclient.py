@@ -273,11 +273,17 @@ class MailChimpOAuth(requests.auth.AuthBase):
             raise e
         else:
             r.raise_for_status()
-            return r.json()
+            output = r.json()
+            if 'error' in output:
+                raise requests.exceptions.RequestException(output['error'])
+            return output
 
 
     def get_base_url(self):
         """
         Get the base_url from the authentication metadata
         """
-        return self.get_metadata()['api_endpoint']
+        try:
+            return self.get_metadata()['api_endpoint']
+        except requests.exceptions.RequestException:
+            raise

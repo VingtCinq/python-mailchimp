@@ -8,6 +8,7 @@ Schema: https://api.mailchimp.com/schema/3.0/Ecommerce/Stores/Products/Instance.
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
+from mailchimp3.entities.storeproductimages import StoreProductImages
 from mailchimp3.entities.storeproductvariants import StoreProductVariants
 
 
@@ -25,6 +26,7 @@ class StoreProducts(BaseApi):
         self.endpoint = 'ecommerce/stores'
         self.store_id = None
         self.product_id = None
+        self.images = StoreProductImages(self)
         self.variants = StoreProductVariants(self)
 
 

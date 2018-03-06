@@ -67,7 +67,12 @@ offset is 0 for all endpoints that support it. The `get_all` parameter
 on the all() method on any endpoint defaults to false, which follows
 the values that are provided in the call, and using `get_all=True` will
 ignore the provided count and offset to ensure that all records are
-returned.
+returned. When using get_all, the count will be 5000, to fetch large
+numbers of records without flooding the system with requests. The large
+size of count should not impact calls which are expected to return a
+very small number of records, and should improve performance for calls
+where fetching 5000 records would only provide a fraction by preventing
+the delay of making a huge number of requests.
 
     client.lists.members.all('123456', count=100, offset=0)
 

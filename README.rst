@@ -1,4 +1,4 @@
-|mailchimp3 v2.0.18 on PyPi| |MIT license| |Stable|
+|mailchimp3 v2.1.0 on PyPi| |MIT license| |Stable|
 
 python-mailchimp-api
 ====================
@@ -17,6 +17,15 @@ it, simply run
 
 ``pip install mailchimp3``
 
+Upgrading from v2.0.x
+~~~~~~~~~~~~~~~~~~~~~
+
+The order of arguments for initializing the Mailchimp API has been
+reversed starting in 2.1.0 as the username is an optional argument for
+basic auth. Please reverse the order of your arguments or remove the
+username argument entirely. The name of the authentication argument has
+also changed from ``mc_secret`` to ``mc_api``.
+
 Upgrading from v1.x
 ~~~~~~~~~~~~~~~~~~~
 
@@ -32,34 +41,48 @@ History
 
 Up to date with
 `changelog <http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/>`__
-features listed thru 1/12/2017.
+features listed thru 3/03/2017.
 
 Initialization
 ~~~~~~~~~~~~~~
 
-Grab ``YOUR_SECRET_KEY`` from your mailchimp account (Account > Extra >
-Api Keys). ``YOUR_USERNAME`` is the one you use to login.
+Grab ``YOUR_API_KEY`` from your mailchimp account (Account > Extra >
+Api Keys). ``YOUR_USERNAME`` is the one you use to login on the website
+and is optional.
 
 ::
 
     from mailchimp3 import MailChimp
 
-    client = MailChimp('YOUR_USERNAME', 'YOUR_SECRET_KEY')
+    client = MailChimp('YOUR_API_KEY', 'YOUR_USERNAME')
+
+OAuth Support
+~~~~~~~~~~~~~
+
+In addition to HTTP Basic Authentication, MailChimp supports
+authentication through OAuth2. Information on obtaining the proper
+access key can be found
+`here <http://developer.mailchimp.com/documentation/mailchimp/guides/how-to-use-oauth2/>`__.
 
 Pagination
 ~~~~~~~~~~
 
-Simply add ``count`` and ``offset`` arguments in your function. The
-count is how many records to return, the offset is how many records to
-skip. For endpoints that allow the pagination parameters, the all()
-method has an additional boolean ``get_all`` argument that will loop
-through all records until the API no longer returns any to get all
-records without manually performing an additional query. By default,
-count is 10 and offset is 0 for all endpoints that support it. The
-``get_all`` parameter on the all() method on any endpoint defaults to
-false, which follows the values that are provided in the call, and
-using ``get_all=True`` will ignore the provided count and offset to
-ensure that all records are returned.
+Simply add ``count`` and ``offset`` arguments in your function. The count
+is how many records to return, the offset is how many records to skip.
+For endpoints that allow the pagination parameters, the all() method
+has an additional boolean ``get_all`` argument that will loop through all
+records until the API no longer returns any to get all records without
+manually performing an additional query. By default, count is 10 and
+offset is 0 for all endpoints that support it. The ``get_all`` parameter
+on the all() method on any endpoint defaults to false, which follows
+the values that are provided in the call, and using ``get_all=True`` will
+ignore the provided count and offset to ensure that all records are
+returned. When using ``get_all``, the count will be 5000, to fetch large
+numbers of records without flooding the system with requests. The large
+size of count should not impact calls which are expected to return a
+very small number of records, and should improve performance for calls
+where fetching 5000 records would only provide a fraction by preventing
+the delay of making a huge number of requests.
 
 ::
 
@@ -142,6 +165,7 @@ individual methods available after.
     |  |  +- Queues
     |  +- Removed Subscribers
     +- Batch Operations
+    +- Batch Webhooks
     +- Campaign Folders
     +- Campaigns
     |  +- Actions
@@ -157,6 +181,7 @@ individual methods available after.
     |  +- Orders
     |  |  +- Lines
     |  +- Products
+    |     +- Images
     |     +- Variants
     +- File Manager Files
     +- File Manager Folders
@@ -287,15 +312,29 @@ Automation Removed Subscribers
 Batch Operations
 ~~~~~~~~~~~~~~~~
 
-Batches
-^^^^^^^
+Batch Operations
+^^^^^^^^^^^^^^^^
 
 ::
 
-    client.batches.create(data={})
-    client.batches.all(get_all=False)
-    client.batches.get(batch_id='')
-    client.batches.delete(batch_id='')
+    client.batch_operations.create(data={})
+    client.batch_operations.all(get_all=False)
+    client.batch_operations.get(batch_id='')
+    client.batch_operations.delete(batch_id='')
+
+Batch Webhooks
+~~~~~~~~~~~~~~
+
+Batch Webhooks
+^^^^^^^^^^^^^^
+
+::
+
+    client.batch_webhooks.create(data={})
+    client.batch_webhooks.all(get_all=False)
+    client.batch_webhooks.get(batch_webhook_id='')
+    client.batch_webhooks.update(batch_webhook_id='')
+    client.batch_webhooks.delete(batch_webhook_id='')
 
 Campaigns
 ~~~~~~~~~
@@ -462,6 +501,17 @@ Store Products
     client.stores.products.get(store_id='', product_id='')
     client.stores.products.update(store_id='', product_id='')
     client.stores.products.delete(store_id='', product_id='')
+
+Store Product Images
+^^^^^^^^^^^^^^^^^^^^
+
+::
+
+    client.stores.products.images.create(store_id='', product_id='', data={})
+    client.stores.products.images.all(store_id='', product_id='', get_all=False)
+    client.stores.products.images.get(store_id='', product_id='', image_id='')
+    client.stores.products.images.update(store_id='', product_id='', image_id='', data={})
+    client.stores.products.images.delete(store_id='', product_id='', image_id='')
 
 Store Product Variants
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -724,7 +774,7 @@ Locations Report
 
 ::
 
-    client.reports.locations.all(campaign_id='')
+    client.reports.locations.all(campaign_id='', get_all=False)
 
 Sent To Reports
 ^^^^^^^^^^^^^^^
@@ -835,7 +885,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |mailchimp3 v2.0.18 on PyPi| image:: https://img.shields.io/badge/pypi-2.0.18-green.svg
+.. |mailchimp3 v2.1.0 on PyPi| image:: https://img.shields.io/badge/pypi-2.1.0-green.svg
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

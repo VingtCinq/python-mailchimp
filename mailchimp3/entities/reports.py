@@ -12,6 +12,7 @@ from mailchimp3.entities.reportcampaignabusereports import ReportCampaignAbuseRe
 from mailchimp3.entities.reportcampaignadvice import ReportCampaignAdvice
 from mailchimp3.entities.reportclickdetailreports import ReportClickDetailReports
 from mailchimp3.entities.reportdomainperformance import ReportDomainPerformance
+from mailchimp3.entities.reportcampaignopendetails import ReportOpenDetails
 from mailchimp3.entities.reporteepurl import ReportEepURL
 from mailchimp3.entities.reportemailactivity import ReportEmailActivity
 from mailchimp3.entities.reportlocations import ReportLocations
@@ -35,6 +36,7 @@ class Reports(BaseApi):
         self.campaign_id = None
         self.abuse_reports = ReportCampaignAbuseReports(self)
         self.advice = ReportCampaignAdvice(self)
+        self.open_details = ReportOpenDetails(self)
         self.click_details = ReportClickDetailReports(self)
         self.domain_performance = ReportDomainPerformance(self)
         self.eepurl = ReportEepURL(self)

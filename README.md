@@ -1,4 +1,4 @@
-[![mailchimp3 v2.1.0 on PyPi](https://img.shields.io/badge/pypi-2.1.0-green.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v3.0.0 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -16,7 +16,7 @@ it, simply run
 
 `pip install mailchimp3`
 
-### Upgrading from v2.0.x
+### Upgrading from v2.x
 
 The order of arguments for initializing the Mailchimp API has been
 reversed starting in 2.1.0 as the username is an optional argument for
@@ -46,7 +46,7 @@ is optional.
 
     from mailchimp3 import MailChimp
 
-    client = MailChimp('YOUR_API_KEY', 'YOUR_USERNAME')
+    client = MailChimp(mc_api='YOUR_API_KEY', mc_user='YOUR_USERNAME')
 
 ### OAuth Support
 

@@ -56,16 +56,16 @@ class BaseApi(object):
         # to avoid 'multiple values for keyword argument' TypeError
         queryparams.pop("offset", None)
         queryparams.pop("count", None)
-        # Fetch results from mailchimp, up to first 5000
-        result = self._mc_client._get(url=url, offset=0, count=5000, **queryparams)
+        # Fetch results from mailchimp, up to first 1000
+        result = self._mc_client._get(url=url, offset=0, count=1000, **queryparams)
         total = result['total_items']
         # Fetch further results if necessary
-        if total > 5000:
-            for offset in range(1, int(total / 5000) + 1):
+        if total > 1000:
+            for offset in range(1, int(total / 1000) + 1):
                 result = merge_results(result, self._mc_client._get(
                     url=url,
-                    offset=int(offset*5000),
-                    count=5000,
+                    offset=int(offset*1000),
+                    count=1000,
                     **queryparams
                 ))
             return result

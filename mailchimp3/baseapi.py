@@ -7,10 +7,12 @@ from itertools import chain
 
 from mailchimp3.helpers import merge_results
 
+
 class BaseApi(object):
     """
     Simple class to buid path for entities
     """
+
     def __init__(self, mc_client):
         """
         Initialize the class with you user_id and secret_key
@@ -22,16 +24,14 @@ class BaseApi(object):
         self._mc_client = mc_client
         self.endpoint = ''
 
-
     def _build_path(self, *args):
         """
-        Build path width endpoint and args
+        Build path with endpoint and args
 
         :param args: Tokens in the endpoint URL
         :type args: :py:class:`unicode`
         """
-        return '/'.join(chain((self.endpoint,), args))
-
+        return '/'.join(chain((self.endpoint,), map(str, args)))
 
     def _iterate(self, url, **queryparams):
         """
@@ -64,7 +64,7 @@ class BaseApi(object):
             for offset in range(1, int(total / 1000) + 1):
                 result = merge_results(result, self._mc_client._get(
                     url=url,
-                    offset=int(offset*1000),
+                    offset=int(offset * 1000),
                     count=1000,
                     **queryparams
                 ))

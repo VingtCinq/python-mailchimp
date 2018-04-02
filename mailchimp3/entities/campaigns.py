@@ -130,6 +130,8 @@ class Campaigns(BaseApi):
         queryparams['since_create_time'] = string
         queryparams['list_id'] = string
         queryparams['folder_id'] = string
+        queryparams['sort_field'] = string
+        queryparams['sort_dir'] = string
         """
         self.campaign_id = None
         if get_all:
@@ -147,6 +149,8 @@ class Campaigns(BaseApi):
         :param queryparams: The query string parameters
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
+        queryparams['sort_field'] = string
+        queryparams['create_time'] = string
         """
         self.campaign_id = campaign_id
         return self._mc_client._get(url=self._build_path(campaign_id), **queryparams)

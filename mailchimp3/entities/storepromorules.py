@@ -1,6 +1,6 @@
 # coding=utf-8
 """
-The E-commerce Stores API endpoint
+The E-commerce Stores Promo Rules API endpoint
 
 Documentation: http://developer.mailchimp.com/documentation/mailchimp/reference/ecommerce/stores/promo-rules
 """
@@ -63,7 +63,7 @@ class StorePromoRules(BaseApi):
         Get information about a store’s promo rules.
 
         :param store_id: The store's id
-        :type store_id: `string`
+        :type store_id: `str`
         :param get_all:
         :type get_all: :py:class:`bool`
         :param queryparams: The query string parameters
@@ -72,7 +72,7 @@ class StorePromoRules(BaseApi):
         queryparams['count'] = integer
         queryparams['offset'] = integer
         """
-        self.store_id=store_id
+        self.store_id = store_id
         if get_all:
             return self._iterate(url=self._build_path(store_id, 'promo-rules'), **queryparams)
         else:
@@ -80,12 +80,10 @@ class StorePromoRules(BaseApi):
 
     def get(self, store_id, promo_rule_id, **queryparams):
         """
-                Get information about a specific promo.
+                Get information about a specific promo rule.
 
                 :param store_id: The store's id
                 :type store_id: `string`
-                :param get_all:
-                :type get_all: :py:class:`bool`
                 :param queryparams: The query string parameters
                 queryparams['fields'] = []
                 queryparams['exclude_fields'] = []
@@ -94,7 +92,7 @@ class StorePromoRules(BaseApi):
                 """
         self.store_id = store_id
         self.promo_rule_id = promo_rule_id
-        return self._mc_client._get(url=self._build_path(store_id, 'promo-rule', promo_rule_id), **queryparams)
+        return self._mc_client._get(url=self._build_path(store_id, 'promo-rules', promo_rule_id), **queryparams)
 
 
     def update(self, store_id, promo_rule_id, data):
@@ -136,4 +134,4 @@ class StorePromoRules(BaseApi):
         """
         self.store_id=store_id
         self.promo_rule_id=promo_rule_id
-        return slef._mc_client._delete(url=self._build_path(store_id, 'promo-rule', promo_rule_id))
+        return self._mc_client._delete(url=self._build_path(store_id, 'promo-rules', promo_rule_id))

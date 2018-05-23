@@ -1,4 +1,4 @@
-[![mailchimp3 v3.0.1 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v3.0.2 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -161,6 +161,8 @@ individual methods available after.
     |  +- Products
     |     +- Images
     |     +- Variants
+    |  +- Promo Rules
+    |     +- Promo Codes
     +- File Manager Files
     +- File Manager Folders
     +- Lists
@@ -180,14 +182,17 @@ individual methods available after.
     |  +- Signup Forms
     |  +- Twitter Lead Generation Carts
     |  +- Webhooks
+    +- Ping
     +- Reports
     |  +- Campaign Abuse
     |  +- Campaign Advice
+    |  +- Campaign Open reports
     |  +- Click Reports
     |  |  +- Members
     |  +- Domain Performance
     |  +- EepURL Reports
     |  +- Email Activity
+    |  +- Google Analytics
     |  +- Location
     |  +- Sent To
     |  +- Sub-Reports

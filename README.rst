@@ -1,10 +1,10 @@
-|mailchimp3 v3.0.1 on PyPi| |MIT license| |Stable|
+|mailchimp3 v3.0.2 on PyPi| |MIT license| |Stable|
 
 python-mailchimp-api
 ====================
 
-A straighforward python client for v3 of MailChimp API using
-requests >= 2.7.0.
+A straighforward python client for v3 of MailChimp API using requests >=
+2.7.0.
 
 Getting Started
 ---------------
@@ -18,7 +18,7 @@ it, simply run
 ``pip install mailchimp3``
 
 Upgrading from v2.x
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 The order of arguments for initializing the Mailchimp API has been
 reversed starting in 2.1.0 as the username is an optional argument for
@@ -31,10 +31,10 @@ Upgrading from v1.x
 
 The installation procedure for 2.x is the same as before, however there
 are a massive number of changes to the naming conventions within this
-wrapper and the way in which certain methods are called. Please read
-the documentation below carefully for information on the new structure
-and expanded functionality. With this release, all documented endpoints
-are implemented and all endpoint methods are available.
+wrapper and the way in which certain methods are called. Please read the
+documentation below carefully for information on the new structure and
+expanded functionality. With this release, all documented endpoints are
+implemented and all endpoint methods are available.
 
 History
 ~~~~~~~
@@ -46,9 +46,9 @@ features listed thru 3/03/2017.
 Initialization
 ~~~~~~~~~~~~~~
 
-Grab ``YOUR_API_KEY`` from your mailchimp account (Account > Extra >
-Api Keys). ``YOUR_USERNAME`` is the one you use to login on the website
-and is optional.
+Grab ``YOUR_API_KEY`` from your mailchimp account (Account > Extra > Api
+Keys). ``YOUR_USERNAME`` is the one you use to login on the website and
+is optional.
 
 ::
 
@@ -67,22 +67,22 @@ access key can be found
 Pagination
 ~~~~~~~~~~
 
-Simply add ``count`` and ``offset`` arguments in your function. The count
-is how many records to return, the offset is how many records to skip.
-For endpoints that allow the pagination parameters, the all() method
-has an additional boolean ``get_all`` argument that will loop through all
-records until the API no longer returns any to get all records without
-manually performing an additional query. By default, count is 10 and
-offset is 0 for all endpoints that support it. The ``get_all`` parameter
-on the all() method on any endpoint defaults to false, which follows
-the values that are provided in the call, and using ``get_all=True`` will
-ignore the provided count and offset to ensure that all records are
-returned. When using ``get_all``, the count will be 5000, to fetch large
-numbers of records without flooding the system with requests. The large
-size of count should not impact calls which are expected to return a
-very small number of records, and should improve performance for calls
-where fetching 5000 records would only provide a fraction by preventing
-the delay of making a huge number of requests.
+Simply add ``count`` and ``offset`` arguments in your function. The
+count is how many records to return, the offset is how many records to
+skip. For endpoints that allow the pagination parameters, the all()
+method has an additional boolean ``get_all`` argument that will loop
+through all records until the API no longer returns any to get all
+records without manually performing an additional query. By default,
+count is 10 and offset is 0 for all endpoints that support it. The
+``get_all`` parameter on the all() method on any endpoint defaults to
+false, which follows the values that are provided in the call, and using
+``get_all=True`` will ignore the provided count and offset to ensure
+that all records are returned. When using get_all, the count will be
+5000, to fetch large numbers of records without flooding the system with
+requests. The large size of count should not impact calls which are
+expected to return a very small number of records, and should improve
+performance for calls where fetching 5000 records would only provide a
+fraction by preventing the delay of making a huge number of requests.
 
 ::
 
@@ -92,10 +92,9 @@ Fields
 ~~~~~~
 
 Many endpoints allow you to select which fields will be returned out of
-all available fields (for example, only the email\_address of a
-member). Simply add ``fields`` arguments in your function. The
-following only display email\_address and id for each member in list
-123456:
+all available fields (for example, only the email_address of a member).
+Simply add ``fields`` arguments in your function. The following only
+display email_address and id for each member in list 123456:
 
 ::
 
@@ -135,7 +134,7 @@ Examples
     # Every API call will return None
     client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', enabled=False)
 
-    # You are encouraged to specify a value in seconds for the  ``timeout``
+    # You are encouraged to specify a value in seconds for the ``timeout``
     # parameter to avoid hanging requests.
     client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', timeout=10.0)
 
@@ -183,6 +182,8 @@ individual methods available after.
     |  +- Products
     |     +- Images
     |     +- Variants
+    |  +- Promo Rules
+    |     +- Promo Codes
     +- File Manager Files
     +- File Manager Folders
     +- Lists
@@ -202,14 +203,17 @@ individual methods available after.
     |  +- Signup Forms
     |  +- Twitter Lead Generation Carts
     |  +- Webhooks
+    +- Ping
     +- Reports
     |  +- Campaign Abuse
     |  +- Campaign Advice
+    |  +- Campaign Open reports
     |  +- Click Reports
     |  |  +- Members
     |  +- Domain Performance
     |  +- EepURL Reports
     |  +- Email Activity
+    |  +- Google Analytics
     |  +- Location
     |  +- Sent To
     |  +- Sub-Reports
@@ -225,8 +229,8 @@ API Endpoints
 
 Below is the list of all endpoints and the methods that can be called
 against them. Any endpoint that has a method that takes an ID argument
-(for example the app\_id in the authorized\_apps endpoint or the
-subscriber\_hash in the list members endpoints) will record all IDs
+(for example the app_id in the authorized_apps endpoint or the
+subscriber_hash in the list members endpoints) will record all IDs
 passed as well as those generated by methods that will only ever return
 a single result such as the create() method present on some endpoints.
 These stored attributes are only available at the level that they were
@@ -238,6 +242,8 @@ above with the name ``client``.
 Root
 ~~~~
 
+.. _root-1:
+
 Root
 ^^^^
 
@@ -247,6 +253,8 @@ Root
 
 Authorized Apps
 ~~~~~~~~~~~~~~~
+
+.. _authorized-apps-1:
 
 Authorized Apps
 ^^^^^^^^^^^^^^^
@@ -259,6 +267,8 @@ Authorized Apps
 
 Automations
 ~~~~~~~~~~~
+
+.. _automations-1:
 
 Automations
 ^^^^^^^^^^^
@@ -312,6 +322,8 @@ Automation Removed Subscribers
 Batch Operations
 ~~~~~~~~~~~~~~~~
 
+.. _batch-operations-1:
+
 Batch Operations
 ^^^^^^^^^^^^^^^^
 
@@ -325,6 +337,8 @@ Batch Operations
 Batch Webhooks
 ~~~~~~~~~~~~~~
 
+.. _batch-webhooks-1:
+
 Batch Webhooks
 ^^^^^^^^^^^^^^
 
@@ -333,7 +347,7 @@ Batch Webhooks
     client.batch_webhooks.create(data={})
     client.batch_webhooks.all(get_all=False)
     client.batch_webhooks.get(batch_webhook_id='')
-    client.batch_webhooks.update(batch_webhook_id='')
+    client.batch_webhooks.update(batch_webhook_id='', data={})
     client.batch_webhooks.delete(batch_webhook_id='')
 
 Campaigns
@@ -349,6 +363,8 @@ Folders
     client.campaign_folders.get(folder_id='')
     client.campaign_folders.update(folder_id='', data={})
     client.campaign_folders.delete(folder_id='')
+
+.. _campaigns-1:
 
 Campaigns
 ^^^^^^^^^
@@ -403,6 +419,8 @@ Campaign Send Checklist
 
 Conversations
 ~~~~~~~~~~~~~
+
+.. _conversations-1:
 
 Conversations
 ^^^^^^^^^^^^^
@@ -539,6 +557,8 @@ Files
     client.files.update(file_id='', data={})
     client.files.delete(file_id='')
 
+.. _folders-1:
+
 Folders
 ^^^^^^^
 
@@ -552,6 +572,8 @@ Folders
 
 Lists
 ~~~~~
+
+.. _lists-1:
 
 Lists
 ^^^^^
@@ -708,6 +730,8 @@ List Webhooks
 Reports
 ~~~~~~~
 
+.. _reports-1:
+
 Reports
 ^^^^^^^
 
@@ -802,6 +826,8 @@ Unsubscribes
 Search
 ~~~~~~
 
+.. _campaigns-2:
+
 Campaigns
 ^^^^^^^^^
 
@@ -819,6 +845,8 @@ Members
 Templates
 ~~~~~~~~~
 
+.. _folders-2:
+
 Folders
 ^^^^^^^
 
@@ -829,6 +857,8 @@ Folders
     client.template_folders.get(folder_id='')
     client.template_folders.update(folder_id='', data={})
     client.template_folders.delete(folder_id='')
+
+.. _templates-1:
 
 Templates
 ^^^^^^^^^
@@ -851,10 +881,11 @@ Default Content
 Logging
 -------
 
-The MailChimp client will log request/response detail into the mailchimp3.client
-logging namespace. Consider the following snippet to get started with logging:
+The MailChimp client will log request/response detail into the
+mailchimp3.client logging namespace. Consider the following snippet to
+get started with logging:
 
-::
+.. code:: python
 
     import logging
     fh = logging.FileHandler('/path/to/some/log.log')
@@ -871,9 +902,8 @@ request/response detail will be appended into /path/to/some/log.log:
     GET Request: https://us15.api.mailchimp.com/3.0/lists?fields=lists.date_created
     GET Response: 200 {"lists":[{"date_created":"2017-05-10T13:53:05+00:00"},{"date_created":"2017-08-22T20:27:56+00:00"},{"date_created":"2017-05-12T21:22:15+00:00"},{"date_created":"2017-04-27T17:42:04+00:00"},{"date_created":"2017-05-10T14:14:49+00:00"},{"date_created":"2017-05-10T13:52:37+00:00"},{"date_created":"2017-05-10T13:51:40+00:00"}]}
 
-Check the docs_ for more detail on the Python logging package.
-
-.. _docs: https://docs.python.org/2/library/logging.html/
+Check the `docs <https://docs.python.org/2/library/logging.html>`__ for
+more detail on the Python logging package.
 
 Support
 -------
@@ -885,7 +915,8 @@ License
 
 The project is licensed under the MIT License.
 
-.. |mailchimp3 v3.0.1 on PyPi| image:: https://img.shields.io/pypi/v/mailchimp3.svg
+.. |mailchimp3 v3.0.2 on PyPi| image:: https://img.shields.io/pypi/v/mailchimp3.svg
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg
+

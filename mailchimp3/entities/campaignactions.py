@@ -125,13 +125,13 @@ class CampaignActions(BaseApi):
         :type data: :py:class:`dict`
         data = {
             "test_emails": array*,
-            "send_type": string* (Must be one of "html" or "plain_text")
+            "send_type": string* (Must be one of "html" or "plaintext")
         }
         """
         for email in data['test_emails']:
             check_email(email)
-        if data['send_type'] not in ['html', 'plain_text']:
-            raise ValueError('The send_type must be either "html" or "plain_text"')
+        if data['send_type'] not in ['html', 'plaintext']:
+            raise ValueError('The send_type must be either "html" or "plaintext"')
         self.campaign_id = campaign_id
         return self._mc_client._post(url=self._build_path(campaign_id, 'actions/test'), data=data)
 

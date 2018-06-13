@@ -43,3 +43,9 @@ class OpenDetails(BaseApi):
         else:
             return self._mc_client._get(url=self._build_path(campaign_id, 'open-details'), **queryparams)
 
+
+class ReportOpenDetails(OpenDetails):
+    """
+    Clone OpenDetails class as ReportOpenDetails for naming consistency
+    """
+    pass

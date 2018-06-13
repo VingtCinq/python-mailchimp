@@ -12,7 +12,7 @@ class StorePromoCodes(BaseApi):
         Promo Promo codes can be created for a given promo rule. All the promo codes under a promo rule share the
         generic information defined for that rule like the amount, type, expiration date etc.
         """
-    def __init__(self, store_id, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         """
         Initialize the Endpoint
         :param args:

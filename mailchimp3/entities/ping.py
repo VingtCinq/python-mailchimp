@@ -12,11 +12,11 @@ class Ping(BaseApi):
     """
     A health check endpoint for MailChimp API 3.0.
     """
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         Initialize the endpoint
         """
-        super(Ping, self).__init__()
+        super(Ping, self).__init__(*args, **kwargs)
         self.endpoint = 'ping'
 
     def get(self):

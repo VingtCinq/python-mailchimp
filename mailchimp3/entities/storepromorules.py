@@ -9,10 +9,10 @@ from mailchimp3.baseapi import BaseApi
 
 class StorePromoRules(BaseApi):
     """
-        Promo Rules help you create promo codes for your campaigns. Promo Rules define generic information about promo
-        codes like expiration time, start time, amount of discount being offered etc
-        """
-    def __init__(self, store_id, *args, **kwargs):
+    Promo Rules help you create promo codes for your campaigns. Promo Rules define generic information about promo
+    codes like expiration time, start time, amount of discount being offered etc
+    """
+    def __init__(self, *args, **kwargs):
         """
         Initialize the Endpoint
         :param args:

@@ -42,6 +42,8 @@ from mailchimp3.entities.storeorderlines import StoreOrderLines
 from mailchimp3.entities.storeproducts import StoreProducts
 from mailchimp3.entities.storeproductimages import StoreProductImages
 from mailchimp3.entities.storeproductvariants import StoreProductVariants
+from mailchimp3.entities.storepromorules import StorePromoRules
+from mailchimp3.entities.storepromocodes import StorePromoCodes
 # File Manager Files
 from mailchimp3.entities.filemanagerfiles import FileManagerFiles
 # File Manager Folders
@@ -63,6 +65,10 @@ from mailchimp3.entities.listsegments import ListSegments
 from mailchimp3.entities.listsegmentmembers import ListSegmentMembers
 from mailchimp3.entities.listsignupforms import ListSignupForms
 from mailchimp3.entities.listwebhooks import ListWebhooks
+
+# ping
+from mailchimp3.entities.ping import Ping
+
 # Reports
 from mailchimp3.entities.reports import Reports
 from mailchimp3.entities.reportcampaignabusereports import ReportCampaignAbuseReports
@@ -76,6 +82,9 @@ from mailchimp3.entities.reportlocations import ReportLocations
 from mailchimp3.entities.reportsentto import ReportSentTo
 from mailchimp3.entities.reportsubreports import ReportSubReports
 from mailchimp3.entities.reportunsubscribes import ReportUnsubscribes
+from mailchimp3.entities.reportopendetails import ReportOpenDetails
+from mailchimp3.entities.reportgoogleanalytics import ReportGoogleAnalytics
+
 # Search Campaigns
 from mailchimp3.entities.searchcampaigns import SearchCampaigns
 # Search Members
@@ -133,6 +142,8 @@ class MailChimp(MailChimpClient):
         self.stores.products = StoreProducts(self)
         self.stores.products.images = StoreProductImages(self)
         self.stores.products.variants = StoreProductVariants(self)
+        self.stores.promo_rules = StorePromoRules(self)
+        self.stores.promo_codes = StorePromoCodes(self)
         # File Manager Files
         self.files = FileManagerFiles(self)
         # File Manager Folders
@@ -154,6 +165,8 @@ class MailChimp(MailChimpClient):
         self.lists.segments.members = ListSegmentMembers(self)
         self.lists.signup_forms = ListSignupForms(self)
         self.lists.webhooks = ListWebhooks(self)
+        # Ping
+        self.ping = Ping(self)
         # Reports
         self.reports = Reports(self)
         self.reports.abuse_reports = ReportCampaignAbuseReports(self)
@@ -167,6 +180,8 @@ class MailChimp(MailChimpClient):
         self.reports.sent_to = ReportSentTo(self)
         self.reports.subreports = ReportSubReports(self)
         self.reports.unsubscribes = ReportUnsubscribes(self)
+        self.reports.open_details = ReportOpenDetails(self)
+        self.reports.google_analytics = ReportGoogleAnalytics(self)
         # Search Campaigns
         self.search_campaigns = SearchCampaigns(self)
         # Search Members

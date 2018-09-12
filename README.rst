@@ -650,6 +650,7 @@ List Members
     client.lists.members.update(list_id='', subscriber_hash='', data={})
     client.lists.members.create_or_update(list_id='', subscriber_hash='', data={})
     client.lists.members.delete(list_id='', subscriber_hash='')
+    client.lists.members.delete_permanent(list_id='', subscriber_hash='')
 
 List Member Activity
 ^^^^^^^^^^^^^^^^^^^^

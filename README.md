@@ -1,4 +1,4 @@
-[![mailchimp3 v3.0.4 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v3.0.5 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -489,6 +489,7 @@ above with the name `client`.
     client.lists.members.update(list_id='', subscriber_hash='', data={})
     client.lists.members.create_or_update(list_id='', subscriber_hash='', data={})
     client.lists.members.delete(list_id='', subscriber_hash='')
+    client.lists.members.delete_permanent(list_id='', subscriber_hash='')
 
 #### List Member Activity
 

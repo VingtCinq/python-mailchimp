@@ -59,3 +59,9 @@ target/
 
 # PyCharm project files
 .idea
+
+# vscode
+.vscode
+
+# sonarlint
+.sonarlint

@@ -60,6 +60,7 @@ from mailchimp3.entities.listmembers import ListMembers
 from mailchimp3.entities.listmemberactivity import ListMemberActivity
 from mailchimp3.entities.listmembergoals import ListMemberGoals
 from mailchimp3.entities.listmembernotes import ListMemberNotes
+from mailchimp3.entities.listmembertags import ListMemberTags
 from mailchimp3.entities.listmergefields import ListMergeFields
 from mailchimp3.entities.listsegments import ListSegments
 from mailchimp3.entities.listsegmentmembers import ListSegmentMembers
@@ -160,6 +161,7 @@ class MailChimp(MailChimpClient):
         self.lists.members.activity = ListMemberActivity(self)
         self.lists.members.goals = ListMemberGoals(self)
         self.lists.members.notes = ListMemberNotes(self)
+        self.lists.members.tags = ListMemberTags(self)
         self.lists.merge_fields = ListMergeFields(self)
         self.lists.segments = ListSegments(self)
         self.lists.segments.members = ListSegmentMembers(self)

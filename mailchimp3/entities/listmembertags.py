@@ -27,9 +27,9 @@ class ListMemberTags(BaseApi):
 
     def update(self, list_id, subscriber_hash, data):
         """
-        Add a new tag for a specific subscriber.
+        Update tags for a specific subscriber.
 
-        The documentation lists only the tag request body parameter so it is
+        The documentation lists only the tags request body parameter so it is
         being documented and error-checked as if it were required based on the
         description of the method.
 

@@ -132,18 +132,17 @@ Examples
 
     # You can also disable at runtime with the optional ``enabled`` parameter.
     # Every API call will return None
-    client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', enabled=False)
+    client = MailChimp('YOUR SECRET KEY', enabled=False)
 
     # You are encouraged to specify a value in seconds for the ``timeout``
     # parameter to avoid hanging requests.
-    client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY', timeout=10.0)
+    client = MailChimp('YOUR SECRET KEY', timeout=10.0)
 
     # You are encouraged to specify a User-Agent for requests to the MailChimp
     # API. Headers can be specified using the ``request_headers`` parameter.
     headers = requests.utils.default_headers()
     headers['User-Agent'] = 'Example (example@example.com)'
-    client = MailChimp('YOUR USERNAME', 'YOUR SECRET KEY',
-                       request_headers=headers)
+    client = MailChimp('YOUR SECRET KEY', request_headers=headers)
 
 API Structure
 -------------

@@ -75,16 +75,17 @@ class BaseApi(object):
         queryparams.pop("offset", None)
         queryparams.pop("count", None)
         # Fetch results from mailchimp, up to first 1000
-        result = self._mc_client._get(url=url, offset=0, count=1000, **queryparams)
+        page_size = 1000
+        result = self._mc_client._get(url=url, offset=0, count=page_size, **queryparams)
         total = result['total_items']
         # Fetch further results if necessary
-        if total > 1000:
+        if total > page_size:
             yield result
-            for offset in range(1, int(total / 1000) + 1):
+            for offset in range(1, int(total / page_size)):
                 yield self._mc_client._get(
                     url=url,
-                    offset=int(offset * 1000),
-                    count=1000,
+                    offset=int(offset * page_size),
+                    count=page_size,
                     **queryparams
                 )
         else:  # Further results not necessary

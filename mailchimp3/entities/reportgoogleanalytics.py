@@ -22,7 +22,7 @@ class ReportGoogleAnalytics(BaseApi):
         self.campaign_id = None
         self.profile_id = None
 
-    def all(self, campaign_id, get_all=False, **queryparams):
+    def all(self, campaign_id, get_all=False, iterate=False, **queryparams):
         """
         Get a summary of Google Analytics reports for a specific campaign.
 
@@ -35,10 +35,8 @@ class ReportGoogleAnalytics(BaseApi):
         queryparams['exclude_fields'] = []
         """
         self.campaign_id = campaign_id
-        if get_all:
-            return self._iterate(url=self._build_path(campaign_id, 'google-analytics'), **queryparams)
-        else:
-            return self._mc_client._get(url=self._build_path(campaign_id, 'google-analytics'), **queryparams)
+        url = self._build_path(campaign_id, 'google-analytics')
+        return self._list_result(url, get_all, iterate, **queryparams)
 
     def get(self, campaign_id, profile_id, **queryparams):
         """

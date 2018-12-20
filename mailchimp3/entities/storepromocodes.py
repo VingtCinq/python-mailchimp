@@ -52,7 +52,7 @@ class StorePromoCodes(BaseApi):
         if response is not None:
             return response
 
-    def all(self, store_id, promo_rule_id, get_all=False, **queryparams):
+    def all(self, store_id, promo_rule_id, get_all=False, iterate=False, **queryparams):
         """
         Get information about a store’s promo codes.
 
@@ -70,10 +70,8 @@ class StorePromoCodes(BaseApi):
         """
         self.store_id=store_id
         self.promo_rule_id=promo_rule_id
-        if get_all:
-            return self._iterate(url=self._build_path(store_id, 'promo-rules', promo_rule_id, 'promo-codes'), **queryparams)
-        else:
-            return self._mc_client._get(url=self._build_path(store_id, 'promo-rule', promo_rule_id), **queryparams)
+        url = self._build_path(store_id, 'promo-rules', promo_rule_id, 'promo-codes')
+        return self._list_result(url, get_all, iterate, **queryparams)
 
     def get(self, store_id, promo_rule_id, promo_code_id, **queryparams):
         """

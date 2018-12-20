@@ -22,7 +22,7 @@ class OpenDetails(BaseApi):
         self.campaign_id = None
 
 
-    def all(self, campaign_id, get_all=False,  **queryparams):
+    def all(self, campaign_id, get_all=False, iterate=False, **queryparams):
         """
         Get detailed information about any campaign emails that were opened by a list member.
 
@@ -30,6 +30,8 @@ class OpenDetails(BaseApi):
         :type campaign_id: :py:class:`str`
         :param get_all: Should the query get all results
         :type get_all: :py:class:`bool`
+        :param iterate: Should the query iterate over each page.
+        :type iterate: :py:class:`bool`
         :param queryparams: The query string parameters
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
@@ -38,10 +40,8 @@ class OpenDetails(BaseApi):
         queryparams['since'] = str
         """
         self.campaign_id = campaign_id
-        if get_all:
-            return self._iterate(url=self._build_path(campaign_id, 'open-details'), **queryparams)
-        else:
-            return self._mc_client._get(url=self._build_path(campaign_id, 'open-details'), **queryparams)
+        url = self._build_path(campaign_id, 'open-details')
+        return self._list_result(url, get_all, iterate, **queryparams)
 
 
 class ReportOpenDetails(OpenDetails):

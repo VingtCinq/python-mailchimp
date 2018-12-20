@@ -50,7 +50,7 @@ class ListMergeFields(BaseApi):
         return response
 
 
-    def all(self, list_id, get_all=False, **queryparams):
+    def all(self, list_id, get_all=False, iterate=False, **queryparams):
         """
         Get a list of all merge fields (formerly merge vars) for a list.
 
@@ -58,6 +58,8 @@ class ListMergeFields(BaseApi):
         :type list_id: :py:class:`str`
         :param get_all: Should the query get all results
         :type get_all: :py:class:`bool`
+        :param iterate: Should the query iterate over each page.
+        :type iterate: :py:class:`bool`
         :param queryparams: The query string parameters
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
@@ -68,10 +70,8 @@ class ListMergeFields(BaseApi):
         """
         self.list_id = list_id
         self.merge_id = None
-        if get_all:
-            return self._iterate(url=self._build_path(list_id, 'merge-fields'), **queryparams)
-        else:
-            return self._mc_client._get(url=self._build_path(list_id, 'merge-fields'), **queryparams)
+        url = self._build_path(list_id, 'merge-fields')
+        return self._list_result(url, get_all, iterate, **queryparams)
 
 
     def get(self, list_id, merge_id):

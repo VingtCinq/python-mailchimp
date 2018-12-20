@@ -27,7 +27,7 @@ class ReportClickDetailMembers(BaseApi):
         self.subscriber_hash = None
 
 
-    def all(self, campaign_id, link_id, get_all=False, **queryparams):
+    def all(self, campaign_id, link_id, get_all=False, iterate=False, **queryparams):
         """
         Get information about list members who clicked on a specific link in a
         campaign.
@@ -38,6 +38,8 @@ class ReportClickDetailMembers(BaseApi):
         :type link_id: :py:class:`str`
         :param get_all: Should the query get all results
         :type get_all: :py:class:`bool`
+        :param iterate: Should the query iterate over each page.
+        :type iterate: :py:class:`bool`
         :param queryparams: The query string parameters
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
@@ -47,13 +49,8 @@ class ReportClickDetailMembers(BaseApi):
         self.campaign_id = campaign_id
         self.link_id = link_id
         self.subscriber_hash = None
-        if get_all:
-            return self._iterate(url=self._build_path(campaign_id, 'click-details', link_id, 'members'), **queryparams)
-        else:
-            return self._mc_client._get(
-                url=self._build_path(campaign_id, 'click-details', link_id, 'members'),
-                **queryparams
-            )
+        url = self._build_path(campaign_id, 'click-details', link_id, 'members')
+        return self._list_result(url, get_all, iterate, **queryparams)
 
 
     def get(self, campaign_id, link_id, subscriber_hash, **queryparams):

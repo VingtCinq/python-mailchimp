@@ -67,22 +67,25 @@ access key can be found
 Pagination
 ~~~~~~~~~~
 
-Simply add ``count`` and ``offset`` arguments in your function. The
-count is how many records to return, the offset is how many records to
-skip. For endpoints that allow the pagination parameters, the all()
-method has an additional boolean ``get_all`` argument that will loop
-through all records until the API no longer returns any to get all
-records without manually performing an additional query. By default,
-count is 10 and offset is 0 for all endpoints that support it. The
-``get_all`` parameter on the all() method on any endpoint defaults to
-false, which follows the values that are provided in the call, and using
-``get_all=True`` will ignore the provided count and offset to ensure
-that all records are returned. When using get_all, the count will be
-5000, to fetch large numbers of records without flooding the system with
-requests. The large size of count should not impact calls which are
-expected to return a very small number of records, and should improve
-performance for calls where fetching 5000 records would only provide a
-fraction by preventing the delay of making a huge number of requests.
+Simply add ``count`` and ``offset`` arguments in your function. The count
+is how many records to return, the offset is how many records to skip.
+For endpoints that allow the pagination parameters, the all() method
+has two additional booleans: ``get_all`` and ``iterate``. By default
+``count`` defaults to 10 and ``offset`` to 0. Setting either ``get_all`` or
+``iterate`` to true will ignore both ``count`` and ``offset``. Setting
+``iterate`` and ``get_all`` both to true will result in a ``ValueError``.
+
+The ``iterate`` argument will cause the method to return a generator
+allowing the caller to iterate over each page without having to handle
+the pagination.
+
+The ``get_all`` will collect all values and return them as a single result.
+When using get_all, the count will be 5000, to fetch large
+numbers of records without flooding the system with requests. The large
+size of count should not impact calls which are expected to return a
+very small number of records, and should improve performance for calls
+where fetching 5000 records would only provide a fraction by preventing
+the delay of making a huge number of requests.
 
 ::
 

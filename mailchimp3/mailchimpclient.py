@@ -40,7 +40,7 @@ class MailChimpClient(object):
     MailChimp class to communicate with the v3 API
     """
     def __init__(self, mc_api=None, mc_user='python-mailchimp', access_token=None, enabled=True, timeout=None,
-                 request_hooks=None, request_headers=None):
+                 request_hooks=None, request_headers=None, show_log_response=True):
         """
         Initialize the class with your optional user_id and required api_key.
 
@@ -82,6 +82,7 @@ class MailChimpClient(object):
             raise Exception('You must provide an OAuth access token or API key')
         self.request_headers = request_headers or requests.utils.default_headers()
         self.request_hooks = request_hooks or requests.hooks.default_hooks()
+        self.show_log_response = show_log_response
 
 
     def _make_request(self, **kwargs):
@@ -91,9 +92,13 @@ class MailChimpClient(object):
 
         response = requests.request(**kwargs)
 
+        if self.show_log_response:
+            text=response.text
+            
+        else:
+            text = ''
         _logger.info(u'{method} Response: {status} {text}'\
-            .format(method=kwargs['method'], status=response.status_code, text=response.text))
-
+                .format(method=kwargs['method'], status=response.status_code, text=text))
         return response
 
 

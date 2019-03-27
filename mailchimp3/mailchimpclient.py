@@ -249,7 +249,12 @@ class MailChimpClient(object):
             raise e
         else:
             if r.status_code >= 400:
-                raise MailChimpError(r.json())
+                # in case of 500 error, the response might not be a JSON
+                try:
+                    error_data = r.json()
+                except ValueError:
+                    error_data = { "response": r }
+                raise MailChimpError(error_data)
             return r.json()
 
 

@@ -34,6 +34,9 @@ def _enabled_or_noop(fn):
 class MailChimpError(Exception):
     pass
 
+class MailChimpTimeoutError(Exception):
+    pass
+
 
 class MailChimpClient(object):
     """
@@ -159,7 +162,9 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            if r.status_code >= 400:
+            if r.status_code == 504:
+                raise MailChimpTimeoutError("Connect Timeout")
+            elif r.status_code >= 400:
                 raise MailChimpError(r.json())
             return r.json()
 

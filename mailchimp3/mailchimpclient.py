@@ -16,12 +16,14 @@ try:
     from urllib.parse import urljoin
     from urllib.parse import urlencode
 except ImportError:
+    # noinspection PyUnresolvedReferences
     from urlparse import urljoin
     from urllib import urlencode
 
 import logging
 
 _logger = logging.getLogger('mailchimp3.client')
+
 
 def _enabled_or_noop(fn):
     @functools.wraps(fn)
@@ -33,6 +35,7 @@ def _enabled_or_noop(fn):
 
 class MailChimpError(Exception):
     pass
+
 
 class MailChimpTimeoutError(Exception):
     pass
@@ -76,8 +79,8 @@ class MailChimpClient(object):
             self.base_url = self.auth.get_base_url() + '/3.0/'
         elif mc_api:
             if not re.match(r"^[0-9a-f]{32}$", mc_api.split('-')[0]):
-                raise ValueError('The API key that you have entered is not valid, did you enter a username by mistake?\n'
-                                 'The order of arguments for API key and username has reversed in 2.1.0')
+                raise ValueError('The API key that you have entered is not valid, did you enter a username by mistake?'
+                                 '\nThe order of arguments for API key and username has reversed in 2.1.0')
             self.auth = HTTPBasicAuth(mc_user, mc_api)
             datacenter = mc_api.split('-').pop()
             self.base_url = 'https://{0}.api.mailchimp.com/3.0/'.format(datacenter)
@@ -86,7 +89,6 @@ class MailChimpClient(object):
         self.request_headers = request_headers or requests.utils.default_headers()
         self.request_hooks = request_hooks or requests.hooks.default_hooks()
 
-
     def _make_request(self, **kwargs):
         _logger.info(u'{method} Request: {url}'.format(**kwargs))
         if kwargs.get('json'):
@@ -94,11 +96,10 @@ class MailChimpClient(object):
 
         response = requests.request(**kwargs)
 
-        _logger.info(u'{method} Response: {status} {text}'\
-            .format(method=kwargs['method'], status=response.status_code, text=response.text))
+        _logger.info(u'{method} Response: {status} {text}'.format(
+            method=kwargs['method'], status=response.status_code, text=response.text))
 
         return response
-
 
     @_enabled_or_noop
     def _post(self, url, data=None):
@@ -130,12 +131,11 @@ class MailChimpClient(object):
                 try:
                     error_data = r.json()
                 except ValueError:
-                    error_data = { "response": r }
+                    error_data = {"response": r}
                 raise MailChimpError(error_data)
             if r.status_code == 204:
                 return None
             return r.json()
-
 
     @_enabled_or_noop
     def _get(self, url, **queryparams):
@@ -168,7 +168,6 @@ class MailChimpClient(object):
                 raise MailChimpError(r.json())
             return r.json()
 
-
     @_enabled_or_noop
     def _delete(self, url):
         """
@@ -191,12 +190,13 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            if r.status_code >= 400:
-                raise MailChimpError(r.json())
             if r.status_code == 204:
                 return
+            elif r.status_code == 504:
+                raise MailChimpTimeoutError("Connect Timeout")
+            elif r.status_code >= 400:
+                raise MailChimpError(r.json())
             return r.json()
-
 
     @_enabled_or_noop
     def _patch(self, url, data=None):
@@ -223,10 +223,13 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            if r.status_code >= 400:
+            if r.status_code == 204:
+                return
+            if r.status_code == 504:
+                raise MailChimpTimeoutError("Connect Timeout")
+            elif r.status_code >= 400:
                 raise MailChimpError(r.json())
             return r.json()
-
 
     @_enabled_or_noop
     def _put(self, url, data=None):
@@ -258,7 +261,7 @@ class MailChimpClient(object):
                 try:
                     error_data = r.json()
                 except ValueError:
-                    error_data = { "response": r }
+                    error_data = {"response": r}
                 raise MailChimpError(error_data)
             return r.json()
 
@@ -279,14 +282,12 @@ class MailChimpOAuth(requests.auth.AuthBase):
         """
         self._access_token = access_token
 
-
     def __call__(self, r):
         """
         Authorize with the access token provided in __init__
         """
         r.headers['Authorization'] = 'OAuth ' + self._access_token
         return r
-
 
     def get_metadata(self):
         """
@@ -302,7 +303,6 @@ class MailChimpOAuth(requests.auth.AuthBase):
             if 'error' in output:
                 raise requests.exceptions.RequestException(output['error'])
             return output
-
 
     def get_base_url(self):
         """

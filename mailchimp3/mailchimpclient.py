@@ -1,4 +1,4 @@
-# coding=utf-8
+  # coding=utf-8
 """
 Mailchimp v3 Api SDK
 
@@ -20,6 +20,7 @@ except ImportError:
     from urllib import urlencode
 
 import logging
+from mailchimp3.exception import *
 
 _logger = logging.getLogger('mailchimp3.client')
 
@@ -29,10 +30,6 @@ def _enabled_or_noop(fn):
         if self.enabled:
             return fn(self, *args, **kwargs)
     return wrapper
-
-
-class MailChimpError(Exception):
-    pass
 
 
 class MailChimpClient(object):
@@ -122,16 +119,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            if r.status_code >= 400:
-                # in case of a 500 error, the response might not be a JSON
-                try:
-                    error_data = r.json()
-                except ValueError:
-                    error_data = { "response": r }
-                raise MailChimpError(error_data)
-            if r.status_code == 204:
-                return None
-            return r.json()
+            reponse = _handle_error(r.response)
+            return response.json()
 
 
     @_enabled_or_noop
@@ -159,9 +148,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            if r.status_code >= 400:
-                raise MailChimpError(r.json())
-            return r.json()
+            reponse = _handle_error(r.response)
+            return response,json()
 
 
     @_enabled_or_noop
@@ -186,11 +174,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            if r.status_code >= 400:
-                raise MailChimpError(r.json())
-            if r.status_code == 204:
-                return
-            return r.json()
+            reponse = _handle_error(r.response)
+            return response.json()
 
 
     @_enabled_or_noop
@@ -218,9 +203,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            if r.status_code >= 400:
-                raise MailChimpError(r.json())
-            return r.json()
+            reponse = _handle_error(r.response)
+            return response.json()
 
 
     @_enabled_or_noop
@@ -248,14 +232,58 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            if r.status_code >= 400:
-                # in case of 500 error, the response might not be a JSON
-                try:
-                    error_data = r.json()
-                except ValueError:
-                    error_data = { "response": r }
-                raise MailChimpError(error_data)
-            return r.json()
+            reponse = _handle_error(r.response)
+            return response.json()
+
+
+    @staticmethod
+    def _handle_error(response):
+        """
+        Raise exceptions in response to any http errors
+
+        :param response: A Response object from requests
+        :type response: :py:func:`requests.Response`
+        """
+        code = response.status_code
+
+        if 200 <= code < 400:
+            return
+
+        if code == 400:
+            sys.stderr.write(response.text + "\n")
+            raise BadRequest(response)
+        elif code == 401:
+            sys.stderr.write(response.text + "\n")
+            raise UnauthorizedAccess(response)
+        elif code == 403:
+            sys.stderr.write(response.text + "\n")
+            raise ForbiddenAccess(response)
+        elif code == 404:
+            sys.stderr.write(response.text + "\n")
+            raise ResourceNotFound(response)
+        elif code == 405:
+            sys.stderr.write(response.text + "\n")
+            raise MethodNotAllowed(response)
+        elif code == 409:
+            sys.stderr.write(response.text + "\n")
+            raise ResourceConflict(response)
+        elif code == 422:
+            sys.stderr.write(response.text + "\n")
+            raise ResourceInvalid(response)
+        elif code == 429:
+            sys.stderr.write(response.text + "\n")
+            raise TooManyRequests(response)
+        elif code in (449, 502, 503, 504):
+            sys.stderr.write(response.text + "\n")
+            raise RetryWithDelay(response)
+        elif 401 <= code < 500:
+            sys.stderr.write(response.text + "\n")
+            raise ClientError(response)
+        elif 500 <= code < 600:
+            sys.stderr.write(response.text + "\n")
+            raise ServerError(response)
+        else:
+            raise ConnectionError(response)
 
 
 class MailChimpOAuth(requests.auth.AuthBase):

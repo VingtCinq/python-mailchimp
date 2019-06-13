@@ -7,7 +7,6 @@ Documentation: http://developer.mailchimp.com/documentation/mailchimp/
 from __future__ import unicode_literals
 import functools
 import re
-import sys
 
 import requests
 from requests.auth import HTTPBasicAuth

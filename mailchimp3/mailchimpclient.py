@@ -7,7 +7,7 @@ Documentation: http://developer.mailchimp.com/documentation/mailchimp/
 from __future__ import unicode_literals
 import functools
 import re
-
+import sys
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -119,8 +119,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            reponse = _handle_error(r.response)
-            return response.json()
+            self._handle_error(r)
+            return r.json()
 
 
     @_enabled_or_noop
@@ -148,8 +148,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            reponse = _handle_error(r.response)
-            return response,json()
+            self._handle_error(r)
+            return r.json()
 
 
     @_enabled_or_noop
@@ -174,8 +174,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            reponse = _handle_error(r.response)
-            return response.json()
+            self._handle_error(r)
+            return r.json()
 
 
     @_enabled_or_noop
@@ -203,8 +203,8 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            reponse = _handle_error(r.response)
-            return response.json()
+            self._handle_error(r)
+            return r.json()
 
 
     @_enabled_or_noop
@@ -232,12 +232,11 @@ class MailChimpClient(object):
         except requests.exceptions.RequestException as e:
             raise e
         else:
-            reponse = _handle_error(r.response)
-            return response.json()
+            self._handle_error(r)
+            return r.json()
 
 
-    @staticmethod
-    def _handle_error(response):
+    def _handle_error(self, response):
         """
         Raise exceptions in response to any http errors
 
@@ -247,40 +246,28 @@ class MailChimpClient(object):
         code = response.status_code
 
         if 200 <= code < 400:
-            return
-
-        if code == 400:
-            sys.stderr.write(response.text + "\n")
+            pass
+        elif code == 400:
             raise BadRequest(response)
         elif code == 401:
-            sys.stderr.write(response.text + "\n")
             raise UnauthorizedAccess(response)
         elif code == 403:
-            sys.stderr.write(response.text + "\n")
             raise ForbiddenAccess(response)
         elif code == 404:
-            sys.stderr.write(response.text + "\n")
             raise ResourceNotFound(response)
         elif code == 405:
-            sys.stderr.write(response.text + "\n")
             raise MethodNotAllowed(response)
         elif code == 409:
-            sys.stderr.write(response.text + "\n")
             raise ResourceConflict(response)
         elif code == 422:
-            sys.stderr.write(response.text + "\n")
             raise ResourceInvalid(response)
         elif code == 429:
-            sys.stderr.write(response.text + "\n")
             raise TooManyRequests(response)
         elif code in (449, 502, 503, 504):
-            sys.stderr.write(response.text + "\n")
             raise RetryWithDelay(response)
         elif 401 <= code < 500:
-            sys.stderr.write(response.text + "\n")
             raise ClientError(response)
         elif 500 <= code < 600:
-            sys.stderr.write(response.text + "\n")
             raise ServerError(response)
         else:
             raise ConnectionError(response)

@@ -175,6 +175,7 @@ individual methods available after.
     |  |  +- Activity
     |  |  +- Goals
     |  |  +- Notes
+    |  |  +- Tags
     |  +- Merge Fields
     |  +- Segments
     |  |  +- Segment Members
@@ -505,6 +506,11 @@ above with the name `client`.
     client.lists.members.notes.get(list_id='', subscriber_hash='', note_id='')
     client.lists.members.notes.update(list_id='', subscriber_hash='', note_id='', data={})
     client.lists.members.notes.delete(list_id='', subscriber_hash='', note_id='')
+
+#### List Member Tags
+
+    client.lists.members.tags.update(list_id='', subscriber_hash='', data={})
+    client.lists.members.tags.all(list_id='', subscriber_hash='')
 
 #### List Merge Fields
 

@@ -35,6 +35,15 @@ class MailChimpError(Exception):
     pass
 
 
+def _raise_response_error(r):
+    # in case of a 500 error, the response might not be a JSON
+    try:
+        error_data = r.json()
+    except ValueError:
+        error_data = { "response": r }
+    raise MailChimpError(error_data)
+
+
 class MailChimpClient(object):
     """
     MailChimp class to communicate with the v3 API
@@ -123,12 +132,8 @@ class MailChimpClient(object):
             raise e
         else:
             if r.status_code >= 400:
-                # in case of a 500 error, the response might not be a JSON
-                try:
-                    error_data = r.json()
-                except ValueError:
-                    error_data = { "response": r }
-                raise MailChimpError(error_data)
+                _raise_response_error(r)
+
             if r.status_code == 204:
                 return None
             return r.json()
@@ -160,7 +165,7 @@ class MailChimpClient(object):
             raise e
         else:
             if r.status_code >= 400:
-                raise MailChimpError(r.json())
+                _raise_response_error(r)
             return r.json()
 
 
@@ -187,7 +192,7 @@ class MailChimpClient(object):
             raise e
         else:
             if r.status_code >= 400:
-                raise MailChimpError(r.json())
+                _raise_response_error(r)
             if r.status_code == 204:
                 return
             return r.json()
@@ -219,7 +224,7 @@ class MailChimpClient(object):
             raise e
         else:
             if r.status_code >= 400:
-                raise MailChimpError(r.json())
+                _raise_response_error(r)
             return r.json()
 
 
@@ -249,12 +254,7 @@ class MailChimpClient(object):
             raise e
         else:
             if r.status_code >= 400:
-                # in case of 500 error, the response might not be a JSON
-                try:
-                    error_data = r.json()
-                except ValueError:
-                    error_data = { "response": r }
-                raise MailChimpError(error_data)
+                _raise_response_error(r)
             return r.json()
 
 

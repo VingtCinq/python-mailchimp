@@ -64,7 +64,7 @@ class StoreOrderLines(BaseApi):
         return response
 
 
-    def all(self, store_id, order_id, get_all=False, **queryparams):
+    def all(self, store_id, order_id, get_all=False, iterate=False, **queryparams):
         """
         Get information about an order’s line items.
 
@@ -74,6 +74,8 @@ class StoreOrderLines(BaseApi):
         :type order_id: :py:class:`str`
         :param get_all: Should the query get all results
         :type get_all: :py:class:`bool`
+        :param iterate: Should the query iterate over each page.
+        :type iterate: :py:class:`bool`
         :param queryparams: The query string parameters
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
@@ -83,11 +85,8 @@ class StoreOrderLines(BaseApi):
         self.store_id = store_id
         self.order_id = order_id
         self.line_id = None
-        if get_all:
-            return self._iterate(url=self._build_path(store_id, 'orders', order_id, 'lines'), **queryparams)
-        else:
-            return self._mc_client._get(url=self._build_path(store_id, 'orders', order_id, 'lines'), **queryparams)
-
+        url = self._build_path(store_id, 'orders', order_id, 'lines')
+        return self._list_result(url, get_all, iterate, **queryparams)
 
     def get(self, store_id, order_id, line_id, **queryparams):
         """

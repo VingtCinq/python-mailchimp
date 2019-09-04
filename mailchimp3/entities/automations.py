@@ -34,21 +34,20 @@ class Automations(BaseApi):
 
 
     # Paid feature
-    def all(self, get_all=False, **queryparams):
+    def all(self, get_all=False, iterate=False, **queryparams):
         """
         Get a summary of an account’s Automations.
 
         :param get_all: Should the query get all results
         :type get_all: :py:class:`bool`
+        :param iterate: Should the query iterate over each page.
+        :type iterate: :py:class:`bool`
         :param queryparams: the query string parameters
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []
         """
         self.workflow_id = None
-        if get_all:
-            return self._iterate(url=self._build_path(), **queryparams)
-        else:
-            return self._mc_client._get(url=self._build_path(), **queryparams)
+        return self._list_result(self._build_path(), get_all, iterate, **queryparams)
 
 
     # Paid feature

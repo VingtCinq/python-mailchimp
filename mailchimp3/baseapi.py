@@ -52,20 +52,24 @@ class BaseApi(object):
         if 'fields' in queryparams:
             if 'total_items' not in queryparams['fields'].split(','):
                 queryparams['fields'] += ',total_items'
-        # Remove offset and count if provided in queryparams
-        # to avoid 'multiple values for keyword argument' TypeError
+        # Remove offset if provided in queryparams to avoid 'multiple values
+        # for keyword argument' TypeError
         queryparams.pop("offset", None)
-        queryparams.pop("count", None)
-        # Fetch results from mailchimp, up to first 1000
-        result = self._mc_client._get(url=url, offset=0, count=1000, **queryparams)
+
+        # Fetch results from mailchimp, up to first count. If count is not
+        # provided, return a count of 500. The maximum value supported by the
+        # api is 1000, but such a large request can cause 504 errors. See:
+        # https://github.com/VingtCinq/python-mailchimp/pull/207
+        count = queryparams.pop("count", 500)
+        result = self._mc_client._get(url=url, offset=0, count=count, **queryparams)
         total = result['total_items']
         # Fetch further results if necessary
-        if total > 1000:
-            for offset in range(1, int(total / 1000) + 1):
+        if total > count:
+            for offset in range(1, int(total / count) + 1):
                 result = merge_results(result, self._mc_client._get(
                     url=url,
-                    offset=int(offset * 1000),
-                    count=1000,
+                    offset=int(offset * count),
+                    count=count,
                     **queryparams
                 ))
             return result

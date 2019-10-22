@@ -1,6 +1,6 @@
 # coding=utf-8
 """
-The Landinge Page Content API endpoint
+The Landing Page Content API endpoint
 
 Documentation: http://developer.mailchimp.com/documentation/mailchimp/reference/landing-pages/content/
 Schema: https://api.mailchimp.com/schema/3.0/Definitions/LandingPages/Content/Response.json

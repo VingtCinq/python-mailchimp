@@ -8,8 +8,8 @@ Schema: https://api.mailchimp.com/schema/3.0/LandingPages/Instance.json
 from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
-from mailchimp3.entities.landingepagecontent import LandingPageContent
 from mailchimp3.entities.landingpageaction import LandingPageAction
+from mailchimp3.entities.landingpagecontent import LandingPageContent
 
 
 class LandingPages(BaseApi):

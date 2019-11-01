@@ -100,8 +100,8 @@ class MailChimpClient(object):
 
         response = requests.request(**kwargs)
 
-        _logger.info(u'{method} Response: {status} {text}'\
-            .format(method=kwargs['method'], status=response.status_code, text=response.text))
+        _logger.info(u'{method} Response: {status}'\
+            .format(method=kwargs['method'], status=response.status_code))
 
         return response
 

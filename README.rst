@@ -186,6 +186,7 @@ individual methods available after.
    |     +- Promo Codes
    +- File Manager Files
    +- File Manager Folders
+   +- Landing Pages
    +- Lists
    |  +- Abuse Reports
    |  +- Activity
@@ -573,7 +574,7 @@ Folders
 
 
 Landing Pages
-^^^^^
+^^^^^^^^^^^^^
 
 ::
 

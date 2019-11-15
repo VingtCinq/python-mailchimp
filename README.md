@@ -163,6 +163,7 @@ individual methods available after.
     |     +- Promo Codes
     +- File Manager Files
     +- File Manager Folders
+    +- Landing Pages
     +- Lists
     |  +- Abuse Reports
     |  +- Activity
@@ -434,6 +435,13 @@ above with the name `client`.
     client.folders.get(folder_id='')
     client.folders.update(folder_id='', data={})
     client.folders.delete(folder_id='')
+
+### Landing Pages
+
+   client.landing_pages.create(data={})
+   client.landing_pages.all()
+   client.landing_pages.all(fields='')
+   client.landing_pages.get(page_id='')
 
 ### Lists
 

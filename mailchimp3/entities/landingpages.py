@@ -33,10 +33,18 @@ class LandingPages(BaseApi):
 
         :param data: The request body parameters
         :type data: :py:class:`dict`
+        data = {
+            "name": string*,
+            "title": string*,
+            "description": string*,
+            "store_id": string*
+            "list_id": string*,
+            "type": string*,
+            "template_id":  string*,
+        }
         """
         if 'list_id' not in data:
             raise KeyError('The landing page must have a list_id')
-
         response = self._mc_client._post(url=self._build_path(), data=data)
         if response is not None:
             self.page_id = response['id']
@@ -69,8 +77,8 @@ class LandingPages(BaseApi):
         """
         Get information about a specific page.
 
-        :param campaign_id: The unique id for the campaign.
-        :type campaign_id: :py:class:`str`
+        :param page_id: The unique id for the page.
+        :type page_id: :py:class:`str`
         :param queryparams: The query string parameters
         queryparams['fields'] = []
         queryparams['exclude_fields'] = []

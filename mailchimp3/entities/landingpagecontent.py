@@ -2,7 +2,7 @@
 """
 The Landing Page Content API endpoint
 
-Documentation: http://developer.mailchimp.com/documentation/mailchimp/reference/landing-pages/content/
+Documentation: https://mailchimp.com/developer/reference/landing-pages/landing-pages_content/
 Schema: https://api.mailchimp.com/schema/3.0/Definitions/LandingPages/Content/Response.json
 """
 from __future__ import unicode_literals

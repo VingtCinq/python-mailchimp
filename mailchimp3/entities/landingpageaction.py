@@ -2,7 +2,7 @@
 """
 The Landinge Page actions API endpoint
 
-Documentation: http://developer.mailchimp.com/documentation/mailchimp/reference/landing-pages/
+Documentation: https://mailchimp.com/developer/reference/landing-pages/
 """
 from __future__ import unicode_literals
 

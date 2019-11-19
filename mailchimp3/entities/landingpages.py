@@ -34,13 +34,7 @@ class LandingPages(BaseApi):
         :param data: The request body parameters
         :type data: :py:class:`dict`
         data = {
-            "name": string*,
-            "title": string*,
-            "description": string*,
-            "store_id": string*
             "list_id": string*,
-            "type": string*,
-            "template_id":  string*,
         }
         """
         if 'list_id' not in data:

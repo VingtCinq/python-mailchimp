@@ -48,6 +48,10 @@ from mailchimp3.entities.storepromocodes import StorePromoCodes
 from mailchimp3.entities.filemanagerfiles import FileManagerFiles
 # File Manager Folders
 from mailchimp3.entities.filemanagerfolders import FileManagerFolders
+# Landinge Pages
+from mailchimp3.entities.landingpages import LandingPages
+from mailchimp3.entities.landingpageaction import LandingPageAction
+from mailchimp3.entities.landingpagecontent import LandingPageContent
 # Lists
 from mailchimp3.entities.lists import Lists
 from mailchimp3.entities.listabusereports import ListAbuseReports
@@ -149,6 +153,10 @@ class MailChimp(MailChimpClient):
         self.files = FileManagerFiles(self)
         # File Manager Folders
         self.folders = FileManagerFolders(self)
+        # Landinge Pages
+        self.landing_pages = LandingPages(self)
+        self.landing_pages.actions = LandingPageAction(self)
+        self.landing_pages.content = LandingPageContent(self)
         # Lists
         self.lists = Lists(self)
         self.lists.abuse_reports = ListAbuseReports(self)

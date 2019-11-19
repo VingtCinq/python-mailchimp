@@ -1,4 +1,4 @@
-[![mailchimp3 v3.0.10 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v3.0.11 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -163,6 +163,9 @@ individual methods available after.
     |     +- Promo Codes
     +- File Manager Files
     +- File Manager Folders
+    +- Landing Pages
+    |  +- Actions
+    |  +- Content
     +- Lists
     |  +- Abuse Reports
     |  +- Activity
@@ -434,6 +437,26 @@ above with the name `client`.
     client.folders.get(folder_id='')
     client.folders.update(folder_id='', data={})
     client.folders.delete(folder_id='')
+
+### Landing Pages
+
+#### Landing Pages
+
+    client.landing_pages.create(data={})
+    client.landing_pages.all()
+    client.landing_pages.all(fields='')
+    client.landing_pages.get(page_id='')
+    client.landing_pages.update(page_id='', data={})
+    client.landing_pages.delete(page_id='')
+   
+#### Landing Pages Actions
+
+    client.landing_pages.actions.publish(page_id='')
+    client.landing_pages.actions.unpublish(page_id='')
+   
+#### Landing Pages Content
+
+    client.landing_pages.content.get(page_id='')
 
 ### Lists
 

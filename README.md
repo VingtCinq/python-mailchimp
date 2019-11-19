@@ -440,6 +440,8 @@ above with the name `client`.
 
 ### Landing Pages
 
+#### Landing Pages
+
     client.landing_pages.create(data={})
     client.landing_pages.all()
     client.landing_pages.all(fields='')

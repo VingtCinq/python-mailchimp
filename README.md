@@ -164,6 +164,8 @@ individual methods available after.
     +- File Manager Files
     +- File Manager Folders
     +- Landing Pages
+    |  +- Actions
+    |  +- Content
     +- Lists
     |  +- Abuse Reports
     |  +- Activity
@@ -442,6 +444,17 @@ above with the name `client`.
    client.landing_pages.all()
    client.landing_pages.all(fields='')
    client.landing_pages.get(page_id='')
+   client.landing_pages.update(page_id='', data={})
+   client.landing_pages.delete(page_id='')
+   
+#### Landing Pages Actions
+
+   client.landing_pages.actions.publish(page_id='')
+   client.landing_pages.actions.unpublish(page_id='')
+   
+#### Landing Pages Content
+
+   client.landing_pages.content.get(page_id='')
 
 ### Lists
 

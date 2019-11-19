@@ -31,7 +31,7 @@ class LandingPageAction(BaseApi):
         :type page_id: :py:class:`str`
         """
         self.page_id = page_id
-        return self._mc_client._get(url=self._build_path(page_id, 'actions/publish'))
+        return self._mc_client._post(url=self._build_path(page_id, 'actions/publish'))
 
 
     def unpublish(self, page_id):
@@ -42,4 +42,4 @@ class LandingPageAction(BaseApi):
         :type page_id: :py:class:`str`
         """
         self.page_id = page_id
-        return self._mc_client._get(url=self._build_path(page_id, 'actions/unpublish'))
+        return self._mc_client._post(url=self._build_path(page_id, 'actions/unpublish'))

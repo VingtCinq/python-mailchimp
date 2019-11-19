@@ -97,9 +97,6 @@ class LandingPages(BaseApi):
         :type data: :py:class:`dict`
         """
         self.page_id = page_id
-        if 'list_id' not in data:
-            raise KeyError('The landing page must have a list_id')
-
         return self._mc_client._patch(url=self._build_path(page_id), data=data)
 
 

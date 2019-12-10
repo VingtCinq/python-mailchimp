@@ -49,6 +49,8 @@ class BaseApi(object):
         # comma-separated substring values to pass along to
         # self._mc_client._get(). It should also contain total_items whenever
         # the parameter is employed, which is forced here.
+        if not self._mc_client.enabled:
+            return
         if 'fields' in queryparams:
             if 'total_items' not in queryparams['fields'].split(','):
                 queryparams['fields'] += ',total_items'

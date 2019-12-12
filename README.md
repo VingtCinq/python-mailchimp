@@ -311,6 +311,7 @@ above with the name `client`.
     client.campaigns.actions.resume(campaign_id='')
     client.campaigns.actions.schedule(campaign_id='', data={})
     client.campaigns.actions.send(campaign_id='')
+    client.campaigns.actions.send(campaign_id='')
     client.campaigns.actions.test(campaign_id='', data={})
     client.campaigns.actions.unschedule(campaign_id='')
 

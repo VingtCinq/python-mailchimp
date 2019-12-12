@@ -115,6 +115,17 @@ class CampaignActions(BaseApi):
         return self._mc_client._post(url=self._build_path(campaign_id, 'actions/send'))
 
 
+    def resend(self, campaign_id):
+        """
+        Resend a MailChimp campaign to those that did not open previously.
+
+        :param campaign_id: The unique id for the campaign.
+        :type campaign_id: :py:class:`str`
+        """
+        self.campaign_id = campaign_id
+        return self._mc_client.post(url=self._build_path(campaign_id, 'actions/create-resend'))
+
+
     def test(self, campaign_id, data):
         """
         Send a test email.

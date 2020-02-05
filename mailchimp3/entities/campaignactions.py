@@ -117,7 +117,9 @@ class CampaignActions(BaseApi):
 
     def resend(self, campaign_id):
         """
-        Resend a MailChimp campaign to those that did not open previously.
+        Creates a Resend to Non-Openers version of this campaign. We will also
+        check if this campaign meets the criteria for Resend to Non-Openers
+        campaigns.
 
         :param campaign_id: The unique id for the campaign.
         :type campaign_id: :py:class:`str`

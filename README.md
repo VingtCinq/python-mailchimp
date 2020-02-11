@@ -1,4 +1,4 @@
-[![mailchimp3 v3.0.12 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v3.0.13 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -311,6 +311,7 @@ above with the name `client`.
     client.campaigns.actions.resume(campaign_id='')
     client.campaigns.actions.schedule(campaign_id='', data={})
     client.campaigns.actions.send(campaign_id='')
+    client.campaigns.actions.resend(campaign_id='')
     client.campaigns.actions.test(campaign_id='', data={})
     client.campaigns.actions.unschedule(campaign_id='')
 

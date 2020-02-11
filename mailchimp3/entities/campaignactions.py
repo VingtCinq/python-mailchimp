@@ -115,6 +115,19 @@ class CampaignActions(BaseApi):
         return self._mc_client._post(url=self._build_path(campaign_id, 'actions/send'))
 
 
+    def resend(self, campaign_id):
+        """
+        Creates a Resend to Non-Openers version of this campaign. We will also
+        check if this campaign meets the criteria for Resend to Non-Openers
+        campaigns.
+
+        :param campaign_id: The unique id for the campaign.
+        :type campaign_id: :py:class:`str`
+        """
+        self.campaign_id = campaign_id
+        return self._mc_client._post(url=self._build_path(campaign_id, 'actions/create-resend'))
+
+
     def test(self, campaign_id, data):
         """
         Send a test email.

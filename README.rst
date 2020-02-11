@@ -1,4 +1,4 @@
-|mailchimp3 v3.0.12 on PyPi| |MIT license| |Stable|
+|mailchimp3 v3.0.13 on PyPi| |MIT license| |Stable|
 
 python-mailchimp-api
 ====================
@@ -392,6 +392,7 @@ Campaign Actions
    client.campaigns.actions.resume(campaign_id='')
    client.campaigns.actions.schedule(campaign_id='', data={})
    client.campaigns.actions.send(campaign_id='')
+   client.campaigns.actions.resend(campaign_id='')
    client.campaigns.actions.test(campaign_id='', data={})
    client.campaigns.actions.unschedule(campaign_id='')
 
@@ -962,7 +963,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |mailchimp3 v3.0.12 on PyPi| image:: https://img.shields.io/pypi/v/mailchimp3.svg
+.. |mailchimp3 v3.0.13 on PyPi| image:: https://img.shields.io/pypi/v/mailchimp3.svg
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

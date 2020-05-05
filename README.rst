@@ -198,6 +198,7 @@ individual methods available after.
    |  |  +- Interests
    |  +- Members
    |  |  +- Activity
+   |  |  +- Events
    |  |  +- Goals
    |  |  +- Notes
    |  |  +- Tags
@@ -697,6 +698,14 @@ List Member Activity
 ::
 
    client.lists.members.activity.all(list_id='', subscriber_hash='')
+
+List Member Events
+^^^^^^^^^^^^^^^^^
+
+::
+
+   client.lists.members.events.create(list_id='', subscriber_hash='', data={})
+   client.lists.members.events.all(list_id='', subscriber_hash='', get_all=False)
 
 List Member Goals
 ^^^^^^^^^^^^^^^^^

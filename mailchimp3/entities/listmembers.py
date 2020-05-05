@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from mailchimp3.baseapi import BaseApi
 from mailchimp3.entities.listmemberactivity import ListMemberActivity
+from mailchimp3.entities.listmemberevents import ListMemberEvents
 from mailchimp3.entities.listmembergoals import ListMemberGoals
 from mailchimp3.entities.listmembernotes import ListMemberNotes
 from mailchimp3.helpers import check_email, check_subscriber_hash
@@ -28,6 +29,7 @@ class ListMembers(BaseApi):
         self.list_id = None
         self.subscriber_hash = None
         self.activity = ListMemberActivity(self)
+        self.events = ListMemberEvents(self)
         self.goals = ListMemberGoals(self)
         self.notes = ListMemberNotes(self)
 

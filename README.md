@@ -1,4 +1,4 @@
-[![mailchimp3 v3.0.13 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v3.0.14 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -175,6 +175,7 @@ individual methods available after.
     |  |  +- Interests
     |  +- Members
     |  |  +- Activity
+    |  |  +- Events
     |  |  +- Goals
     |  |  +- Notes
     |  |  +- Tags
@@ -517,6 +518,11 @@ above with the name `client`.
 #### List Member Activity
 
     client.lists.members.activity.all(list_id='', subscriber_hash='')
+
+#### List Member Events
+
+    client.lists.members.events.create(list_id='', subscriber_hash='', data={})
+    client.lists.members.events.all(list_id='', subscriber_hash='', get_all=False)
 
 #### List Member Goals
 

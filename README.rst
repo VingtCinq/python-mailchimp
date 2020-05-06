@@ -1,4 +1,4 @@
-|mailchimp3 v3.0.13 on PyPi| |MIT license| |Stable|
+|mailchimp3 v3.0.14 on PyPi| |MIT license| |Stable|
 
 python-mailchimp-api
 ====================
@@ -198,6 +198,7 @@ individual methods available after.
    |  |  +- Interests
    |  +- Members
    |  |  +- Activity
+   |  |  +- Events
    |  |  +- Goals
    |  |  +- Notes
    |  |  +- Tags
@@ -698,6 +699,14 @@ List Member Activity
 
    client.lists.members.activity.all(list_id='', subscriber_hash='')
 
+List Member Events
+^^^^^^^^^^^^^^^^^
+
+::
+
+   client.lists.members.events.create(list_id='', subscriber_hash='', data={})
+   client.lists.members.events.all(list_id='', subscriber_hash='', get_all=False)
+
 List Member Goals
 ^^^^^^^^^^^^^^^^^
 
@@ -963,7 +972,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |mailchimp3 v3.0.13 on PyPi| image:: https://img.shields.io/pypi/v/mailchimp3.svg
+.. |mailchimp3 v3.0.14 on PyPi| image:: https://img.shields.io/pypi/v/mailchimp3.svg
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

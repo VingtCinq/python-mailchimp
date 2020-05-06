@@ -36,12 +36,11 @@ class ListMemberEvents(BaseApi):
         :type data: :py:class:`dict`
         data = {
             "name": string*, (Must be 2-30 characters in length)
-            "properties": object (An optional list of properties)
-            "is_syncing": boolean
-            "occurred_at": string
         }
         """
+        subscriber_hash = check_subscriber_hash(subscriber_hash)
         self.list_id = list_id
+        self.subscriber_hash = subscriber_hash
         if 'name' not in data:
             raise KeyError('The list member events must have a name')
         if len(data['name']) < 2 or len(data['name']) > 30:

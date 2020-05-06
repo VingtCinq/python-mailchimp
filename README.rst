@@ -576,7 +576,6 @@ Folders
    client.folders.update(folder_id='', data={})
    client.folders.delete(folder_id='')
 
-
 Landing Pages
 ~~~~~~~~~~~~~
 
@@ -608,7 +607,6 @@ Landing Pages Content
 ::
 
    client.landing_pages.content.get(page_id='')
-
 
 Lists
 ~~~~~
@@ -700,7 +698,7 @@ List Member Activity
    client.lists.members.activity.all(list_id='', subscriber_hash='')
 
 List Member Events
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 ::
 

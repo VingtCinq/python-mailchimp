@@ -12,6 +12,7 @@ from mailchimp3.entities.listmemberactivity import ListMemberActivity
 from mailchimp3.entities.listmemberevents import ListMemberEvents
 from mailchimp3.entities.listmembergoals import ListMemberGoals
 from mailchimp3.entities.listmembernotes import ListMemberNotes
+from mailchimp3.entities.listmembertags import ListMemberTags
 from mailchimp3.helpers import check_email, check_subscriber_hash
 
 
@@ -32,6 +33,7 @@ class ListMembers(BaseApi):
         self.events = ListMemberEvents(self)
         self.goals = ListMemberGoals(self)
         self.notes = ListMemberNotes(self)
+        self.tags = ListMemberTags(self)
 
 
     def create(self, list_id, data):

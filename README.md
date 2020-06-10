@@ -175,6 +175,7 @@ individual methods available after.
     |  |  +- Interests
     |  +- Members
     |  |  +- Activity
+    |  |  +- Activity Feed
     |  |  +- Events
     |  |  +- Goals
     |  |  +- Notes
@@ -518,6 +519,10 @@ above with the name `client`.
 #### List Member Activity
 
     client.lists.members.activity.all(list_id='', subscriber_hash='')
+
+#### List Member Activity Feed
+
+    client.lists.members.activity_feed.all(list_id='', subscriber_hash='')
 
 #### List Member Events
 

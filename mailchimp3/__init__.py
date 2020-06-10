@@ -62,6 +62,7 @@ from mailchimp3.entities.listinterestcategories import ListInterestCategories
 from mailchimp3.entities.listinterestcategoryinterest import ListInterestCategoryInterest
 from mailchimp3.entities.listmembers import ListMembers
 from mailchimp3.entities.listmemberactivity import ListMemberActivity
+from mailchimp3.entities.listmemberactivityfeed import ListMemberActivityFeed
 from mailchimp3.entities.listmemberevents import ListMemberEvents
 from mailchimp3.entities.listmembergoals import ListMemberGoals
 from mailchimp3.entities.listmembernotes import ListMemberNotes
@@ -168,6 +169,7 @@ class MailChimp(MailChimpClient):
         self.lists.interest_categories.interests = ListInterestCategoryInterest(self)
         self.lists.members = ListMembers(self)
         self.lists.members.activity = ListMemberActivity(self)
+        self.lists.members.activity_feed = ListMemberActivityFeed(self)
         self.lists.members.events = ListMemberEvents(self)
         self.lists.members.goals = ListMemberGoals(self)
         self.lists.members.notes = ListMemberNotes(self)

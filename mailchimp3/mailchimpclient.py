@@ -23,6 +23,7 @@ import logging
 
 _logger = logging.getLogger('mailchimp3.client')
 
+
 def _enabled_or_noop(fn):
     @functools.wraps(fn)
     def wrapper(self, *args, **kwargs):
@@ -36,11 +37,19 @@ class MailChimpError(Exception):
 
 
 def _raise_response_error(r):
-    # in case of a 500 error, the response might not be a JSON
+    """
+    Return a MailChimpError to which we pass:
+        - the response object
+        - the response's JSON data if found.
+    """
+    error_data = {"response": r}
     try:
-        error_data = r.json()
+        json_data = r.json()
     except ValueError:
-        error_data = { "response": r }
+        # in case of a 500 error, the response might not be a JSON
+        pass
+    else:
+        error_data.update(json_data)
     raise MailChimpError(error_data)
 
 

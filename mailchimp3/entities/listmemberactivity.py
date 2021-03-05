@@ -46,8 +46,9 @@ class ListMemberActivity(BaseApi):
     
     def feed(self, list_id, subscriber_hash, **queryparams):
         """
-        Get the last 50 events of a member’s activity on a specific list,
-        including opens, clicks, and unsubscribes.
+        Get the last 10 events of a member’s activity on a specific list,
+        including opens, clicks, and unsubscribes. 
+        With count parameter, get as many past events as you would like.
 
         :param list_id: The unique id for the list.
         :type list_id: :py:class:`str`

@@ -76,7 +76,7 @@ class StorePromoRules(BaseApi):
         if get_all:
             return self._iterate(url=self._build_path(store_id, 'promo-rules'), **queryparams)
         else:
-            return self._mc_client._get(url=self._build_path(store_id, 'promo-rule'), **queryparams)
+            return self._mc_client._get(url=self._build_path(store_id, 'promo-rules'), **queryparams)
 
     def get(self, store_id, promo_rule_id, **queryparams):
         """

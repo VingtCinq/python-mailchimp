@@ -1,4 +1,4 @@
-|mailchimp3 v3.0.15 on PyPi| |MIT license| |Stable|
+|mailchimp3 v3.0.16 on PyPi| |MIT license| |Stable|
 
 python-mailchimp-api
 ====================

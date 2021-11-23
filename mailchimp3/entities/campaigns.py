@@ -48,14 +48,11 @@ class Campaigns(BaseApi):
             {
                 "list_id": string*
             },
-            "settings": object*
-            {
-                "subject_line": string*,
-                "from_name": string*,
-                "reply_to": string*
-            },
             "variate_settings": object* (Required if type is "variate")
             {
+                "subject_lines": string* (can be empty if subject_line in settings)
+                "from_names": string* (can be empty if from_name in settings)
+                "reply_to_addresses": string* (can be empty if reply_to in settings)
                 "winner_criteria": string* (Must be one of "opens", "clicks", "total_revenue", or "manual")
             },
             "rss_opts": object* (Required if type is "rss")
@@ -70,15 +67,8 @@ class Campaigns(BaseApi):
             raise KeyError('The campaign must have recipients')
         if 'list_id' not in data['recipients']:
             raise KeyError('The campaign recipients must have a list_id')
-        if 'settings' not in data:
-            raise KeyError('The campaign must have settings')
-        if 'subject_line' not in data['settings']:
-            raise KeyError('The campaign settings must have a subject_line')
-        if 'from_name' not in data['settings']:
-            raise KeyError('The campaign settings must have a from_name')
-        if 'reply_to' not in data['settings']:
-            raise KeyError('The campaign settings must have a reply_to')
-        check_email(data['settings']['reply_to'])
+        if 'reply_to' in data.get('settings', {}):
+            check_email(data['settings']['reply_to'])
         if 'type' not in data:
             raise KeyError('The campaign must have a type')
         if not data['type'] in ['regular', 'plaintext', 'rss', 'variate', 'abspilt']:
@@ -91,6 +81,12 @@ class Campaigns(BaseApi):
             if data['variate_settings']['winner_criteria'] not in ['opens', 'clicks', 'total_revenue', 'manual']:
                 raise ValueError('The campaign variate_settings '
                                  'winner_criteria must be one of "opens", "clicks", "total_revenue", or "manual"')
+            if 'subject_lines' not in data['variate_settings'] and 'subject_line' not in data.get('settings'):
+                raise KeyError('The campaign variate_settings must have a subject_lines')
+            if 'from_names' not in data['variate_settings'] and 'from_name' not in data.get('settings'):
+                raise KeyError('The campaign variate_settings must have a from_names')
+            if 'reply_to_addresses' not in data['variate_settings'] and 'reply_to' not in data.get('settings'):
+                raise KeyError('The campaign variate_settings must have a reply_to_addresses')
         if data['type'] == 'rss':
             if 'rss_opts' not in data:
                 raise KeyError('The rss campaign must have rss_opts')

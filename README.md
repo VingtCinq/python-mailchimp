@@ -150,6 +150,7 @@ individual methods available after.
     |  +- Send Checklist
     +- Conversations
     |  +- Messages
+    +- Customer Journeys
     +- Stores
     |  +- Carts
     |  |  +- Lines
@@ -345,6 +346,12 @@ above with the name `client`.
     client.conversations.messages.create(conversation_id='', data={})
     client.conversations.messages.all(conversation_id='')
     client.conversations.messages.get(conversation_id='', message_id='')
+
+### Customer Journeys
+
+#### Customer Journeys
+
+    client.customer_journeys.trigger(journey_id='', step_id='', data={})
 
 ### E-Commerce
 

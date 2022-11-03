@@ -4,6 +4,7 @@ Mailchimp v3 Api SDK
 
 Documentation at http://developer.mailchimp.com/documentation/mailchimp/reference/overview/
 """
+from mailchimp3.entities.customerjourney import CustomerJourney
 # API Client
 from mailchimp3.mailchimpclient import MailChimpClient
 # API Root
@@ -203,3 +204,5 @@ class MailChimp(MailChimpClient):
         # Templates
         self.templates = Templates(self)
         self.templates.default_content = TemplateDefaultContent(self)
+        # Customer Journey
+        self.journeys = self.customer_journeys = CustomerJourney(self)

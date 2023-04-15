@@ -32,6 +32,8 @@ from mailchimp3.entities.campaignsendchecklist import CampaignSendChecklist
 # Conversations
 from mailchimp3.entities.conversations import Conversations
 from mailchimp3.entities.conversationmessages import ConversationMessages
+# Customer Journeys
+from mailchimp3.entities.customerjourney import CustomerJourney
 # E-commerce Stores
 from mailchimp3.entities.stores import Stores
 from mailchimp3.entities.storecarts import StoreCarts
@@ -138,6 +140,8 @@ class MailChimp(MailChimpClient):
         # Conversations - Paid feature
         self.conversations = Conversations(self)
         self.conversations.messages = ConversationMessages(self)
+        # Customer Journey
+        self.journeys = self.customer_journeys = CustomerJourney(self)
         # E-commerce Stores
         self.stores = self.ecommerce = Stores(self)
         self.stores.carts = StoreCarts(self)

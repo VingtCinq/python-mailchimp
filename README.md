@@ -4,7 +4,7 @@
 
 # python-mailchimp-api
 
-A straighforward python client for v3 of MailChimp API using
+A straightforward python client for v3 of MailChimp API using
 requests >= 2.7.0.
 
 ## Getting Started
@@ -36,12 +36,12 @@ endpoints are implemented and all endpoint methods are available.
 ### History
 
 Up to date with [changelog](http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/)
-features listed thru 3/03/2017.
+features listed through 3/03/2017.
 
 ### Initialization
 
 Grab `YOUR_API_KEY` from your mailchimp account (Account > Extra > Api
-Keys). `YOUR_USERNAME` is the one you use to login on the website and
+Keys). `YOUR_USERNAME` is the one you use to log in on the website and
 is optional.
 
     from mailchimp3 import MailChimp
@@ -150,6 +150,7 @@ individual methods available after.
     |  +- Send Checklist
     +- Conversations
     |  +- Messages
+    +- Customer Journeys
     +- Stores
     |  +- Carts
     |  |  +- Lines
@@ -345,6 +346,12 @@ above with the name `client`.
     client.conversations.messages.create(conversation_id='', data={})
     client.conversations.messages.all(conversation_id='')
     client.conversations.messages.get(conversation_id='', message_id='')
+
+### Customer Journeys
+
+#### Customer Journeys
+
+    client.customer_journeys.trigger(journey_id='', step_id='', data={})
 
 ### E-Commerce
 

@@ -3,7 +3,7 @@
 python-mailchimp-api
 ====================
 
-A straighforward python client for v3 of MailChimp API using requests >=
+A straightforward python client for v3 of MailChimp API using requests >=
 2.7.0.
 
 Getting Started
@@ -173,6 +173,7 @@ individual methods available after.
    |  +- Send Checklist
    +- Conversations
    |  +- Messages
+   +- Customer Journeys
    +- Stores
    |  +- Carts
    |  |  +- Lines
@@ -223,7 +224,7 @@ individual methods available after.
    |  +- Sent To
    |  +- Sub-Reports
    |  +- Unsubscribes
-   +- Seach Campaigns
+   +- Search Campaigns
    +- Search Members
    +- Template Folders
    +- Templates
@@ -444,6 +445,17 @@ Conversation Messages
    client.conversations.messages.create(conversation_id='', data={})
    client.conversations.messages.all(conversation_id='')
    client.conversations.messages.get(conversation_id='', message_id='')
+
+Customer Journeys
+~~~~~~~~~~
+
+Customer Journeys
+^^^^^^
+
+::
+
+    client.customer_journeys.trigger(journey_id='', step_id='', data={})
+
 
 E-Commerce
 ~~~~~~~~~~
@@ -838,7 +850,7 @@ EepURL Reports
 
 ::
 
-   client.reports.eepurl.all(camnpaign_id='')
+   client.reports.eepurl.all(campaign_id='')
 
 Email Activity Reports
 ^^^^^^^^^^^^^^^^^^^^^^

@@ -201,7 +201,7 @@ individual methods available after.
     |  +- Sent To
     |  +- Sub-Reports
     |  +- Unsubscribes
-    +- Seach Campaigns
+    +- Search Campaigns
     +- Search Members
     +- Template Folders
     +- Templates

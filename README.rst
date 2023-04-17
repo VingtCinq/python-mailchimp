@@ -3,8 +3,8 @@
 python-mailchimp-api
 ====================
 
-A straightforward python client for v3 of MailChimp API using requests >=
-2.7.0.
+A straightforward python client for v3 of MailChimp API using requests
+>= 2.7.0.
 
 Getting Started
 ---------------
@@ -41,13 +41,13 @@ History
 
 Up to date with
 `changelog <http://developer.mailchimp.com/documentation/mailchimp/guides/changelog/>`__
-features listed thru 3/03/2017.
+features listed through 3/03/2017.
 
 Initialization
 ~~~~~~~~~~~~~~
 
 Grab ``YOUR_API_KEY`` from your mailchimp account (Account > Extra > Api
-Keys). ``YOUR_USERNAME`` is the one you use to login on the website and
+Keys). ``YOUR_USERNAME`` is the one you use to log in on the website and
 is optional.
 
 ::
@@ -447,15 +447,16 @@ Conversation Messages
    client.conversations.messages.get(conversation_id='', message_id='')
 
 Customer Journeys
-~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+
+.. _customer-journeys-1:
 
 Customer Journeys
-^^^^^^
+^^^^^^^^^^^^^^^^^
 
 ::
 
-    client.customer_journeys.trigger(journey_id='', step_id='', data={})
-
+   client.customer_journeys.trigger(journey_id='', step_id='', data={})
 
 E-Commerce
 ~~~~~~~~~~
@@ -850,7 +851,7 @@ EepURL Reports
 
 ::
 
-   client.reports.eepurl.all(campaign_id='')
+   client.reports.eepurl.all(camnpaign_id='')
 
 Email Activity Reports
 ^^^^^^^^^^^^^^^^^^^^^^

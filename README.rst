@@ -1,4 +1,4 @@
-|mailchimp3 v3.0.17 on PyPi| |MIT license| |Stable|
+|mailchimp3 v3.0.18 on PyPi| |MIT license| |Stable|
 
 python-mailchimp-api
 ====================
@@ -982,7 +982,7 @@ License
 
 The project is licensed under the MIT License.
 
-.. |mailchimp3 v3.0.17 on PyPi| image:: https://img.shields.io/pypi/v/mailchimp3.svg
+.. |mailchimp3 v3.0.18 on PyPi| image:: https://img.shields.io/pypi/v/mailchimp3.svg
    :target: https://pypi.python.org/pypi/mailchimp3
 .. |MIT license| image:: https://img.shields.io/badge/licence-MIT-blue.svg
 .. |Stable| image:: https://img.shields.io/badge/status-stable-green.svg

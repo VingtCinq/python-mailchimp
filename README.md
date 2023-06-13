@@ -1,4 +1,4 @@
-[![mailchimp3 v3.0.18 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
+[![mailchimp3 v3.0.19 on PyPi](https://img.shields.io/pypi/v/mailchimp3.svg)](https://pypi.python.org/pypi/mailchimp3)
 ![MIT license](https://img.shields.io/badge/licence-MIT-blue.svg)
 ![Stable](https://img.shields.io/badge/status-stable-green.svg)
 
@@ -485,7 +485,8 @@ above with the name `client`.
 
 #### List Activity
 
-    client.lists.activity.all(list_id='')
+    client.lists.activity.all(list_id='', subscriber_hash='')
+    client.lists.activity.feed(list_id='', subscriber_hash='')
 
 #### List Clients
 

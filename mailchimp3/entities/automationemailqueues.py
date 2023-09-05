@@ -62,7 +62,7 @@ class AutomationEmailQueues(BaseApi):
 
 
     # Paid feature
-    def all(self, workflow_id, email_id):
+    def all(self, workflow_id, email_id, get_all=False, **queryparams):
         """
         Get information about an Automation email queue.
 
@@ -70,11 +70,22 @@ class AutomationEmailQueues(BaseApi):
         :type workflow_id: :py:class:`str`
         :param email_id: The unique id for the Automation workflow email.
         :type email_id: :py:class:`str`
+        :param get_all: Should the query get all results
+        :type get_all: :py:class:`bool`
+        :param queryparams: The query string parameters
+        queryparams['count'] = integer
+        queryparams['offset'] = integer
+        queryparams['workflow_id'] = string
+        queryparams['email_id'] = string
         """
         self.workflow_id = workflow_id
         self.email_id = email_id
         self.subscriber_hash = None
-        return self._mc_client._get(url=self._build_path(workflow_id, 'emails', email_id, 'queue'))
+        url = self._build_path(workflow_id, 'emails', email_id,'queue')
+        if get_all:
+            return self._iterate(url=url, **queryparams)
+        else:
+            return self._mc_client._get(url=url, **queryparams)
 
 
     # Paid feature
